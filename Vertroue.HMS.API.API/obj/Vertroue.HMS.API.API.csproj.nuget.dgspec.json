@@ -1,0 +1,422 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj",
+        "projectName": "Vertroue.HMS.API.API",
+        "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj",
+        "packagesPath": "C:\\Users\\P3003184\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\P3003184\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://investmenttransformation.pkgs.visualstudio.com/_packaging/investmenttransformation/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj": {
+                "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj"
+              },
+              "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj"
+              },
+              "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj": {
+                "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.21.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "NuGet.CommandLine": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj",
+        "projectName": "Vertroue.HMS.API.Application",
+        "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj",
+        "packagesPath": "C:\\Users\\P3003184\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\P3003184\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://investmenttransformation.pkgs.visualstudio.com/_packaging/investmenttransformation/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Domain\\Vertroue.HMS.API.Domain.csproj": {
+                "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Domain\\Vertroue.HMS.API.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.4.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.4.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.12.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Domain\\Vertroue.HMS.API.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Domain\\Vertroue.HMS.API.Domain.csproj",
+        "projectName": "Vertroue.HMS.API.Domain",
+        "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Domain\\Vertroue.HMS.API.Domain.csproj",
+        "packagesPath": "C:\\Users\\P3003184\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\P3003184\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://investmenttransformation.pkgs.visualstudio.com/_packaging/investmenttransformation/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj",
+        "projectName": "Vertroue.HMS.API.Infrastructure",
+        "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\P3003184\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\P3003184\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://investmenttransformation.pkgs.visualstudio.com/_packaging/investmenttransformation/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj": {
+                "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[30.0.1, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Identity.Web": {
+              "target": "Package",
+              "version": "[1.25.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj",
+        "projectName": "Vertroue.HMS.API.Persistence",
+        "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj",
+        "packagesPath": "C:\\Users\\P3003184\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\P3003184\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://investmenttransformation.pkgs.visualstudio.com/_packaging/investmenttransformation/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj": {
+                "projectPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

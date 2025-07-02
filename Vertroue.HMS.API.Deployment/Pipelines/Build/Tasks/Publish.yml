@@ -1,0 +1,8 @@
+﻿steps:
+- task: DotNetCoreCLI@2
+  displayName: Publish API
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/*.API.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)\artifact'

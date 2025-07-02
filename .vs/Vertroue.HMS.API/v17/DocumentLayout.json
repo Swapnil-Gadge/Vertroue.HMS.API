@@ -1,0 +1,344 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.api\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|solutionrelative:vertroue.hms.api.api\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.persistence\\repositories\\dashboardrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|solutionrelative:vertroue.hms.api.persistence\\repositories\\dashboardrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.application\\features\\dashboards\\models\\tatreportcase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|solutionrelative:vertroue.hms.api.application\\features\\dashboards\\models\\tatreportcase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.application\\features\\dashboards\\models\\casecounts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|solutionrelative:vertroue.hms.api.application\\features\\dashboards\\models\\casecounts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.application\\features\\dashboards\\queries\\getprovideradmindashboard\\getprovideradmindashboardqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|solutionrelative:vertroue.hms.api.application\\features\\dashboards\\queries\\getprovideradmindashboard\\getprovideradmindashboardqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.api\\services\\loggedinuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|solutionrelative:vertroue.hms.api.api\\services\\loggedinuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.application\\features\\users\\commands\\login\\logincommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|solutionrelative:vertroue.hms.api.application\\features\\users\\commands\\login\\logincommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|solutionrelative:vertroue.hms.api.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.api\\startupextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|solutionrelative:vertroue.hms.api.api\\startupextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.persistence\\persistenceserviceregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|solutionrelative:vertroue.hms.api.persistence\\persistenceserviceregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D1EFC6F-5CB4-47D2-ACFC-C6D07DE422EE}|Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.infrastructure\\infrastructureserviceregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0D1EFC6F-5CB4-47D2-ACFC-C6D07DE422EE}|Vertroue.HMS.API.Infrastructure\\Vertroue.HMS.API.Infrastructure.csproj|solutionrelative:vertroue.hms.api.infrastructure\\infrastructureserviceregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{09DAA667-7625-4C36-BBAD-0E2E01D84C06}|Vertroue.HMS.API.API\\Vertroue.HMS.API.API.csproj|solutionrelative:vertroue.hms.api.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.application\\features\\users\\commands\\login\\logincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|solutionrelative:vertroue.hms.api.application\\features\\users\\commands\\login\\logincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.persistence\\repositories\\usermasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|solutionrelative:vertroue.hms.api.persistence\\repositories\\usermasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.application\\features\\users\\commands\\register\\userregistercommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2331102-83F9-4126-AB83-E13F1867D18D}|Vertroue.HMS.API.Application\\Vertroue.HMS.API.Application.csproj|solutionrelative:vertroue.hms.api.application\\features\\users\\commands\\register\\userregistercommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|c:\\users\\p3003184\\source\\repos\\vertroue.hms\\vertroue.hms.api.persistence\\apidbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3DCEB82-B38F-44AF-B0DD-868FCAAEA14E}|Vertroue.HMS.API.Persistence\\Vertroue.HMS.API.Persistence.csproj|solutionrelative:vertroue.hms.api.persistence\\apidbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 16,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CaseCounts.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\CaseCounts.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\CaseCounts.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\CaseCounts.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\CaseCounts.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAYAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T14:45:21.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoggedInUserService.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Services\\LoggedInUserService.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.API\\Services\\LoggedInUserService.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Services\\LoggedInUserService.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.API\\Services\\LoggedInUserService.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAmwBQAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T14:37:12.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GetProviderAdminDashboardQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Dashboards\\Queries\\GetProviderAdminDashboard\\GetProviderAdminDashboardQueryHandler.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Application\\Features\\Dashboards\\Queries\\GetProviderAdminDashboard\\GetProviderAdminDashboardQueryHandler.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Dashboards\\Queries\\GetProviderAdminDashboard\\GetProviderAdminDashboardQueryHandler.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Application\\Features\\Dashboards\\Queries\\GetProviderAdminDashboard\\GetProviderAdminDashboardQueryHandler.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAiwBQAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T12:05:47.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "LoginCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommandHandler.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommandHandler.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommandHandler.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommandHandler.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAhwDAAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T08:34:53.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DashBoardRepository.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Repositories\\DashBoardRepository.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Persistence\\Repositories\\DashBoardRepository.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Repositories\\DashBoardRepository.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Persistence\\Repositories\\DashBoardRepository.cs",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAswGIAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T12:20:07.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.API\\Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.API\\Controllers\\DashboardController.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAA4wBcAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T14:06:06.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TatReportCase.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\TatReportCase.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\TatReportCase.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\TatReportCase.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Application\\Features\\Dashboards\\Models\\TatReportCase.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAA/wBQAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T15:02:37.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PersistenceServiceRegistration.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\PersistenceServiceRegistration.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Persistence\\PersistenceServiceRegistration.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\PersistenceServiceRegistration.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Persistence\\PersistenceServiceRegistration.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAB8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T13:09:10.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.API\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.API\\Controllers\\AccountController.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAmwCsAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T13:25:22.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StartupExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\StartupExtensions.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.API\\StartupExtensions.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\StartupExtensions.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.API\\StartupExtensions.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAWwB4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T13:04:27.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\appsettings.json",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.API\\appsettings.json",
+              "RelativeToolTip": "Vertroue.HMS.API.API\\appsettings.json",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABYAAACFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-01T13:06:28.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ApiDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\ApiDbContext.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Persistence\\ApiDbContext.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\ApiDbContext.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Persistence\\ApiDbContext.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAcwBgAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T13:03:31.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "InfrastructureServiceRegistration.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\InfrastructureServiceRegistration.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Infrastructure\\InfrastructureServiceRegistration.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Infrastructure\\InfrastructureServiceRegistration.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Infrastructure\\InfrastructureServiceRegistration.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAawBcAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T13:17:26.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserRegisterCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Register\\UserRegisterCommandHandler.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Register\\UserRegisterCommandHandler.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Register\\UserRegisterCommandHandler.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Register\\UserRegisterCommandHandler.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAYwBwAAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T13:40:01Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UserMasterRepository.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Repositories\\UserMasterRepository.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Persistence\\Repositories\\UserMasterRepository.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Persistence\\Repositories\\UserMasterRepository.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Persistence\\Repositories\\UserMasterRepository.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAgwBMAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T08:04:52.442Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LoginCommand.cs",
+              "DocumentMoniker": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommand.cs",
+              "RelativeDocumentMoniker": "Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommand.cs",
+              "ToolTip": "C:\\Users\\P3003184\\source\\repos\\Vertroue.HMS\\Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommand.cs",
+              "RelativeToolTip": "Vertroue.HMS.API.Application\\Features\\Users\\Commands\\Login\\LoginCommand.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T08:54:27.944Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1217,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

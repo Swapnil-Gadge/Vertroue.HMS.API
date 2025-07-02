@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>487d0879-d2c1-48eb-8505-af2520de228b</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PrepareForBuildDependsOn>
+    </PrepareForBuildDependsOn>
+  </PropertyGroup>
+  <Import Condition=" Exists('Deployment.targets') " Project="Deployment.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <!-- vertag<:>start tokens<:>maj.min -->
+  <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
+  <!-- vertag<:>end -->
+  <ItemGroup>
+    <None Include="Deploy-AzureResourceGroup.ps1" />
+    <None Include="Deployment.targets">
+      <Visible>False</Visible>
+    </None>
+    <None Include="Infra\AppInsights\AppInsights.bicep" />
+    <None Include="Infra\AppServicePlan\AppServicePlan.bicep" />
+    <None Include="Infra\AppService\AppService.bicep" />
+    <None Include="Infra\AzureSQLDatabase\AzureSQLDatabase.bicep" />
+    <None Include="Infra\AzureSQLDatabase\PermissionAssigment\AssignAppManagedIdentityAccessToDB.sql" />
+    <None Include="Infra\KeyVault\KeyVault.bicep" />
+    <None Include="Infra\ResourceGroup\CreateOrUpdateRGWithTags.ps1" />
+    <None Include="Infra\ServicePrincipal\ServicePrincipal.json" />
+    <None Include="Infra\SQLElasticPool\SQLElasticPool.bicep" />
+    <None Include="Infra\SQLServer\SQLServer.bicep" />
+    <None Include="Infra\StorageAccount\StorageAccount.bicep" />
+    <None Include="Pipelines\azure-pipelines.yml" />
+    <None Include="Pipelines\Build\Build.yml" />
+    <None Include="Pipelines\Build\Tasks\BuildAll.yml" />
+    <None Include="Pipelines\Build\Tasks\CheckMarxSAST.yml" />
+    <None Include="Pipelines\Build\Tasks\CopyInfraScripts.yml" />
+    <None Include="Pipelines\Build\Tasks\NexusSCA.yml" />
+    <None Include="Pipelines\Build\Tasks\Publish.yml" />
+    <None Include="Pipelines\Build\Tasks\PublishBuildArtifacts.yml" />
+    <None Include="Pipelines\Build\Tasks\RestoreAll.yml" />
+    <None Include="Pipelines\Build\Tasks\TestAll.yml" />
+    <None Include="Pipelines\Build\Tasks\UseDotNet.yml" />
+  </ItemGroup>
+  <Target Name="GetReferenceAssemblyPaths" />
+</Project>

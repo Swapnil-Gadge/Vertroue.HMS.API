@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Vertroue.HMS.API.API.props" />
+</Project>

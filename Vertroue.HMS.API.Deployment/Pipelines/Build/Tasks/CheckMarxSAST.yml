@@ -1,0 +1,22 @@
+steps:
+  - task: Application security testing@2022
+    displayName: Static Application Security Testing (SAST) - CheckMarx
+    inputs:
+      projectName: ${{ parameters.checkmarxProjectName }}
+      enableProxy: false
+      enableSastScan: true
+      CheckmarxService: ${{ parameters.checkmarxServiceName }}
+      fullTeamName: ${{ parameters.checkmarxFullTeamName }}
+      fullScansScheduled: true
+      fullScanCycle: '5'
+      generatePDFReport: true
+      scanTimeout: '60'
+      vulnerabilityThreshold: true
+      failBuildForNewVulnerabilitiesEnabled: true
+      failBuildForNewVulnerabilitiesSeverity: HIGH
+      high: '1'
+      medium: ''
+      low: ''
+      enablePolicyViolations: true
+      avoidDuplicateScans: true
+      enableDependencyScan: false

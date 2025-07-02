@@ -1,0 +1,28 @@
+jobs:
+  - job: Vertroue.HMS.API.CI
+    displayName: Vertroue.HMS.API.CI
+    pool:
+      name: Azure Pipelines
+      vmImage: windows-latest
+    variables:
+      buildConfiguration: Release
+      buildPlatform: any cpu
+    steps:
+      - template: Tasks/UseDotNet.yml
+      - template: Tasks/RestoreAll.yml
+      - template: Tasks/BuildAll.yml
+      - template: Tasks/TestAll.yml
+      - template: Tasks/NexusSCA.yml
+        parameters:
+          nexusIQServiceName: 'NexusIQPRD-Analytics Platform'
+          nexusIQAppId: 'AP.Desktop.IdentityService__investmenttransformationAnalyticsPlatform'
+      - template: Tasks/CheckMarxSAST.yml
+        parameters:
+          checkmarxProjectName: AP.Desktop.IdentityService - InvTrans - AnalyticsPlatform
+          checkmarxServiceName: CxServerPRD-Analytics Platform
+          checkmarxFullTeamName: /CxServer/InvTech/AnalyticsPlatform
+      - template: Tasks/Publish.yml
+      - template: Tasks/CopyDevOps.yml
+      - template: Tasks/PublishBuildArtifacts.yml
+      - pwsh: Get-ChildItem -Path $(Agent.WorkFolder) -Recurse -Force -ErrorAction
+          SilentlyContinue | Select-Object FullName

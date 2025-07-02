@@ -1,0 +1,7 @@
+﻿steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '7.x'
+    performMultiLevelLookup: true
+    includePreviewVersions: true 

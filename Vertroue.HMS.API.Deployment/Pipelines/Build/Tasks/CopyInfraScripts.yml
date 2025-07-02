@@ -1,0 +1,7 @@
+﻿steps:
+- task: CopyFiles@2
+  displayName: Copy DevOps scripts
+  inputs:
+    SourceFolder: 'Vertroue.HMS.API.Deployment/Infra'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\Deployment'

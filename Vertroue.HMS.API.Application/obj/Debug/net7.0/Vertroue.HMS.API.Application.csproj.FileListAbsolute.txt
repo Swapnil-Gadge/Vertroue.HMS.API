@@ -1,0 +1,15 @@
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.csproj.AssemblyReference.cache
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.AssemblyInfoInputs.cache
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.AssemblyInfo.cs
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.csproj.CoreCompileInputs.cache
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\bin\Debug\net7.0\Vertroue.HMS.API.Application.deps.json
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\bin\Debug\net7.0\Vertroue.HMS.API.Application.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\bin\Debug\net7.0\Vertroue.HMS.API.Application.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\bin\Debug\net7.0\Vertroue.HMS.API.Domain.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\bin\Debug\net7.0\Vertroue.HMS.API.Domain.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.7083A960.Up2Date
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\refint\Vertroue.HMS.API.Application.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\Vertroue.HMS.API.Application.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Application\obj\Debug\net7.0\ref\Vertroue.HMS.API.Application.dll

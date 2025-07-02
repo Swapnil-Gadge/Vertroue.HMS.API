@@ -1,0 +1,33 @@
+﻿{
+  "servicePrincipal": {
+    "servicePrincipalName": "$(ApplicationDisplayName)$",
+    "subject": "$(ApplicationDisplayName)$",
+    "validityInMonths": 12,
+    "homePage": "https://$(AppName)$.azurewebsites.net",
+    "credentialType": "password",
+    "identifier": "https://savingsandinvestments.onmicrosoft.com/$(ApplicationDisplayName)$",
+    "owners": [ "$(ServicePrincipalOwners)$" ],
+    "errorUrl": "https://$(AppName)$.azurewebsites.net",
+    "logoutUrl": "https://$(AppName)$.azurewebsites.net",
+    "groupMembershipClaims": "SecurityGroup",
+    "signInAudience": "AzureADMyOrg",
+    "permissions": [
+      {
+        "appId": "00000003-0000-0000-c000-000000000000",
+        "scopeId": "e1fe6dd8-ba31-4d61-89e7-88639da4683d",
+        "description": "Graph API - Sign in and read users profile permission"
+      }
+    ]
+  },
+  "notify": {
+    "keyVaults": [
+      {
+        "keyVaultName": "$(KeyVaultName)$",
+        "keyName": "appClientSecret",
+        "isCertificate": false
+      }
+    ]
+  },
+  "rotationSchedule": "custom",
+  "customRotationScheduleName": "SacredWeeklySchedule"
+}

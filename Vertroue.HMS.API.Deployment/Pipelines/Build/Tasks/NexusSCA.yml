@@ -1,0 +1,8 @@
+steps:
+- task: NexusIqPipelineTask@1
+  displayName: Software Composition Analysis (SCA) - Nexus IQ
+  inputs:
+    nexusIqService: ${{ parameters.nexusIQServiceName }}
+    applicationId: ${{ parameters.nexusIQAppId }}
+    stage: 'Build'
+    scanTargets: '**/*'

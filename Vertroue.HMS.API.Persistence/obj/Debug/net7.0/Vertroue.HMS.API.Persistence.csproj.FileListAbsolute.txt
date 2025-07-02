@@ -1,0 +1,17 @@
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.csproj.AssemblyReference.cache
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.AssemblyInfoInputs.cache
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.AssemblyInfo.cs
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Persistence.deps.json
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Persistence.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Persistence.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Application.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Domain.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Application.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\bin\Debug\net7.0\Vertroue.HMS.API.Domain.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.D4B324D1.Up2Date
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\refint\Vertroue.HMS.API.Persistence.dll
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\Vertroue.HMS.API.Persistence.pdb
+C:\Users\P3003184\source\repos\Vertroue.HMS\Vertroue.HMS.API.Persistence\obj\Debug\net7.0\ref\Vertroue.HMS.API.Persistence.dll

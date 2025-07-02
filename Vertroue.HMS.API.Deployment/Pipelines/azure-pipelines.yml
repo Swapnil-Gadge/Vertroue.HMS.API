@@ -1,0 +1,11 @@
+trigger:
+- master
+
+variables:
+  buildConfiguration: 'Release'
+  buildPlatform: 'any cpu'
+
+stages:
+- stage: Build
+  jobs:
+  - template: Build/Build.yml
