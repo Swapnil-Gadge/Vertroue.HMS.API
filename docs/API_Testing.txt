@@ -1,0 +1,18 @@
+Billing
+https://localhost:7006/api/billing/pending-cases?corporateId=1&userId=123&userType=Admin&userRole=SuperUser
+https://localhost:7006/api/billing/1?userId=123&userType=Admin&userRole=SuperUser
+
+-- Masters
+https://localhost:7006/api/MasterData/zones
+https://localhost:7006/api/MasterData/states
+https://localhost:7006/api/MasterData/cities
+
+Corporate 
+https://localhost:7006/api/corporate/parent?userId=123&userType=Admin&userRole=SuperUser
+https://localhost:7006/api/corporate/details?parentCorporateId=1&corporateId=1&userId=123&userType=Admin&userRole=SuperUser
+https://localhost:7006/api/corporate/list?parentCorporateId=1&userId=123&userType=Admin&userRole=SuperUser
+
+
+
+
+
