@@ -1,4 +1,4 @@
-﻿namespace Vertroue.HMS.API.Application.Features.PaidCases.Models
+﻿namespace Vertroue.HMS.API.Application.Features.Billing.PaidCases.Models
 {
     public class PaidCaseDto
     {

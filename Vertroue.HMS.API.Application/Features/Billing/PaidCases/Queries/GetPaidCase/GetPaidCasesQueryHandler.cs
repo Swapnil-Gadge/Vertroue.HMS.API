@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vertroue.HMS.API.Application.Contracts.Persistence;
-using Vertroue.HMS.API.Application.Features.PaidCases.Models;
+using Vertroue.HMS.API.Application.Features.Billing.PaidCases.Models;
 
-namespace Vertroue.HMS.API.Application.Features.PaidCases.Queries.GetPaidCase
+namespace Vertroue.HMS.API.Application.Features.Billing.PaidCases.Queries.GetPaidCase
 {
     public class GetPaidCasesQueryHandler : IRequestHandler<GetPaidCasesQuery, List<PaidCaseDto>>
     {
-        private readonly IPaidCasesRepository _repository;
+        private readonly IBillingRepository _repository;
 
-        public GetPaidCasesQueryHandler(IPaidCasesRepository repository)
+        public GetPaidCasesQueryHandler(IBillingRepository repository)
         {
             _repository = repository;
         }

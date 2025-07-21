@@ -25,8 +25,8 @@ namespace Vertroue.HMS.API.Persistence
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserMasterRepository, UserMasterRepository>();
             services.AddScoped<IDashBoardRepository, DashBoardRepository>();
-            services.AddScoped<IPaidCasesRepository, PaidCasesRepository>();
-
+            services.AddScoped<IBillingRepository, BillingRepository>();
+            services.AddSingleton<IMasterDataRepository, MasterDataRepository>();
             return services;    
         }        
     }

@@ -1,0 +1,22 @@
+# Ignore all bin and obj folders in all projects
+**/bin/
+**/obj/
+
+# Ignore user-specific VS files
+*.user
+*.suo
+.vs/
+
+# Ignore build outputs
+*.dll
+*.exe
+*.pdb
+.vs/ProjectEvaluation/vertroue.hms.api.metadata.v7.bin
+.vs/ProjectEvaluation/vertroue.hms.api.projects.v7.bin
+.vs/Vertroue.HMS.API/DesignTimeBuild/.dtbcache.v2
+.vs/Vertroue.HMS.API/FileContentIndex/28866465-31f1-4fca-a86f-6e180fdd0a9c.vsidx
+.vs/Vertroue.HMS.API/FileContentIndex/3f1c0b1d-d398-44b9-b548-aa3d83761e86.vsidx
+.vs/Vertroue.HMS.API/FileContentIndex/5505994e-bfce-4fcd-80c1-398e8ce77f9a.vsidx
+.vs/Vertroue.HMS.API/FileContentIndex/71b1e408-e02f-4b87-b01d-d689bc7755db.vsidx
+.vs/Vertroue.HMS.API/FileContentIndex/b55efd9e-3cbe-49a0-9bd0-e3d898b44f58.vsidx
+.vs/Vertroue.HMS.API/v17/.suo
