@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.List.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Commands;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Queries;
@@ -43,6 +44,13 @@ public class CorporateController : ControllerBase
     public async Task<IActionResult> GetCorporateList([FromQuery] int parentCorporateId,  [FromQuery] int userId, [FromQuery] string userType, [FromQuery] string userRole)
     {
         var query = new FetchCorporateListQuery(parentCorporateId, userId, userType, userRole);
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet("corporateUsers")]
+    public async Task<IActionResult> GetCorporateUsers([FromQuery] FetchCorporateUsersQuery query)
+    {
         var result = await _mediator.Send(query);
         return Ok(result);
     }

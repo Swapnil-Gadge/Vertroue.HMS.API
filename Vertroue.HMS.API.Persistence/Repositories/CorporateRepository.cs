@@ -4,6 +4,8 @@ using System.Data;
 using Vertroue.HMS.API.Application.Contracts.Persistence;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.List.Models;
 using Vertroue.HMS.API.Application.Features.Corporate.List.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Commands;
@@ -324,6 +326,49 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             }
 
             return response;
+        }
+
+        public async Task<List<CorporateUserDto>> FetchCorporateUsersAsync(FetchCorporateUsersQuery request)
+        {
+            var result = new List<CorporateUserDto>();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using (var conn = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand("FetchCorporateUsers", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserId", request.UserId);
+                cmd.Parameters.AddWithValue("@UserType", request.UserType);
+                cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+                cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+                await conn.OpenAsync();
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        result.Add(new CorporateUserDto
+                        {
+                            ContactPersonId = reader.GetInt32(reader.GetOrdinal("Contact_Person_id")),
+                            CorporateId = reader.GetInt32(reader.GetOrdinal("Corporate_Id")),
+                            Salutation = reader.IsDBNull(reader.GetOrdinal("Contact_Person_Salutation")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_Salutation")),
+                            FirstName = reader.IsDBNull(reader.GetOrdinal("Contact_Person_FirstName")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_FirstName")),
+                            MiddleName = reader.IsDBNull(reader.GetOrdinal("Contact_Person_MiddleName")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_MiddleName")),
+                            LastName = reader.IsDBNull(reader.GetOrdinal("Contact_Person_LastName")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_LastName")),
+                            Mobile = reader.IsDBNull(reader.GetOrdinal("Contact_Person_Mobile")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_Mobile")),
+                            Email = reader.IsDBNull(reader.GetOrdinal("Contact_Person_Email")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_Email")),
+                            UserRole = reader.IsDBNull(reader.GetOrdinal("User_role")) ? null : reader.GetString(reader.GetOrdinal("User_role")),
+                            ActiveFlag = !reader.IsDBNull(reader.GetOrdinal("Active_Flag")) ? null : reader.GetString(reader.GetOrdinal("Active_Flag")),
+                            CreatedDate = reader.IsDBNull(reader.GetOrdinal("Created_date")) ? null: reader.GetString(reader.GetOrdinal("Created_date")),
+                            CreatedBy = reader.IsDBNull(reader.GetOrdinal("Created_By")) ? null : reader.GetString(reader.GetOrdinal("Created_By"))
+                        });
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }
