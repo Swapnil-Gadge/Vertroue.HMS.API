@@ -3,6 +3,8 @@ using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.Modify;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurerRates.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.AddCorporateUser;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.ModifyCorporateUser;
@@ -30,5 +32,6 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<string> AddCorporateInsurerAsync(AddCorporateInsurerCommand command);
         Task<string> DeactivateCorporateInsurerAsync(int corporateInsurerId, int corporateId, int userId, string userType, string userRole);
         Task<string> AddCorporateInsurerRateAsync(AddCorporateInsurerRateCommand command);
+        Task<List<CorporateMouDto>> FetchCorporateMOUAsync(int corporateId, int userId, string userType, string userRole);
     }
 }

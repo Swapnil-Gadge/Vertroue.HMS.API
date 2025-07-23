@@ -8,6 +8,8 @@ using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurerRates.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.AddCorporateUser;
@@ -658,6 +660,52 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             await conn.OpenAsync();
             var result = await cmd.ExecuteScalarAsync();
             return result?.ToString() ?? "Insert failed";
+        }
+
+        public async Task<List<CorporateMouDto>> FetchCorporateMOUAsync(int corporateId, int userId, string userType, string userRole)
+        {
+            var response = new List<CorporateMouDto>();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("FetchCorporate_MOU", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@UserType", userType);
+            cmd.Parameters.AddWithValue("@UserRole", userRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", corporateId);
+
+            await conn.OpenAsync();
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                response.Add(new CorporateMouDto
+                {
+                    Tbl_Id = reader.GetInt32(reader.GetOrdinal("tbl_id")),
+                    CorporateMOUId = reader.GetInt32(reader.GetOrdinal("Corporate_MOU_id")),
+                    CorporateId = reader.GetInt32(reader.GetOrdinal("Corporate_id")),
+                    ActiveFromDate = DateTime.TryParse(reader["MOU_Active_from_date"]?.ToString(), out var fromDate)
+                                ? fromDate : (DateTime?)null,
+                    ActiveToDate = DateTime.TryParse(reader["MOU_Active_to_date"]?.ToString(), out var toDate)
+                                ? toDate : (DateTime?)null,
+                    DocumentName = reader["MOU_document_Name"]?.ToString(),
+                    DocumentLink = reader["MOU_document_Link"]?.ToString(),
+                    Remarks = reader["MOU_document_Remarks"]?.ToString(),
+                    ActiveFlag = reader["Active_Flag"]?.ToString(),
+                    CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var createdDate)
+                                ? createdDate : (DateTime?)null,
+                    CreatedBy = reader["Created_By"]?.ToString(),
+                    ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modifiedDate)
+                                ? modifiedDate : (DateTime?)null,
+                    ModifiedBy = reader["Modifed_By"]?.ToString()
+                });
+            }
+
+            return response;
         }
     }
 }
