@@ -2,8 +2,16 @@
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using Vertroue.HMS.API.Application.Contracts.Persistence;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.Add;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.AddInsurerRates;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.Modify;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurerRates.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.AddCorporateUser;
+using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.ModifyCorporateUser;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.List.Models;
@@ -361,7 +369,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
                             Email = reader.IsDBNull(reader.GetOrdinal("Contact_Person_Email")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_Email")),
                             UserRole = reader.IsDBNull(reader.GetOrdinal("User_role")) ? null : reader.GetString(reader.GetOrdinal("User_role")),
                             ActiveFlag = !reader.IsDBNull(reader.GetOrdinal("Active_Flag")) ? null : reader.GetString(reader.GetOrdinal("Active_Flag")),
-                            CreatedDate = reader.IsDBNull(reader.GetOrdinal("Created_date")) ? null: reader.GetString(reader.GetOrdinal("Created_date")),
+                            CreatedDate = reader.IsDBNull(reader.GetOrdinal("Created_date")) ? null : reader.GetString(reader.GetOrdinal("Created_date")),
                             CreatedBy = reader.IsDBNull(reader.GetOrdinal("Created_By")) ? null : reader.GetString(reader.GetOrdinal("Created_By"))
                         });
                     }
@@ -369,6 +377,287 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             }
 
             return result;
+        }
+
+        public async Task<string> AddCorporateUserAsync(AddCorporateUserCommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            string message = "";
+
+            using (var conn = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand("Insert_Corporate_users", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserId", request.UserId);
+                cmd.Parameters.AddWithValue("@UserType", request.UserType);
+                cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+                cmd.Parameters.AddWithValue("@Contact_Person_FirstName", request.FirstName);
+                cmd.Parameters.AddWithValue("@Contact_Person_MiddleName", request.MiddleName);
+                cmd.Parameters.AddWithValue("@Contact_Person_LastName", request.LastName);
+                cmd.Parameters.AddWithValue("@Contact_Person_Mobile", request.MobileNo);
+                cmd.Parameters.AddWithValue("@Contact_Person_Email", request.EmailId);
+                cmd.Parameters.AddWithValue("@User_Role_id", request.UserRoleId);
+                cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+                await conn.OpenAsync();
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        message = reader.GetString(0);
+                    }
+                }
+            }
+
+            return message;
+        }
+
+        public async Task<string> ModifyCorporateUserAsync(ModifyCorporateUserCommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            string message = "";
+
+            using (var conn = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand("Update_Corporate_Users", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserId", request.UserId);
+                cmd.Parameters.AddWithValue("@UserType", request.UserType);
+                cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+                cmd.Parameters.AddWithValue("@Contact_Person_FirstName", request.FirstName);
+                cmd.Parameters.AddWithValue("@Contact_Person_MiddleName", request.MiddleName);
+                cmd.Parameters.AddWithValue("@Contact_Person_LastName", request.LastName);
+                cmd.Parameters.AddWithValue("@Contact_Person_Mobile", request.MobileNo);
+                cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+                cmd.Parameters.AddWithValue("@Contact_Person_id", request.ContactPersonId);
+
+                await conn.OpenAsync();
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        message = reader.GetString(0);
+                    }
+                }
+            }
+
+            return message;
+        }
+
+        public async Task<string> DeactivateCorporateUserAsync(DeactivateCorporateUserCommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            string message = "";
+
+            using (var conn = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand("Deactivate_Corporate_Users", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserId", request.UserId);
+                cmd.Parameters.AddWithValue("@UserType", request.UserType);
+                cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+                cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+                cmd.Parameters.AddWithValue("@Contact_Person_id", request.ContactPersonId);
+
+                await conn.OpenAsync();
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        message = reader.GetString(0);
+                    }
+                }
+            }
+
+            return message;
+        }
+
+        public async Task<FetchCorporateInsurerResponse> FetchCorporateInsurersAsync(int corporateId, int userId, string userType, string userRole)
+        {
+            var result = new FetchCorporateInsurerResponse();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("FetchCorporateInsurer", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@UserType", userType);
+            cmd.Parameters.AddWithValue("@UserRole", userRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", corporateId);
+
+            await conn.OpenAsync();
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.CorporateInsurers.Add(new CorporateInsurerDto
+                {
+                    CorporateInsurerId = reader.GetInt32(reader.GetOrdinal("Corporate_Insurer_id")),
+                    CorporateId = reader.GetInt32(reader.GetOrdinal("Corporate_Id")),
+                    InsurerName = reader["Insurer_Name"]?.ToString(),
+                    EmpanneledDate = DateTime.TryParse(reader["Empanneled_date"]?.ToString(), out var empDate) ? empDate : (DateTime?)null,
+                    PortalLink = reader["Portal_Link"]?.ToString(),
+                    PortalUserId = reader["Portal_UserId"]?.ToString(),
+                    PortalPassword = reader["Portal_Password"]?.ToString(),
+                    ActiveFlag = reader["Active_Flag"]?.ToString(),
+                    CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var createdDate) ? createdDate : (DateTime?)null,
+                    CreatedBy = reader["Created_By"]?.ToString(),
+                    ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modDate) ? modDate : (DateTime?)null,
+                    ModifiedBy = reader["Modifed_By"]?.ToString()
+                });
+            }
+
+            if (await reader.NextResultAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    result.InsurerMasterList.Add(new InsurerMasterDto
+                    {
+                        InsurerId = reader.GetInt32(reader.GetOrdinal("Insurer_id")),
+                        InsurerName = reader["Insurer_Name"]?.ToString(),
+                        InsurerCode = reader["Insurer_Code"]?.ToString(),
+                        ActiveFlag = reader["Active_Flag"]?.ToString(),
+                        CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var createdDate) ? createdDate : (DateTime?)null,
+                        CreatedBy = reader["Created_By"]?.ToString(),
+                        ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modDate) ? modDate : (DateTime?)null,
+                        ModifiedBy = reader["Modifed_By"]?.ToString()
+                    });
+                }
+            }
+
+            return result;
+        }
+        public async Task<List<CorporateInsurerRateDto>> FetchCorporateInsurerRatesAsync(int corporateInsurerId, int corporateId, int userId, string userType, string userRole)
+        {
+            var result = new List<CorporateInsurerRateDto>();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using (var conn = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand("FetchCorporateInsurer_Rates", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@UserType", userType);
+                cmd.Parameters.AddWithValue("@UserRole", userRole);
+                cmd.Parameters.AddWithValue("@Corporate_Insurer_id", corporateInsurerId);
+                cmd.Parameters.AddWithValue("@Corporate_id", corporateId);
+
+                await conn.OpenAsync();
+
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        result.Add(new CorporateInsurerRateDto
+                        {
+                            CorporateInsurerRatesId = reader.GetInt32(reader.GetOrdinal("Corporate_Insurer_Rates_id")),
+                            CorporateInsurerId = reader.GetInt32(reader.GetOrdinal("Corporate_Insurer_id")),
+                            RateListDocument = reader["Rate_List_document"]?.ToString(),
+                            RateRemarks = reader["Rate_remarks"]?.ToString(),
+                            ActiveFlag = reader["Active_Flag"]?.ToString(),
+
+                            RateActiveFromDate = DateTime.TryParse(reader["Rate_Active_from_date"]?.ToString(), out var fromDate)
+                                ? fromDate : (DateTime?)null,
+
+                            RateActiveToDate = DateTime.TryParse(reader["Rate_Active_to_date"]?.ToString(), out var toDate)
+                                ? toDate : (DateTime?)null,
+
+                            CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var createdDate)
+                                ? createdDate : (DateTime?)null,
+
+                            ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modifiedDate)
+                                ? modifiedDate : (DateTime?)null,
+                            ModifiedBy = reader["Modifed_By"]?.ToString(),
+                            CreatedBy = reader["Created_By"]?.ToString()
+                        });
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public async Task<string> DeactivateCorporateInsurerAsync(int corporateInsurerId, int corporateId, int userId, string userType, string userRole)
+        {
+            using var conn = new SqlConnection(_config.GetConnectionString("CoreDbConnectionString"));
+            using var cmd = new SqlCommand("Deactivate_Corporate_Insurer", conn) { CommandType = CommandType.StoredProcedure };
+
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@UserType", userType);
+            cmd.Parameters.AddWithValue("@UserRole", userRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", corporateId);
+            cmd.Parameters.AddWithValue("@Corporate_Insurer_id", corporateInsurerId);
+
+            await conn.OpenAsync();
+            var result = await cmd.ExecuteScalarAsync();
+            return result?.ToString() ?? "No response";
+        }
+        public async Task<string> AddCorporateInsurerAsync(AddCorporateInsurerCommand command)
+        {
+            using var conn = new SqlConnection(_config.GetConnectionString("CoreDbConnectionString"));
+            using var cmd = new SqlCommand("Insert_Corporate_Insurer", conn) { CommandType = CommandType.StoredProcedure };
+
+            cmd.Parameters.AddWithValue("@UserId", command.UserId);
+            cmd.Parameters.AddWithValue("@UserType", command.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", command.UserRole);
+            cmd.Parameters.AddWithValue("@Insurer_id", command.InsurerId);
+            cmd.Parameters.AddWithValue("@Empanneled_date", command.EmpanneledDate);
+            cmd.Parameters.AddWithValue("@Portal_Link", command.PortalLink);
+            cmd.Parameters.AddWithValue("@Portal_UserId", command.PortalUserId);
+            cmd.Parameters.AddWithValue("@Portal_Password", command.PortalPassword);
+            cmd.Parameters.AddWithValue("@Corporate_id", command.CorporateId);
+
+            await conn.OpenAsync();
+            var result = await cmd.ExecuteScalarAsync();
+            return result?.ToString() ?? "No response";
+        }
+        public async Task<string> ModifyCorporateInsurerAsync(ModifyCorporateInsurerCommand command)
+        {
+            using var conn = new SqlConnection(_config.GetConnectionString("CoreDbConnectionString"));
+            using var cmd = new SqlCommand("Update_Corporate_Insurer", conn) { CommandType = CommandType.StoredProcedure };
+
+            cmd.Parameters.AddWithValue("@UserId", command.UserId);
+            cmd.Parameters.AddWithValue("@UserType", command.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", command.UserRole);
+            cmd.Parameters.AddWithValue("@Insurer_id", command.CorporateInsurerId);
+            cmd.Parameters.AddWithValue("@Empanneled_date", command.EmpanneledDate);
+            cmd.Parameters.AddWithValue("@Portal_Link", command.PortalLink);
+            cmd.Parameters.AddWithValue("@Portal_UserId", command.PortalUserId);
+            cmd.Parameters.AddWithValue("@Portal_Password", command.PortalPassword);
+            cmd.Parameters.AddWithValue("@Corporate_id", command.CorporateId);
+
+            await conn.OpenAsync();
+            var result = await cmd.ExecuteScalarAsync();
+            return result?.ToString() ?? "No response";
+        }
+        public async Task<string> AddCorporateInsurerRateAsync(AddCorporateInsurerRateCommand command)
+        {
+            using var conn = new SqlConnection(_config.GetConnectionString("CoreDbConnectionString"));
+            using var cmd = new SqlCommand("Insert_Corporate_Insurer_Rates", conn) { CommandType = CommandType.StoredProcedure };
+
+            cmd.Parameters.AddWithValue("@UserId", command.UserId);
+            cmd.Parameters.AddWithValue("@UserType", command.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", command.UserRole);
+            cmd.Parameters.AddWithValue("@Corporate_Insurer_id", command.CorporateInsurerId);
+            cmd.Parameters.AddWithValue("@Corporate_id", command.CorporateId);
+            cmd.Parameters.AddWithValue("@Rate_Active_from_date", command.FromDate);
+            cmd.Parameters.AddWithValue("@Rate_Active_to_date", command.ToDate);
+            cmd.Parameters.AddWithValue("@Rate_List_document", command.RateListDocument);
+            cmd.Parameters.AddWithValue("@Rate_remarks", command.RateRemarks);
+
+            await conn.OpenAsync();
+            var result = await cmd.ExecuteScalarAsync();
+            return result?.ToString() ?? "Insert failed";
         }
     }
 }
