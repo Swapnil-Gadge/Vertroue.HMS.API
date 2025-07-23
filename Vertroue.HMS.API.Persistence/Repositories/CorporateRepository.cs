@@ -9,7 +9,6 @@ using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurerRates.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Model;
-using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.AddCorporateUser;
@@ -21,6 +20,16 @@ using Vertroue.HMS.API.Application.Features.Corporate.List.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Commands;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Model;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Commands;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.AddCorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.DeactivateCorporateTPACommand;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.InsertCorporateTPARates;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.ModifyCorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Model;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPARates;
 
 namespace Vertroue.HMS.API.Persistence.Repositories
 {
@@ -707,5 +716,292 @@ namespace Vertroue.HMS.API.Persistence.Repositories
 
             return response;
         }
+        public async Task<FetchCorporateRenewalsResponse> FetchCorporateRenewalsAsync(int corporateId, int userId, string userType, string userRole)
+        {
+            var response = new FetchCorporateRenewalsResponse();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("FetchCorporateRenewals", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@UserType", userType);
+            cmd.Parameters.AddWithValue("@UserRole", userRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", corporateId);
+
+            await conn.OpenAsync();
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            // First ResultSet - Renewals
+            while (await reader.ReadAsync())
+            {
+                response.Renewals.Add(new CorporateRenewalDto
+                {
+                    CorporateServiceRenewalId = reader.GetInt32(reader.GetOrdinal("Corporate_Service_Renewal_id")),
+                    CorporateId = reader.GetInt32(reader.GetOrdinal("Corporate_Id")),
+                    ServiceRenewalName = reader["Service_Renewal_Name"]?.ToString(),
+                    ServiceDesc = reader["Service_Desc"]?.ToString(),
+                    RenewalDate = DateTime.TryParse(reader["Renewal_date"]?.ToString(), out var renewalDate)
+            ? renewalDate : (DateTime?)null,
+                    ExpireDate = DateTime.TryParse(reader["Expire_date"]?.ToString(), out var expireDate)
+            ? expireDate : (DateTime?)null,
+                    RenewalFlag = reader["Renewal_Flag"]?.ToString(),
+                    ActiveFlag = reader["Active_Flag"]?.ToString(),
+                    CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var createdDate)
+            ? createdDate : (DateTime?)null,
+                    CreatedBy = reader["Created_By"]?.ToString(),
+                    ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modifiedDate)
+            ? modifiedDate : (DateTime?)null,
+                    ModifiedBy = reader["Modifed_By"]?.ToString() 
+                });
+            }
+
+            if (await reader.NextResultAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    response.RenewalDetails.Add(new CorporateRenewalDetailsDto
+                    {
+                        Service_Renewal_id = reader.GetInt32(reader.GetOrdinal("Service_Renewal_id")),
+                        Service_Renewal_Name = reader["Service_Renewal_Name"]?.ToString(),
+                        Service_Renewal_Desc = reader["Service_Renewal_Desc"]?.ToString(),
+                        Active_Flag = reader["Active_Flag"]?.ToString(),
+                        Created_date = DateTime.TryParse(reader["Created_date"]?.ToString(), out var createdDate) ? createdDate : (DateTime?)null,
+                        Created_By = reader["Created_By"]?.ToString(),
+                        Modifed_date = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modifiedDate) ? modifiedDate : (DateTime?)null,
+                        Modifed_By = reader["Modifed_By"]?.ToString()
+                    });
+                }
+            }
+
+            return response;
+        }
+
+        public async Task<string> AddCorporateRenewalAsync(AddCorporateRenewalCommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("Insert_Corporate_Service_Renewals", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Service_Renewal_id", request.ServiceRenewalId);
+            cmd.Parameters.AddWithValue("@Service_Desc", request.ServiceDesc);
+            cmd.Parameters.AddWithValue("@Renewal_date", request.RenewalDate);
+            cmd.Parameters.AddWithValue("@Expire_date", request.ExpireDate);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+            await conn.OpenAsync();
+            var result = await cmd.ExecuteScalarAsync(); // Use ExecuteNonQueryAsync if SP doesn't return scalar
+            return result?.ToString() ?? "Success";
+        }
+
+        public async Task<FetchCorporateTPAResponse> FetchCorporateTPAAsync(FetchCorporateTPAQuery request)
+        {
+            var result = new FetchCorporateTPAResponse();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("FetchCorporateTPA", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+            await conn.OpenAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.CorporateTPAs.Add(new CorporateTPADetailsDto
+                {
+                    CorporateTPAId = reader.GetInt32(reader.GetOrdinal("Corporate_TPA_id")),
+                    CorporateId = reader.GetInt32(reader.GetOrdinal("Corporate_Id")),
+                    TPAName = reader["TPA_Name"]?.ToString(),
+                    EmpanneledDate = DateTime.TryParse(reader["Empanneled_date"]?.ToString(), out var empDate) ? empDate : (DateTime?)null,
+                    PortalLink = reader["Portal_Link"]?.ToString(),
+                    PortalUserId = reader["Portal_UserId"]?.ToString(),
+                    PortalPassword = reader["Portal_Password"]?.ToString(),
+                    ActiveFlag = reader["Active_Flag"]?.ToString(),
+                    CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var created) ? created : (DateTime?)null,
+                    CreatedBy = reader["Created_By"]?.ToString(),
+                    ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var mod) ? mod : (DateTime?)null,
+                    ModifiedBy = reader["Modifed_By"]?.ToString()
+                });
+            }
+
+            if (await reader.NextResultAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    result.TPAMasterList.Add(new TPAMasterDto
+                    {
+                        TPAId = reader.GetInt32(reader.GetOrdinal("TPA_Id")),
+                        TPName = reader["TP_Name"]?.ToString(),
+                        LicenseNumber = reader["License_Number"]?.ToString(),
+                        LicenseValidity = DateTime.TryParse(reader["License_Validity"]?.ToString(), out var licVal) ? licVal : (DateTime?)null,
+                        ChiefExecutiveOfficer = reader["Chief_Executive_Officer"]?.ToString(),
+                        TPAAddress = reader["TPA_Address"]?.ToString(),
+                        SeniorCitizenHelpline = reader["Senior_Citizen_Helpline"]?.ToString(),
+                        TollFreeNumber = reader["Toll_Free_Number"]?.ToString(),
+                        TPAEmail = reader["TPA_Email"]?.ToString(),
+                        TPAWebsite = reader["TPA_Website"]?.ToString(),
+                        ActiveFlag = reader["Active_Flag"]?.ToString(),
+                        CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var created) ? created : (DateTime?)null,
+                        CreatedBy = reader["Created_By"]?.ToString(),
+                        ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var mod) ? mod : (DateTime?)null,
+                        ModifiedBy = reader["Modifed_By"]?.ToString()
+                    });
+                }
+            }
+
+            return result;
+        }
+        public async Task<List<CorporateTPARateDto>> FetchCorporateTPARatesAsync(FetchCorporateTPARatesQuery request)
+        {
+            var rates = new List<CorporateTPARateDto>();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("FetchCorporateTPA_Rates", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Corporate_TPA_id", request.CorporateTPAId);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+            await conn.OpenAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                rates.Add(new CorporateTPARateDto
+                {
+                    CorporateTPARatesId = reader.GetInt32(reader.GetOrdinal("Corporate_TPA_Rates_id")),
+                    CorporateTPAId = reader.GetInt32(reader.GetOrdinal("Corporate_TPA_id")),
+                    RateActiveFromDate = DateTime.TryParse(reader["Rate_Active_from_date"]?.ToString(), out var from) ? from : (DateTime?)null,
+                    RateActiveToDate = DateTime.TryParse(reader["Rate_Active_to_date"]?.ToString(), out var to) ? to : (DateTime?)null,
+                    RateListDocument = reader["Rate_List_document"]?.ToString(),
+                    RateRemarks = reader["Rate_remarks"]?.ToString(),
+                    ActiveFlag = reader["Active_Flag"]?.ToString(),
+                    CreatedDate = DateTime.TryParse(reader["Created_date"]?.ToString(), out var created) ? created : (DateTime?)null,
+                    CreatedBy = reader["Created_By"]?.ToString(),
+                    ModifiedDate = DateTime.TryParse(reader["Modifed_date"]?.ToString(), out var modified) ? modified : (DateTime?)null,
+                    ModifiedBy = reader["Modifed_By"]?.ToString()
+                });
+            }
+
+            return rates;
+        }
+
+        public async Task<string> AddCorporateTPAAsync(AddCorporateTPACommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("Insert_Corporate_TPA", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@TPA_id", request.TPAId);
+            cmd.Parameters.AddWithValue("@Empanneled_date", request.EmpanneledDate);
+            cmd.Parameters.AddWithValue("@Portal_Link", request.PortalLink);
+            cmd.Parameters.AddWithValue("@Portal_UserId", request.PortalUserId);
+            cmd.Parameters.AddWithValue("@Portal_Password", request.PortalPassword);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+            return "Corporate TPA added successfully.";
+        }
+
+        public async Task<string> ModifyCorporateTPAAsync(ModifyCorporateTPACommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("Update_Corporate_TPA", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Empanneled_date", request.EmpanneledDate);
+            cmd.Parameters.AddWithValue("@Portal_Link", request.PortalLink);
+            cmd.Parameters.AddWithValue("@Portal_UserId", request.PortalUserId);
+            cmd.Parameters.AddWithValue("@Portal_Password", request.PortalPassword);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+            cmd.Parameters.AddWithValue("@Corporate_TPA_id", request.CorporateTPAId);
+
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+            return "Corporate TPA modified successfully.";
+        }
+
+        public async Task<string> DeactivateCorporateTPAAsync(DeactivateCorporateTPACommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("Deactivate_Corporate_TPA", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+            cmd.Parameters.AddWithValue("@Corporate_TPA_id", request.CorporateTPAId);
+
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+            return "Corporate TPA deactivated successfully.";
+        }
+
+        public async Task<string> InsertCorporateTPARatesAsync(InsertCorporateTPARatesCommand request)
+        {
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("Insert_Corporate_TPA_Rates", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Corporate_TPA_id", request.CorporateTPAId);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+            cmd.Parameters.AddWithValue("@Rate_Active_from_date", request.RateFromDate);
+            cmd.Parameters.AddWithValue("@Rate_Active_to_date", request.RateToDate);
+            cmd.Parameters.AddWithValue("@Rate_List_document", request.DocumentLink);
+            cmd.Parameters.AddWithValue("@Rate_remarks", request.RateRemarks);
+
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+            return "Corporate TPA rates added successfully.";
+        }
+
     }
 }

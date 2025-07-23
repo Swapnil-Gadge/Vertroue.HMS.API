@@ -13,6 +13,14 @@ using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.List.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Commands;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Commands;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.AddCorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.DeactivateCorporateTPACommand;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.InsertCorporateTPARates;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.ModifyCorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPARates;
 
 namespace Vertroue.HMS.API.Application.Contracts.Persistence
 {
@@ -33,5 +41,13 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<string> DeactivateCorporateInsurerAsync(int corporateInsurerId, int corporateId, int userId, string userType, string userRole);
         Task<string> AddCorporateInsurerRateAsync(AddCorporateInsurerRateCommand command);
         Task<List<CorporateMouDto>> FetchCorporateMOUAsync(int corporateId, int userId, string userType, string userRole);
+        Task<FetchCorporateRenewalsResponse> FetchCorporateRenewalsAsync(int corporateId, int userId, string userType, string userRole);
+        Task<string> AddCorporateRenewalAsync(AddCorporateRenewalCommand request);
+        Task<FetchCorporateTPAResponse> FetchCorporateTPAAsync(FetchCorporateTPAQuery request);
+        Task<List<CorporateTPARateDto>> FetchCorporateTPARatesAsync(FetchCorporateTPARatesQuery request);
+        Task<string> AddCorporateTPAAsync(AddCorporateTPACommand command);
+        Task<string> ModifyCorporateTPAAsync(ModifyCorporateTPACommand command);
+        Task<string> DeactivateCorporateTPAAsync(DeactivateCorporateTPACommand command);
+        Task<string> InsertCorporateTPARatesAsync(InsertCorporateTPARatesCommand command);
     }
 }
