@@ -6,6 +6,7 @@ using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.Modify;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurerRates.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.CorporateMou.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Details.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.AddCorporateUser;
 using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Commands.ModifyCorporateUser;
@@ -120,5 +121,20 @@ public class CorporateController : ControllerBase
     [HttpPost("corporateInsurerAddRates")]
     public async Task<IActionResult> AddRates([FromBody] AddCorporateInsurerRateCommand command)
         => Ok(await _mediator.Send(command));
+
+    [HttpGet("corporate-mou")]
+    public async Task<IActionResult> FetchMOU([FromQuery] int corporateInsurerId,
+    [FromQuery] int corporateId,
+    [FromQuery] int userId,
+    [FromQuery] string userType,
+    [FromQuery] string userRole)
+    {
+        var result = await _mediator.Send(new FetchCorporateMOUQuery(
+            corporateId,
+            userId,
+            userType,
+            userRole));
+        return Ok(result);
+    }
 
 }

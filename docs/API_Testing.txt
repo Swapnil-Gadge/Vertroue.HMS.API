@@ -14,6 +14,9 @@ https://localhost:7006/api/corporate/list?parentCorporateId=1&userId=123&userTyp
 https://localhost:7006/api/corporate/corporateUsers?corporateId=1&userId=1&userType=Admin&userRole=SuperUser
 https://localhost:7006/api/corporate/rates?corporateInsurerId=1&corporateId=1&userId=1&userType=Admin&userRole=SuperUser
 https://localhost:7006/api/corporate/corporateInsurers?corporateId=1&userId=1&userType=1&userRole=1
+https://localhost:7006/api/corporate/corporate-mou?corporateId=1&userId=1&userType=1&userRole=1
+
+
 
 
 
