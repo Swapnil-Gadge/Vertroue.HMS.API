@@ -14,6 +14,14 @@ using Vertroue.HMS.API.Application.Features.Corporate.HospitalUsers.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.List.Queries;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Commands;
 using Vertroue.HMS.API.Application.Features.Corporate.Onboarding.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Commands;
+using Vertroue.HMS.API.Application.Features.Corporate.Renewal.Queries;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.AddCorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.DeactivateCorporateTPACommand;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.InsertCorporateTPARates;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Commands.ModifyCorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPA;
+using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPARates;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -135,6 +143,63 @@ public class CorporateController : ControllerBase
             userType,
             userRole));
         return Ok(result);
+    }
+
+    [HttpGet("corporateRenewals")]
+    public async Task<IActionResult> GetCorporateRenewals([FromQuery] int corporateId, [FromQuery] int userId, [FromQuery] string userType, [FromQuery] string userRole)
+    {
+        var query = new FetchCorporateRenewalsQuery(corporateId, userId, userType, userRole);
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost("corporate-renewal/add")]
+    public async Task<IActionResult> AddCorporateRenewal(AddCorporateRenewalCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { message = result });
+    }
+
+    [HttpGet("corporate-tpa")]
+    public async Task<IActionResult> GetCorporateTPA([FromQuery] FetchCorporateTPAQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet("corporate-tpa/rates")]
+    public async Task<IActionResult> GetCorporateTPARates([FromQuery] FetchCorporateTPARatesQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost("AddCorporatTPA")]
+    public async Task<IActionResult> AddCorporateTPA(AddCorporateTPACommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { message = result });
+    }
+
+    [HttpPut("ModifyCorporatTPA")]
+    public async Task<IActionResult> ModifyCorporateTPA(ModifyCorporateTPACommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { message = result });
+    }
+
+    [HttpPost("DeactivateCorporatTPA")]
+    public async Task<IActionResult> DeactivateCorporateTPA(DeactivateCorporateTPACommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { message = result });
+    }
+
+    [HttpPost("AddCorporatTPARates")]
+    public async Task<IActionResult> AddCorporateTPARates(InsertCorporateTPARatesCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(new { message = result });
     }
 
 }
