@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Vertroue.HMS.API.Domain\Vertroue.HMS.API.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\MasterData\AdmissionType\Queries\GetAll\" />
+  </ItemGroup>
+
 </Project>
