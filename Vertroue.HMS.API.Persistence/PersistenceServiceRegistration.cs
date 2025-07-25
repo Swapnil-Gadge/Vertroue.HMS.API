@@ -1,7 +1,4 @@
-﻿using Azure.Core;
-using Azure.Identity;
-
-using Vertroue.HMS.API.Application.Contracts.Persistence;
+﻿using Vertroue.HMS.API.Application.Contracts.Persistence;
 using Vertroue.HMS.API.Persistence.Repositories;
 
 using Microsoft.Data.SqlClient;
@@ -28,6 +25,7 @@ namespace Vertroue.HMS.API.Persistence
             services.AddScoped<IBillingRepository, BillingRepository>();
             services.AddSingleton<IMasterDataRepository, MasterDataRepository>();
             services.AddScoped<ICorporateRepository, CorporateRepository>();
+            services.AddScoped<IQMSDataRepository, QMSDataRepository>();
             return services;    
         }        
     }
