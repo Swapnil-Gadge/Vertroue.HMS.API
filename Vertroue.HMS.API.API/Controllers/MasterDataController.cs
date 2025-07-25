@@ -99,6 +99,7 @@ namespace Vertroue.HMS.API.API.Controllers
         //}
 
 
+        #region Corporate Type Endpoints
         [HttpPost("addCorporateType")]
         public async Task<IActionResult> AddCorporateType(AddCorporateTypeMasterCommand command)
             => Ok(await _mediator.Send(command));
@@ -114,7 +115,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allCorporateType")]
         public async Task<IActionResult> GetAllCorporateType()
             => Ok(await _mediator.Send(new FetchCorporateTypeMasterQuery()));
+        #endregion
 
+        #region Admission Type Endpoints
         [HttpPost("addAdmissionType")]
         public async Task<IActionResult> AddAdmissionType(AddAdmissionTypeCommand command)
             => Ok(await _mediator.Send(command));
@@ -130,7 +133,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allAdmissionType")]
         public async Task<IActionResult> GetAllAdmissionType()
             => Ok(await _mediator.Send(new GetAllAdmissionTypesQuery()));
+        #endregion
 
+        #region City Endpoints
         [HttpPost("addCities")]
         public async Task<IActionResult> AddCities(AddCityCommand command)
             => Ok(await _mediator.Send(command));
@@ -146,7 +151,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allCities")]
         public async Task<IActionResult> GetAllCities()
             => Ok(await _mediator.Send(new FetchCityMasterQuery()));
+        #endregion
 
+        #region Corporate Plan Endpoints
         [HttpPost("addCorporatePlan")]
         public async Task<IActionResult> AddCorporatePlan(AddCorporatePlanCommand command)
             => Ok(await _mediator.Send(command));
@@ -162,7 +169,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allCorporatePlan")]
         public async Task<IActionResult> GetAllCorporatePlan()
             => Ok(await _mediator.Send(new GetAllCorporatePlansQuery()));
+        #endregion
 
+        #region Corporate Service Renewal Endpoints
         [HttpPost("addCorporateServiceRenewal")]
         public async Task<IActionResult> AddCorporateServiceRenewal(AddServiceRenewalCommand command)
             => Ok(await _mediator.Send(command));
@@ -178,7 +187,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allCorporateServiceRenewal")]
         public async Task<IActionResult> GetAllCorporateServiceRenewal()
             => Ok(await _mediator.Send(new GetAllServiceRenewalsQuery()));
+        #endregion
 
+        #region Document Type Endpoints
         [HttpPost("addDocumentType")]
         public async Task<IActionResult> Add(AddDocumentTypeCommand cmd) => Ok(await _mediator.Send(cmd));
 
@@ -190,7 +201,9 @@ namespace Vertroue.HMS.API.API.Controllers
 
         [HttpGet("allDocumentType")]
         public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetAllDocumentTypesQuery()));
+        #endregion
 
+        #region Gender Endpoints
         [HttpPost("addGender")]
         public async Task<IActionResult> Add(AddGenderCommand cmd) => Ok(await _mediator.Send(cmd));
 
@@ -202,7 +215,9 @@ namespace Vertroue.HMS.API.API.Controllers
 
         [HttpGet("allGender")]
         public async Task<IActionResult> GetAllGender() => Ok(await _mediator.Send(new GetAllGendersQuery()));
+        #endregion
 
+        #region Identification Type Endpoints
         [HttpPost("addIdentificationType")]
         public async Task<IActionResult> AddIdentificationType(AddIdentificationTypeCommand command) =>
         Ok(await _mediator.Send(command));
@@ -218,7 +233,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allIdentificationType")]
         public async Task<IActionResult> GetAllIdentificationType() =>
             Ok(await _mediator.Send(new GetAllIdentificationTypesQuery()));
+        #endregion
 
+        #region Insurer Endpoints
         [HttpPost("addInsurer")]
         public async Task<IActionResult> AddInsurer([FromBody] AddInsurerCommand command)
         {
@@ -246,6 +263,9 @@ namespace Vertroue.HMS.API.API.Controllers
             var result = await _mediator.Send(new GetAllInsurersQuery());
             return Ok(result);
         }
+        #endregion
+
+        #region Relation Master Endpoints
         [HttpPost("addRelationMaster")]
         public async Task<IActionResult> Add(AddRelationMasterCommand command) =>
        Ok(await _mediator.Send(command));
@@ -261,7 +281,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allRelationMaster")]
         public async Task<IActionResult> Get() =>
             Ok(await _mediator.Send(new GetRelationMasterQuery()));
+        #endregion
 
+        #region State Endpoints
         [HttpPost("addStates")]
         public async Task<IActionResult> Add(AddStateCommand command)
         => Ok(await _mediator.Send(command));
@@ -277,7 +299,9 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allStates")]
         public async Task<IActionResult> GetAllStates()
             => Ok(await _mediator.Send(new GetAllStatesQuery()));
+        #endregion
 
+        #region Status Master Endpoints
         [HttpPost("addStatusMaster")]
         public async Task<IActionResult> Add([FromBody] AddStatusMasterCommand command)
         {
@@ -305,6 +329,9 @@ namespace Vertroue.HMS.API.API.Controllers
             var result = await _mediator.Send(new GetAllStatusMasterQuery { UserId = userId });
             return Ok(result);
         }
+        #endregion
+
+        #region Status Process Flow Endpoints
         [HttpPost("addStatusProcessFlow")]
         public async Task<IActionResult> Add(AddStatusProcessFlowCommand command)
         {
@@ -328,7 +355,9 @@ namespace Vertroue.HMS.API.API.Controllers
         {
             return Ok(await _mediator.Send(new GetStatusProcessFlowQuery()));
         }
+        #endregion
 
+        #region User Role Endpoints
         [HttpPost("addUserRole")]
         public async Task<IActionResult> AddUserRole(AddUserRoleCommand command) => Ok(await _mediator.Send(command));
 
@@ -340,7 +369,9 @@ namespace Vertroue.HMS.API.API.Controllers
 
         [HttpGet("allUserRole")]
         public async Task<IActionResult> GetAllUserRole() => Ok(await _mediator.Send(new GetUserRolesQuery()));
+        #endregion
 
+        #region User Type Endpoints
         [HttpPost("addUserType")]
         public async Task<IActionResult> AddUserType(AddUserTypeCommand command) =>
         Ok(await _mediator.Send(command));
@@ -356,17 +387,16 @@ namespace Vertroue.HMS.API.API.Controllers
         [HttpGet("allUserType")]
         public async Task<IActionResult> GetAllUserType() =>
             Ok(await _mediator.Send(new GetAllUserTypesQuery()));
+        #endregion
 
-        
-        
-        
+        #region Zone Endpoints
         [HttpPut("updateZone")]
         public async Task<IActionResult> UpdateZone([FromBody] UpdateZoneCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        
+
         [HttpPut("deactivateZone")]
         public async Task<IActionResult> DeactivateZone([FromBody] DeactivateZoneCommand command)
         {
@@ -387,5 +417,6 @@ namespace Vertroue.HMS.API.API.Controllers
             var result = await _mediator.Send(new GetAllZonesQuery());
             return Ok(result);
         }
+        #endregion
     }
 }
