@@ -3,9 +3,9 @@ https://localhost:7006/api/billing/pending-cases?corporateId=1&userId=123&userTy
 https://localhost:7006/api/billing/1?userId=123&userType=Admin&userRole=SuperUser
 
 -- Masters
-https://localhost:7006/api/MasterData/zones
-https://localhost:7006/api/MasterData/states
-https://localhost:7006/api/MasterData/cities/1
+/////// https://localhost:7006/api/MasterData/zones
+/////// https://localhost:7006/api/MasterData/states
+/////// https://localhost:7006/api/MasterData/cities/1
 https://localhost:7006/api/MasterData/allCorporateType
 https://localhost:7006/api/MasterData/allAdmissionType
 https://localhost:7006/api/MasterData/allCities
@@ -14,6 +14,15 @@ https://localhost:7006/api/MasterData/allCorporateServiceRenewal
 https://localhost:7006/api/MasterData/allDocumentType
 https://localhost:7006/api/MasterData/allGender
 https://localhost:7006/api/MasterData/allIdentificationType
+https://localhost:7006/api/MasterData/allInsurer
+https://localhost:7006/api/MasterData/allRelationMaster
+https://localhost:7006/api/MasterData/allStates
+https://localhost:7006/api/MasterData/allStatusMaster
+https://localhost:7006/api/MasterData/allStatusProcessFlow
+https://localhost:7006/api/MasterData/allUserRole
+https://localhost:7006/api/MasterData/allUserType
+https://localhost:7006/api/MasterData/allZones
+
 
 Corporate 
 https://localhost:7006/api/corporate/parent?userId=123&userType=Admin&userRole=SuperUser

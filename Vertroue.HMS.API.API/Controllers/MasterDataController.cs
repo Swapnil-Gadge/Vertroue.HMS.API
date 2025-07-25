@@ -30,7 +30,39 @@ using Vertroue.HMS.API.Application.Features.MasterData.GenderMaster.Commands.Upd
 using Vertroue.HMS.API.Application.Features.MasterData.GenderMaster.Queries;
 using Vertroue.HMS.API.Application.Features.MasterData.IdentificationTypeMaster.Commands;
 using Vertroue.HMS.API.Application.Features.MasterData.IdentificationTypeMaster.Queries;
-using Vertroue.HMS.API.Application.Features.MasterData.Queries.GetMasterData;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.States.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.States.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.States.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.States.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Model;
+using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.UserType.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.UserType.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.UserType.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.UserType.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.Zone.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.Zone.Commands.Deactivate;
+using Vertroue.HMS.API.Application.Features.MasterData.Zone.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.Zone.Queries;
 
 namespace Vertroue.HMS.API.API.Controllers
 {
@@ -45,26 +77,26 @@ namespace Vertroue.HMS.API.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("states")]
-        public async Task<IActionResult> GetStates()
-        {
-            var result = await _mediator.Send(new FetchStatesQuery());
-            return Ok(result);
-        }
+        //[HttpGet("states")]
+        //public async Task<IActionResult> GetStates()
+        //{
+        //    var result = await _mediator.Send(new FetchStatesQuery());
+        //    return Ok(result);
+        //}
 
-        [HttpGet("cities/{stateId}")]
-        public async Task<IActionResult> GetCities(int stateId)
-        {
-            var result = await _mediator.Send(new FetchCitiesQuery(stateId));
-            return Ok(result);
-        }
+        //[HttpGet("cities/{stateId}")]
+        //public async Task<IActionResult> GetCities(int stateId)
+        //{
+        //    var result = await _mediator.Send(new FetchCitiesQuery(stateId));
+        //    return Ok(result);
+        //}
 
-        [HttpGet("zones")]
-        public async Task<IActionResult> GetZones()
-        {
-            var result = await _mediator.Send(new FetchZonesQuery());
-            return Ok(result);
-        }
+        //[HttpGet("zones")]
+        //public async Task<IActionResult> GetZones()
+        //{
+        //    var result = await _mediator.Send(new FetchZonesQuery());
+        //    return Ok(result);
+        //}
 
 
         [HttpPost("addCorporateType")]
@@ -187,5 +219,173 @@ namespace Vertroue.HMS.API.API.Controllers
         public async Task<IActionResult> GetAllIdentificationType() =>
             Ok(await _mediator.Send(new GetAllIdentificationTypesQuery()));
 
+        [HttpPost("addInsurer")]
+        public async Task<IActionResult> AddInsurer([FromBody] AddInsurerCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut("updateInsurer")]
+        public async Task<IActionResult> UpdateInsurer([FromBody] UpdateInsurerCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPatch("deactivateInsurer")]
+        public async Task<IActionResult> DeactivateInsurer([FromBody] DeactivateInsurerCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("allInsurer")]
+        public async Task<IActionResult> GetAllInsurers()
+        {
+            var result = await _mediator.Send(new GetAllInsurersQuery());
+            return Ok(result);
+        }
+        [HttpPost("addRelationMaster")]
+        public async Task<IActionResult> Add(AddRelationMasterCommand command) =>
+       Ok(await _mediator.Send(command));
+
+        [HttpPut("updateRelationMaster")]
+        public async Task<IActionResult> Update(UpdateRelationMasterCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [HttpDelete("deactivateRelationMaster")]
+        public async Task<IActionResult> Deactivate(DeactivateRelationMasterCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [HttpGet("allRelationMaster")]
+        public async Task<IActionResult> Get() =>
+            Ok(await _mediator.Send(new GetRelationMasterQuery()));
+
+        [HttpPost("addStates")]
+        public async Task<IActionResult> Add(AddStateCommand command)
+        => Ok(await _mediator.Send(command));
+
+        [HttpPut("updateStates")]
+        public async Task<IActionResult> Update(UpdateStateCommand command)
+            => Ok(await _mediator.Send(command));
+
+        [HttpPatch("deactivateStates")]
+        public async Task<IActionResult> Deactivate(DeactivateStateCommand command)
+            => Ok(await _mediator.Send(command));
+
+        [HttpGet("allStates")]
+        public async Task<IActionResult> GetAllStates()
+            => Ok(await _mediator.Send(new GetAllStatesQuery()));
+
+        [HttpPost("addStatusMaster")]
+        public async Task<IActionResult> Add([FromBody] AddStatusMasterCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut("updateStatusMaster")]
+        public async Task<IActionResult> Update([FromBody] UpdateStatusMasterCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut("deactivateStatusMaster")]
+        public async Task<IActionResult> Deactivate([FromBody] DeactivateStatusMasterCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("allStatusMaster")]
+        public async Task<IActionResult> GetAll([FromQuery] int userId)
+        {
+            var result = await _mediator.Send(new GetAllStatusMasterQuery { UserId = userId });
+            return Ok(result);
+        }
+        [HttpPost("addStatusProcessFlow")]
+        public async Task<IActionResult> Add(AddStatusProcessFlowCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPut("updateStatusProcessFlow")]
+        public async Task<IActionResult> Update(UpdateStatusProcessFlowCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPut("deactivateStatusProcessFlow")]
+        public async Task<IActionResult> Deactivate(DeactivateStatusProcessFlowCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpGet("allStatusProcessFlow")]
+        public async Task<ActionResult<List<StatusProcessFlowDto>>> GetAllStatusProcessFlowCommand()
+        {
+            return Ok(await _mediator.Send(new GetStatusProcessFlowQuery()));
+        }
+
+        [HttpPost("addUserRole")]
+        public async Task<IActionResult> AddUserRole(AddUserRoleCommand command) => Ok(await _mediator.Send(command));
+
+        [HttpPut("updateUserRole")]
+        public async Task<IActionResult> UpdateUserRole(UpdateUserRoleCommand command) => Ok(await _mediator.Send(command));
+
+        [HttpDelete("deactivateUserRole")]
+        public async Task<IActionResult> DeactivateUserRole(DeactivateUserRoleCommand command) => Ok(await _mediator.Send(command));
+
+        [HttpGet("allUserRole")]
+        public async Task<IActionResult> GetAllUserRole() => Ok(await _mediator.Send(new GetUserRolesQuery()));
+
+        [HttpPost("addUserType")]
+        public async Task<IActionResult> AddUserType(AddUserTypeCommand command) =>
+        Ok(await _mediator.Send(command));
+
+        [HttpPut("updateUserType")]
+        public async Task<IActionResult> UpdateUserType(UpdateUserTypeCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [HttpPut("deactivateUserType")]
+        public async Task<IActionResult> DeactivateUserType(DeactivateUserTypeCommand command) =>
+        Ok(await _mediator.Send(command));
+
+        [HttpGet("allUserType")]
+        public async Task<IActionResult> GetAllUserType() =>
+            Ok(await _mediator.Send(new GetAllUserTypesQuery()));
+
+        
+        
+        
+        [HttpPut("updateZone")]
+        public async Task<IActionResult> UpdateZone([FromBody] UpdateZoneCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        
+        [HttpPut("deactivateZone")]
+        public async Task<IActionResult> DeactivateZone([FromBody] DeactivateZoneCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost("addZone")]
+        public async Task<IActionResult> AddZone([FromBody] AddZoneCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("allZones")]
+        public async Task<IActionResult> GetAllZones()
+        {
+            var result = await _mediator.Send(new GetAllZonesQuery());
+            return Ok(result);
+        }
     }
 }
