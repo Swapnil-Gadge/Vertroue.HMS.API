@@ -23,8 +23,11 @@ https://localhost:7006/api/MasterData/allUserRole
 https://localhost:7006/api/MasterData/allUserType
 https://localhost:7006/api/MasterData/allZones
 
+--QMS
+https://localhost:7006/api/QMS/corporate-pending-filesent?corporateId=1&userId=1&userType=Admin&userRole=SuperUser
 
-Corporate 
+
+--Corporate 
 https://localhost:7006/api/corporate/parent?userId=123&userType=Admin&userRole=SuperUser
 https://localhost:7006/api/corporate/details?parentCorporateId=1&corporateId=1&userId=123&userType=Admin&userRole=SuperUser
 https://localhost:7006/api/corporate/list?parentCorporateId=1&userId=123&userType=Admin&userRole=SuperUser
