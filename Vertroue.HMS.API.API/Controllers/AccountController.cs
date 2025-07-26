@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.Users.Commands.Login;
 using Vertroue.HMS.API.Application.Features.Users.Commands.Register;
@@ -46,14 +47,14 @@ namespace Vertroue.HMS.API.API.Controllers
 
 
         [HttpGet("validate-login")]
-        public async Task<IActionResult> ValidateLogin([FromQuery] string UserId, [FromQuery] string UserPass ,[FromQuery] string UserType)
+        public async Task<IActionResult> ValidateLogin([FromQuery] string UserId, [FromQuery] string UserPass, [FromQuery] string UserType)
         {
             var query = new ValidateLoginQuery
-            {                
+            {
                 UserId = UserId,
                 Password = UserPass,
                 UserType = UserType
-            }; 
+            };
             var result = await _mediator.Send(query);
             if (result == null)
                 return Unauthorized("Invalid credentials");
@@ -70,6 +71,7 @@ namespace Vertroue.HMS.API.API.Controllers
                 return BadRequest("Password update failed. Please verify your current password.");
 
             return Ok("Password updated successfully.");
+        }
 
         [Authorize]
         [HttpPost("validate-token")]
@@ -81,5 +83,6 @@ namespace Vertroue.HMS.API.API.Controllers
                 Success = true
             });
         }
+
     }
 }
