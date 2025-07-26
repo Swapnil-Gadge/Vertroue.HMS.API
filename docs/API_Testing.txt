@@ -22,9 +22,18 @@ https://localhost:7006/api/MasterData/allStatusProcessFlow
 https://localhost:7006/api/MasterData/allUserRole
 https://localhost:7006/api/MasterData/allUserType
 https://localhost:7006/api/MasterData/allZones
+https://localhost:7006/api/MasterData/fetch-menu-html
 
 --QMS
 https://localhost:7006/api/QMS/corporate-pending-filesent?corporateId=1&userId=1&userType=Admin&userRole=SuperUser
+https://localhost:7006/api/QMS/payment-received/list?corporateId=1&userId=1&userType=Admin&userRole=SuperUser
+https://localhost:7006/api/QMS/FetchAllControlsList?corporateId=1&userId=1&userType=Admin&userRole=SuperUser
+
+-- Reports
+https://localhost:7006/api/Report/GetCorporatePendingCaseReport?corporateId=1&userId=1&userType=Admin&userRole=SuperUser
+
+--Account
+https://localhost:7006/api/Account/validate-login?UserId=1&UserPass=1&UserType=1
 
 
 --Corporate 

@@ -7,6 +7,8 @@ using Vertroue.HMS.API.Application.Features.MasterData.DocumentType.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.GenderMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.IdentificationTypeMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Model;
+using Vertroue.HMS.API.Application.Features.MasterData.Menu.Model;
+using Vertroue.HMS.API.Application.Features.MasterData.Menu.Queries;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.States.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Model;
@@ -60,6 +62,7 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
 
         Task<string> ManageZoneMasterAsync(object request, char action);
         Task<List<ZoneDto>> FetchZoneMasterAsync();
+        Task<List<MenuHtmlDto>> FetchMenuHtmlAsync(GetMenuHtmlQuery request);
     }
 }
 
