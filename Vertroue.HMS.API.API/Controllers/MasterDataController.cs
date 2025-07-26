@@ -34,6 +34,7 @@ using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Ad
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Deactivate;
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Update;
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.Menu.Queries;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Add;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Deactivate;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Update;
@@ -418,5 +419,19 @@ namespace Vertroue.HMS.API.API.Controllers
             return Ok(result);
         }
         #endregion
+
+        [HttpGet("fetch-menu-html")]
+        public async Task<IActionResult> FetchMenuHtml([FromQuery] int corporateId, [FromQuery] int userId, [FromQuery] string userType, [FromQuery] string userRole)
+        {
+            var query = new GetMenuHtmlQuery
+            {
+                CorporateId = corporateId,
+                UserId = userId,
+                UserType = userType,
+                UserRole = userRole
+            }; 
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

@@ -13,15 +13,14 @@ using Vertroue.HMS.API.Application.Features.MasterData.IdentificationTypeMaster.
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.States.Model;
-using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Commands.Add;
-using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Commands.Deactivate;
-using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Commands.Update;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.TpaMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.UserType.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.Zones.Model;
+using Vertroue.HMS.API.Application.Features.MasterData.Menu.Model;
+using Vertroue.HMS.API.Application.Features.MasterData.Menu.Queries;
 
 namespace Vertroue.HMS.API.Persistence.Repositories
 {
@@ -1212,6 +1211,37 @@ namespace Vertroue.HMS.API.Persistence.Repositories
 
             return result;
         }
+
+        public async Task<List<MenuHtmlDto>> FetchMenuHtmlAsync(GetMenuHtmlQuery request)
+        {
+            var result = new List<MenuHtmlDto>();
+            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand("FetchMenuList", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@UserId", request.UserId);
+            cmd.Parameters.AddWithValue("@UserType", request.UserType);
+            cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
+            cmd.Parameters.AddWithValue("@Corporate_id", request.CorporateId);
+
+            await conn.OpenAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new MenuHtmlDto
+                {
+                    FinalHtmlText = reader["Final_html_text"] == DBNull.Value ? string.Empty : reader["Final_html_text"].ToString()
+                });
+            }
+
+            return result;
+        }
+
 
     }
 }
