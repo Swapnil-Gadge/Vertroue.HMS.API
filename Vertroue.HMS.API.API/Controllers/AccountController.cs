@@ -42,5 +42,16 @@ namespace Vertroue.HMS.API.API.Controllers
 
             return Ok(response);
         }
+
+        [Authorize]
+        [HttpPost("validate-token")]
+        public async Task<ActionResult<BaseResponse>> ValidateToken()
+        {
+            return Ok(new BaseResponse
+            {
+                Message = "Authorized",
+                Success = true
+            });
+        }
     }
 }
