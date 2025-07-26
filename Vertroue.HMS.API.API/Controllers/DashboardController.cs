@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.Dashboards.Queries.GetProviderAdminDashboard;
-using Vertroue.HMS.API.Application.Features.Users.Commands.Login;
-using Vertroue.HMS.API.Application.Responses;
 
 namespace Vertroue.HMS.API.API.Controllers
 {

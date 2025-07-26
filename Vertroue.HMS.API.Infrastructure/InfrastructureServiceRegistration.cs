@@ -33,6 +33,7 @@ namespace Vertroue.HMS.API.Infrastructure
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
+                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
             });

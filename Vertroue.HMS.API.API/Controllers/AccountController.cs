@@ -44,6 +44,7 @@ namespace Vertroue.HMS.API.API.Controllers
             return Ok(response);
         }
 
+
         [HttpGet("validate-login")]
         public async Task<IActionResult> ValidateLogin([FromQuery] string UserId, [FromQuery] string UserPass ,[FromQuery] string UserType)
         {
@@ -69,6 +70,16 @@ namespace Vertroue.HMS.API.API.Controllers
                 return BadRequest("Password update failed. Please verify your current password.");
 
             return Ok("Password updated successfully.");
+
+        [Authorize]
+        [HttpPost("validate-token")]
+        public async Task<ActionResult<BaseResponse>> ValidateToken()
+        {
+            return Ok(new BaseResponse
+            {
+                Message = "Authorized",
+                Success = true
+            });
         }
     }
 }
