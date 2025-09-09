@@ -59,7 +59,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
                 UserName = reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : string.Empty,
                 UserRoleName = reader["User_role_Name"] != DBNull.Value ? reader["User_role_Name"].ToString() : string.Empty,
                 UserTypeName = reader["User_Type_Name"] != DBNull.Value ? reader["User_Type_Name"].ToString() : string.Empty,
-                PasswordExpireFlag = reader["PasswordExpire_flag"] != DBNull.Value && Convert.ToBoolean(reader["PasswordExpire_flag"]),
+                PasswordExpireFlag = reader["PasswordExpire_flag"] != DBNull.Value ? reader["PasswordExpire_flag"].ToString() : string.Empty,
                 LastChangePasswordDate = reader["Last_change_Pass_Date"] != DBNull.Value ? reader["Last_change_Pass_Date"].ToString() : string.Empty,
                 UserSessionId = reader["User_SessionId"] != DBNull.Value ? reader["User_SessionId"].ToString() : string.Empty,
                 CorporateIdAgain = reader["Corporate_Id"] != DBNull.Value ? Convert.ToInt32(reader["Corporate_Id"]) : 0,

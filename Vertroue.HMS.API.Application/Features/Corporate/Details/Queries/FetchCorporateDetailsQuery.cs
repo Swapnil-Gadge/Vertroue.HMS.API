@@ -1,8 +1,13 @@
 ﻿using MediatR;
-using Vertroue.HMS.API.Application.Features.Corporate.Details.Model;
 
 namespace Vertroue.HMS.API.Application.Features.Corporate.Details.Queries
 {
-    public record FetchCorporateDetailsQuery(int ParentCorporateId, int CorporateId, int UserId, string UserType, string UserRole)
-    : IRequest<FetchCorporateDetailsResponse>;
+    public class FetchCorporateDetailsQuery : IRequest<FetchCorporateDetailsResponse>
+    {
+        public int ParentCorporateId { get; set; }
+        public int? CorporateId { get; set; }
+        public int? UserLoginId { get; set; }
+        public string? UserType { get; set; }
+        public string? UserRole { get; set; }
+    }
 }

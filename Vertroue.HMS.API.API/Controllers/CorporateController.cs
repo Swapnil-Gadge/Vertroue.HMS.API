@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.Add;
 using Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Commands.AddInsurerRates;
@@ -24,6 +25,7 @@ using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPA;
 using Vertroue.HMS.API.Application.Features.Corporate.TPA.Queries.CorporateTPARates;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class CorporateController : ControllerBase
 {
@@ -50,9 +52,9 @@ public class CorporateController : ControllerBase
     }
 
     [HttpGet("details")]
-    public async Task<IActionResult> GetCorporateDetails([FromQuery] int parentCorporateId, [FromQuery] int corporateId, [FromQuery] int userId, [FromQuery] string userType, [FromQuery] string userRole)
+    public async Task<IActionResult> GetCorporateDetails([FromQuery] int parentCorporateId)
     {
-        var query = new FetchCorporateDetailsQuery(parentCorporateId, corporateId, userId, userType, userRole);
+        var query = new FetchCorporateDetailsQuery { ParentCorporateId = parentCorporateId };
         var result = await _mediator.Send(query);
         return Ok(result);
     }
@@ -66,9 +68,9 @@ public class CorporateController : ControllerBase
     }
 
     [HttpGet("corporateUsers")]
-    public async Task<IActionResult> GetCorporateUsers([FromQuery] FetchCorporateUsersQuery query)
+    public async Task<IActionResult> GetCorporateUsers()
     {
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new FetchCorporateUsersQuery());
         return Ok(result);
     }
 
@@ -85,13 +87,9 @@ public class CorporateController : ControllerBase
         Ok(await _mediator.Send(command));
 
     [HttpGet("{corporateInsurers}")]
-    public async Task<IActionResult> GetCorporateInsurers(
-       int corporateId,
-       [FromQuery] int userId,
-       [FromQuery] string userType,
-       [FromQuery] string userRole)
+    public async Task<IActionResult> GetCorporateInsurers()
     {
-        var result = await _mediator.Send(new FetchCorporateInsurerQuery(corporateId, userId, userType, userRole));
+        var result = await _mediator.Send(new FetchCorporateInsurerQuery());
         return Ok(result);
     }
 
@@ -131,24 +129,16 @@ public class CorporateController : ControllerBase
         => Ok(await _mediator.Send(command));
 
     [HttpGet("corporate-mou")]
-    public async Task<IActionResult> FetchMOU([FromQuery] int corporateInsurerId,
-    [FromQuery] int corporateId,
-    [FromQuery] int userId,
-    [FromQuery] string userType,
-    [FromQuery] string userRole)
+    public async Task<IActionResult> FetchMOU()
     {
-        var result = await _mediator.Send(new FetchCorporateMOUQuery(
-            corporateId,
-            userId,
-            userType,
-            userRole));
+        var result = await _mediator.Send(new FetchCorporateMOUQuery());
         return Ok(result);
     }
 
     [HttpGet("corporateRenewals")]
-    public async Task<IActionResult> GetCorporateRenewals([FromQuery] int corporateId, [FromQuery] int userId, [FromQuery] string userType, [FromQuery] string userRole)
+    public async Task<IActionResult> GetCorporateRenewals()
     {
-        var query = new FetchCorporateRenewalsQuery(corporateId, userId, userType, userRole);
+        var query = new FetchCorporateRenewalsQuery();
         var result = await _mediator.Send(query);
         return Ok(result);
     }
@@ -161,9 +151,9 @@ public class CorporateController : ControllerBase
     }
 
     [HttpGet("corporate-tpa")]
-    public async Task<IActionResult> GetCorporateTPA([FromQuery] FetchCorporateTPAQuery query)
+    public async Task<IActionResult> GetCorporateTPA()
     {
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new FetchCorporateTPAQuery());
         return Ok(result);
     }
 
@@ -174,21 +164,21 @@ public class CorporateController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("AddCorporatTPA")]
+    [HttpPost("addCorporatTPA")]
     public async Task<IActionResult> AddCorporateTPA(AddCorporateTPACommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(new { message = result });
     }
 
-    [HttpPut("ModifyCorporatTPA")]
+    [HttpPost("modifyCorporatTPA")]
     public async Task<IActionResult> ModifyCorporateTPA(ModifyCorporateTPACommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(new { message = result });
     }
 
-    [HttpPost("DeactivateCorporatTPA")]
+    [HttpPost("deactivateCorporatTPA")]
     public async Task<IActionResult> DeactivateCorporateTPA(DeactivateCorporateTPACommand command)
     {
         var result = await _mediator.Send(command);

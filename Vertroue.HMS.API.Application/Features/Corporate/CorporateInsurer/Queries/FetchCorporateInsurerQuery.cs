@@ -2,10 +2,11 @@
 
 namespace Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries
 {
-    public record FetchCorporateInsurerQuery(
-    int CorporateId,
-    int UserId,
-    string UserType,
-    string UserRole
-) : IRequest<FetchCorporateInsurerResponse>;
+    public class FetchCorporateInsurerQuery : IRequest<FetchCorporateInsurerResponse>
+    {
+        public int CorporateId { get; set; }
+        public int UserLoginId { get; set; }
+        public string UserType { get; set; }
+        public string UserRole { get; set; }
+    }
 }

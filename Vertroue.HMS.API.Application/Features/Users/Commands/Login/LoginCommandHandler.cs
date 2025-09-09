@@ -39,6 +39,10 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
             if (result != PasswordVerificationResult.Success)
                 throw new UnauthorizedAccessException();
 
+            var validateLoginResult = await _userMasterRepository.ValidateLoginAsync(request.UserName, request.Password, request.UserRole);
+            if (validateLoginResult == null)
+                throw new UnauthorizedAccessException();
+
             // Create JWT TOKEN
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration.GetSection("SecretKey").Value); // store in appsettings!
@@ -54,14 +58,18 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
                     new Claim("UserRoleId", userMaster.UserRole?.User_Role_id.ToString() ?? "User"),
                     new Claim("UserLoginId", userMaster.User_Login_id.ToString() ?? "User"),
                     }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return new LoginResponse{ Token = tokenString, UserName = user.UserName };
+            return new LoginResponse { 
+                Token = tokenString, 
+                UserName = user.UserName, 
+                UserRole = validateLoginResult.UserRoleName 
+            };
         }
     }
 }

@@ -160,6 +160,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
                 }
             }
 
+            totalCaseBiFurications.Reverse();
             return (caseCounts, tatReportCases, denials, defficiencies, tatReport, totalCaseBiFurications);
         }
     }

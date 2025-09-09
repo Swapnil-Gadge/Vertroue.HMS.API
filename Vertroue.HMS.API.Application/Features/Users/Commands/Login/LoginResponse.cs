@@ -7,5 +7,7 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
         public string Token { get; set; }
 
         public string UserName { get; set; }
+
+        public string UserRole {  get; set; }
     }
 }

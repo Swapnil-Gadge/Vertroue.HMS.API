@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.QMS.FileSentTPA.Commands;
 using Vertroue.HMS.API.Application.Features.QMS.FileSentTPA.Queries;
@@ -12,6 +13,7 @@ using Vertroue.HMS.API.Application.Features.QMS.QMSControl.Queries;
 namespace Vertroue.HMS.API.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class QMSController : ControllerBase
     {

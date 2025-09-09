@@ -1,9 +1,5 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Vertroue.HMS.API.Application.Contracts;
 using Vertroue.HMS.API.Application.Contracts.Persistence;
 
 namespace Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queries
@@ -11,15 +7,21 @@ namespace Vertroue.HMS.API.Application.Features.Corporate.CorporateInsurer.Queri
     public class FetchCorporateInsurerQueryHandler : IRequestHandler<FetchCorporateInsurerQuery, FetchCorporateInsurerResponse>
     {
         private readonly ICorporateRepository _repo;
+        private readonly ILoggedInUserService _loggedInUserService;
 
-        public FetchCorporateInsurerQueryHandler(ICorporateRepository repo)
+        public FetchCorporateInsurerQueryHandler(ICorporateRepository repo, ILoggedInUserService loggedInUserService)
         {
             _repo = repo;
+            _loggedInUserService = loggedInUserService;
         }
 
         public async Task<FetchCorporateInsurerResponse> Handle(FetchCorporateInsurerQuery request, CancellationToken cancellationToken)
         {
-            return await _repo.FetchCorporateInsurersAsync(request.CorporateId, request.UserId, request.UserType, request.UserRole);
+            request.CorporateId = _loggedInUserService.CorporateId;
+            request.UserLoginId = _loggedInUserService.UserLoginId;
+            request.UserType = _loggedInUserService.UserType;
+            request.UserRole = _loggedInUserService.UserRole;
+            return await _repo.FetchCorporateInsurersAsync(request.CorporateId, request.UserLoginId, request.UserType, request.UserRole);
         }
     }
 }

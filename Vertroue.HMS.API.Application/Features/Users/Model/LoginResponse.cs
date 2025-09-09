@@ -10,7 +10,7 @@ namespace Vertroue.HMS.API.Application.Features.Users.Model
         public string UserName { get; set; }
         public string UserRoleName { get; set; }
         public string UserTypeName { get; set; }
-        public bool PasswordExpireFlag { get; set; }
+        public string PasswordExpireFlag { get; set; }
         public string LastChangePasswordDate { get; set; }
         public string UserSessionId { get; set; }
         public int CorporateIdAgain { get; set; }
