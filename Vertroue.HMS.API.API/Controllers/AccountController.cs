@@ -34,17 +34,11 @@ namespace Vertroue.HMS.API.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<BaseResponse>> Login(string userName, string password)
+        public async Task<ActionResult<BaseResponse>> Login(LoginCommand command)
         {
-            var response = await _mediator.Send(new LoginCommand
-            {
-                UserName = userName,
-                Password = password
-            });
-
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
-
 
         [HttpGet("validate-login")]
         public async Task<IActionResult> ValidateLogin([FromQuery] string UserId, [FromQuery] string UserPass, [FromQuery] string UserType)
@@ -62,6 +56,7 @@ namespace Vertroue.HMS.API.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost("update-password")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordCommand command)
         {

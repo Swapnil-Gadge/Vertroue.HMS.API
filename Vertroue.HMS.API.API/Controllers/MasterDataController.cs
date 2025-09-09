@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.MasterData.AdmissionType.Commands.Add;
 using Vertroue.HMS.API.Application.Features.MasterData.AdmissionType.Commands.Deactivate;
@@ -68,6 +69,7 @@ using Vertroue.HMS.API.Application.Features.MasterData.Zone.Queries;
 namespace Vertroue.HMS.API.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class MasterDataController : ControllerBase
     {

@@ -1,16 +1,12 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vertroue.HMS.API.Application.Features.Corporate.Renewal.Queries
 {
-    public record FetchCorporateRenewalsQuery(
-        int CorporateId,
-        int UserId,
-        string UserType,
-        string UserRole
-    ) : IRequest<FetchCorporateRenewalsResponse>;
+    public class FetchCorporateRenewalsQuery : IRequest<FetchCorporateRenewalsResponse>
+    {
+        public int CorporateId { get; set; }
+        public int UserLoginId { get; set; }
+        public string UserType { get; set; }
+        public string UserRole { get; set; }
+    }
 }

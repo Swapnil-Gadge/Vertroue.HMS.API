@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vertroue.HMS.API.Application.Features.QMS.QMSControl.Queries;
 using Vertroue.HMS.API.Application.Features.Reports.Queries;
 
 namespace Vertroue.HMS.API.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ReportController : Controller
     {

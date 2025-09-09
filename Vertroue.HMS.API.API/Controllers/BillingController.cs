@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.Billing.PaidCases.Queries.GetPaidCase;
 using Vertroue.HMS.API.Application.Features.Billing.PendingCases.Queries.GetPendingPayments;
@@ -6,6 +7,7 @@ using Vertroue.HMS.API.Application.Features.Billing.PendingCases.Queries.GetPend
 namespace Vertroue.HMS.API.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class BillingController : ControllerBase
     {

@@ -199,7 +199,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@UserId", request.UserId);
+                cmd.Parameters.AddWithValue("@UserId", request.UserLoginId);
                 cmd.Parameters.AddWithValue("@UserType", request.UserType);
                 cmd.Parameters.AddWithValue("@UserRole", request.UserRole);
                 cmd.Parameters.AddWithValue("@Parent_Corporate_id", request.ParentCorporateId);
@@ -379,7 +379,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
                             Mobile = reader.IsDBNull(reader.GetOrdinal("Contact_Person_Mobile")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_Mobile")),
                             Email = reader.IsDBNull(reader.GetOrdinal("Contact_Person_Email")) ? null : reader.GetString(reader.GetOrdinal("Contact_Person_Email")),
                             UserRole = reader.IsDBNull(reader.GetOrdinal("User_role")) ? null : reader.GetString(reader.GetOrdinal("User_role")),
-                            ActiveFlag = !reader.IsDBNull(reader.GetOrdinal("Active_Flag")) ? null : reader.GetString(reader.GetOrdinal("Active_Flag")),
+                            ActiveFlag = reader.IsDBNull(reader.GetOrdinal("Active_Flag")) ? null : reader.GetString(reader.GetOrdinal("Active_Flag")),
                             CreatedDate = reader.IsDBNull(reader.GetOrdinal("Created_date")) ? null : reader.GetString(reader.GetOrdinal("Created_date")),
                             CreatedBy = reader.IsDBNull(reader.GetOrdinal("Created_By")) ? null : reader.GetString(reader.GetOrdinal("Created_By"))
                         });
@@ -481,7 +481,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
                 {
                     if (await reader.ReadAsync())
                     {
-                        message = reader.GetString(0);
+                        message = "Success";
                     }
                 }
             }
@@ -613,6 +613,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             var result = await cmd.ExecuteScalarAsync();
             return result?.ToString() ?? "No response";
         }
+        
         public async Task<string> AddCorporateInsurerAsync(AddCorporateInsurerCommand command)
         {
             using var conn = new SqlConnection(_config.GetConnectionString("CoreDbConnectionString"));
@@ -640,7 +641,7 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             cmd.Parameters.AddWithValue("@UserId", command.UserId);
             cmd.Parameters.AddWithValue("@UserType", command.UserType);
             cmd.Parameters.AddWithValue("@UserRole", command.UserRole);
-            cmd.Parameters.AddWithValue("@Insurer_id", command.CorporateInsurerId);
+            cmd.Parameters.AddWithValue("@Corporate_Insurer_id", command.CorporateInsurerId);
             cmd.Parameters.AddWithValue("@Empanneled_date", command.EmpanneledDate);
             cmd.Parameters.AddWithValue("@Portal_Link", command.PortalLink);
             cmd.Parameters.AddWithValue("@Portal_UserId", command.PortalUserId);
