@@ -4,6 +4,12 @@
     {
         public string? UserId { get; }
 
+        public int HospitalId { get; }
+
+        public string? UserName { get; }
+
+        public bool IsUserUnauthorizedToPerformOperation(int hospitalId);
+
         public int CorporateId { get; }
 
         public int UserLoginId { get; }

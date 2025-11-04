@@ -9,5 +9,11 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
         public string UserName { get; set; }
 
         public string UserRole {  get; set; }
+
+        public string HospitalName { get; set; }
+
+        public int HospitalId { get; set; }
+
+        public string FullName { get; set; }
     }
 }

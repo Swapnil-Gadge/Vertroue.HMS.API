@@ -10,27 +10,31 @@ using Vertroue.HMS.API.Application.Features.MasterData.CorporateServiceRenewal.M
 using Vertroue.HMS.API.Application.Features.MasterData.DocumentType.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.GenderMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.IdentificationTypeMaster.Model;
-using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.States.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Model;
-using Vertroue.HMS.API.Application.Features.MasterData.TpaMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.UserType.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.Zones.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.Menu.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.Menu.Queries;
+using Vertroue.HMS.API.Domain.Entities;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Add;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Update;
+using Microsoft.EntityFrameworkCore;
 
 namespace Vertroue.HMS.API.Persistence.Repositories
 {
     internal class MasterDataRepository : IMasterDataRepository
     {
         private readonly IConfiguration _config;
+        protected readonly ApiDbContext _dbContext;
 
-        public MasterDataRepository(IConfiguration config)
+        public MasterDataRepository(IConfiguration config, ApiDbContext dbContext)
         {
             _config = config;
+            _dbContext = dbContext;
         }
     //    public async Task<List<StateDto>> GetStatesAsync() => new List<StateDto> {
     //    new StateDto { StateId = 1, StateName = "Maharashtra" },
@@ -577,73 +581,48 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             return result;
         }
 
-        public async Task<string> ManageInsurerAsync(object command, char action)
+        public async Task<bool> AddUpdateInsuranceCompany(object command)
         {
-            var connStr = _config.GetConnectionString("CoreDbConnectionString");
-            using var conn = new SqlConnection(connStr);
-            using var cmd = new SqlCommand("CRUD_Insurer_Master", conn)
+            if (command is AddInsurerCommand addCommand)
             {
-                CommandType = CommandType.StoredProcedure
-            };
-
-            dynamic data = command;
-
-            cmd.Parameters.AddWithValue("@Action", action);
-            cmd.Parameters.AddWithValue("@UserId", data.UserId);
-
-            if (action == 'I' || action == 'U')
-            {
-                cmd.Parameters.AddWithValue("@Insurer_Name", data.InsurerName);
-                cmd.Parameters.AddWithValue("@Insurer_Code", data.InsurerCode);
-            }
-
-            if (action != 'I')
-                cmd.Parameters.AddWithValue("@Insurer_id", data.InsurerId);
-
-            await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
-            string result = "";
-            while (await reader.ReadAsync())
-            {
-                result = reader["msg"]?.ToString();
-            }
-
-            return result;
-        }
-
-        public async Task<List<InsurerDto>> FetchInsurersAsync()
-        {
-            var result = new List<InsurerDto>();
-            var connStr = _config.GetConnectionString("CoreDbConnectionString");
-
-            using var conn = new SqlConnection(connStr);
-            using var cmd = new SqlCommand("CRUD_Insurer_Master", conn)
-            {
-                CommandType = CommandType.StoredProcedure
-            };
-
-            cmd.Parameters.AddWithValue("@Action", 'S');
-            cmd.Parameters.AddWithValue("@UserId", 0);
-
-            await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                result.Add(new InsurerDto
+                var insuranceCompany = new InsuranceCompany
                 {
-                    InsurerId = Convert.ToInt32(reader["Insurer_id"]),
-                    InsurerName = reader["Insurer_Name"]?.ToString(),
-                    InsurerCode = reader["Insurer_Code"]?.ToString(),
-                    ActiveFlag = reader["Active_Flag"]?.ToString(),
-                    CreatedDate = reader["Created_date"]?.ToString(),
-                    CreatedBy = reader["Created_by"]?.ToString(),
-                    ModifiedDate = reader["Modifed_date"]?.ToString(),
-                    ModifiedBy = reader["Modified_by"]?.ToString()
-                });
+                    Name = addCommand.Name,
+                    ContactNumber = addCommand.ContactNumber,
+                    FaxNumber = addCommand.FaxNumber,
+                    WebSite = addCommand.WebSite,
+                    Code = addCommand.Code,
+                    IsActive = true
+                };
+                await _dbContext.AddAsync(insuranceCompany);
+                await _dbContext.SaveChangesAsync();
             }
+            else if (command is UpdateInsurerCommand updateCommand)
+            {
+                var existingInsurer = await _dbContext.InsuranceCompanies.FindAsync(updateCommand.InsuranceCompanyId);
+                if (existingInsurer == null)
+                    throw new Exception($"Insurer with ID {updateCommand.InsuranceCompanyId} not found.");
 
-            return result;
+                existingInsurer.Name = updateCommand.Name;
+                existingInsurer.ContactNumber = updateCommand.ContactNumber;
+                existingInsurer.FaxNumber = updateCommand.FaxNumber;
+                existingInsurer.WebSite = updateCommand.WebSite;
+                existingInsurer.Code = updateCommand.Code;
+
+                await _dbContext.SaveChangesAsync();
+            }
+            return true;
         }
+
+        public async Task<List<InsuranceCompany>> FetchInsurersAsync()
+        {
+            return await _dbContext.InsuranceCompanies.ToListAsync();
+        }
+
+        public async Task<InsuranceCompany> GetInsuranceCompanyAsync(int insuranceCompanyId)
+        {
+            return await _dbContext.InsuranceCompanies.FindAsync(insuranceCompanyId);
+        } 
 
         public async Task<string> ManageRelationMasterAsync(dynamic data, char action)
         {
@@ -969,42 +948,87 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             return result;
         }
 
-        public async Task<List<TpaMasterDto>> FetchTpaMasterAsync()
+        public async Task<Tpa> GetTpaAsync(int tpaId)
         {
-            var result = new List<TpaMasterDto>();
-            var connStr = _config.GetConnectionString("CoreDbConnectionString");
+            var tpa = await _dbContext.Tpas.FindAsync(tpaId);
+            if (tpa == null)
+                throw new Exception($"TPA not found for TPAID {tpaId}");
 
-            using var conn = new SqlConnection(connStr);
-            using var cmd = new SqlCommand("CRUD_TPA_Master", conn) { CommandType = CommandType.StoredProcedure };
-            cmd.Parameters.AddWithValue("@Action", 'S');
-            cmd.Parameters.AddWithValue("@UserId", 0);
+            return tpa;
+        }
 
-            await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync())
+        public async Task<bool> AddUpdateTPA(object request)
+        {
+            if (request is AddTpaMasterCommand command)
             {
-                result.Add(new TpaMasterDto
+                var newTPA = new Tpa
                 {
-                    TPA_Id = Convert.ToInt32(reader["TPA_Id"]),
-                    TP_Name = reader["TP_Name"]?.ToString(),
-                    License_Number = reader["License_Number"]?.ToString(),
-                    License_Validity = reader["License_Validity"]?.ToString(),
-                    Chief_Executive_Officer = reader["Chief_Executive_Officer"]?.ToString(),
-                    TPA_Address = reader["TPA_Address"]?.ToString(),
-                    Senior_Citizen_Helpline = reader["Senior_Citizen_Helpline"]?.ToString(),
-                    Toll_Free_Number = reader["Toll_Free_Number"]?.ToString(),
-                    TPA_Email = reader["TPA_Email"]?.ToString(),
-                    TPA_Website = reader["TPA_Website"]?.ToString(),
-                    ActiveFlag = reader["Active_Flag"]?.ToString(),
-                    CreatedDate = reader["Created_date"]?.ToString(),
-                    CreatedBy = reader["Created_by"]?.ToString(),
-                    ModifiedDate = reader["Modifed_date"]?.ToString(),
-                    ModifiedBy = reader["Modified_by"]?.ToString()
-                });
+                    Address = command.Address,
+                    Ceo = command.Ceo,
+                    ContactNumber = command.ContactNumber,
+                    Email = command.Email,
+                    LicenseNumber = command.LicenseNumber,
+                    LicenseValidTill = command.LicenseValidTill,
+                    Name = command.Name,
+                    FaxNumber = command.FaxNumber,
+                    WebSite = command.WebSite,
+                    IsActive = true,
+                };
+                await _dbContext.AddAsync(newTPA);
+                await _dbContext.SaveChangesAsync();
             }
+            else if (request is UpdateTpaMasterCommand updateCommand)
+            {
+                var existingTPA = await _dbContext.Tpas.FindAsync(updateCommand.Tpaid);
+                if (existingTPA == null)
+                    throw new Exception($"TPA not found for TPAID {updateCommand.Tpaid}");
 
-            return result;
+                existingTPA.Address = updateCommand.Address;
+                existingTPA.Ceo = updateCommand.Ceo;
+                existingTPA.ContactNumber = updateCommand.ContactNumber;
+                existingTPA.Email = updateCommand.Email;
+                existingTPA.LicenseNumber = updateCommand.LicenseNumber;
+                existingTPA.LicenseValidTill = updateCommand.LicenseValidTill;
+                existingTPA.Name = updateCommand.Name;
+                existingTPA.FaxNumber = updateCommand.FaxNumber;
+                existingTPA.WebSite = updateCommand.WebSite;
+
+                await _dbContext.SaveChangesAsync();
+            }
+            return true;
+        }
+
+        public async Task<bool> DisableInsuranceCompany(int insuranceCompanyId)
+        {
+            var existingInsurer = await _dbContext.InsuranceCompanies.Include(i => i.EmpanelledInsuranceCompanies)
+                .FirstOrDefaultAsync(i =>i.InsuranceCompanyId == insuranceCompanyId);
+            if (existingInsurer == null)
+                throw new Exception($"Insurer with ID {insuranceCompanyId} not found.");
+
+            existingInsurer.IsActive = false;
+            existingInsurer.EmpanelledInsuranceCompanies.ToList()
+                .ForEach(eic => eic.IsActive = false);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DisableTPA(int tpaId)
+        {
+            var existingTPA = await _dbContext.Tpas.Include(t => t.EmpanelledTpas)
+                .FirstOrDefaultAsync(t => t.Tpaid == tpaId);
+            if (existingTPA == null)
+                throw new Exception($"TPA not found for TPAID {tpaId}");
+
+            existingTPA.IsActive = false;
+            existingTPA.EmpanelledTpas.ToList()
+                .ForEach(eic => eic.IsActive = false);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Tpa>> FetchTpaMasterAsync()
+        {
+            return await _dbContext.Tpas.ToListAsync();
         }
 
         public async Task<string> ManageUserRoleMasterAsync(object request, char action)
@@ -1242,6 +1266,20 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             return result;
         }
 
-
+        public async Task<(List<CitiesMaster>, List<StatesMaster>, List<AdmissionType>, List<ClaimStatusMaster>, List<DischargeType>, List<LineOfTreatment>, List<MedicalHistoriesMaster>, List<RoomType>, List<Tpa>, List<InsuranceCompany>, List<UserRole>)> GetMasterData()
+        {
+            var cities = await _dbContext.CitiesMasters.AsNoTracking().ToListAsync();
+            var states = await _dbContext.StatesMasters.AsNoTracking().ToListAsync();
+            var admissionTypes = await _dbContext.AdmissionTypes.AsNoTracking().ToListAsync();
+            var claimStatuses = await _dbContext.ClaimStatusMasters.ToListAsync();
+            var dischargeTypes = await _dbContext.DischargeTypes.AsNoTracking().ToListAsync();
+            var lineOfTreatments = await _dbContext.LineOfTreatments.AsNoTracking().ToListAsync();
+            var medicalHistories = await _dbContext.MedicalHistoriesMasters.AsNoTracking().ToListAsync();
+            var roomTypes = await _dbContext.RoomTypes.AsNoTracking().ToListAsync();
+            var tpas = await _dbContext.Tpas.AsNoTracking().ToListAsync();
+            var insuranceCompanies = await _dbContext.InsuranceCompanies.AsNoTracking().ToListAsync();
+            var userRoles = await _dbContext.UserRoles.AsNoTracking().ToListAsync();
+            return (cities, states, admissionTypes, claimStatuses, dischargeTypes, lineOfTreatments, medicalHistories, roomTypes, tpas, insuranceCompanies, userRoles);
+        }
     }
 }

@@ -23,10 +23,12 @@ namespace Vertroue.HMS.API.Persistence
             services.AddScoped<IUserMasterRepository, UserMasterRepository>();
             services.AddScoped<IDashBoardRepository, DashBoardRepository>();
             services.AddScoped<IBillingRepository, BillingRepository>();
-            services.AddSingleton<IMasterDataRepository, MasterDataRepository>();
+            services.AddScoped<IMasterDataRepository, MasterDataRepository>();
             services.AddScoped<ICorporateRepository, CorporateRepository>();
             services.AddScoped<IQMSDataRepository, QMSDataRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IHospitalRepository, HospitalRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
             return services;    
         }        
     }

@@ -34,7 +34,9 @@ using Vertroue.HMS.API.Application.Features.MasterData.IdentificationTypeMaster.
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Add;
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Deactivate;
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Update;
+using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.MasterData.Queries.GetMasterData;
 using Vertroue.HMS.API.Application.Features.MasterData.Menu.Queries;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Add;
 using Vertroue.HMS.API.Application.Features.MasterData.RelationMaster.Commands.Deactivate;
@@ -53,6 +55,8 @@ using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Command
 using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Commands.Update;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.StatusProcessFlow.Queries;
+using Vertroue.HMS.API.Application.Features.MasterData.TpaMaster.Model;
+using Vertroue.HMS.API.Application.Features.MasterData.TpaMaster.Queries;
 using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Commands.Add;
 using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Commands.Deactivate;
 using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Commands.Update;
@@ -79,28 +83,6 @@ namespace Vertroue.HMS.API.API.Controllers
         {
             _mediator = mediator;
         }
-
-        //[HttpGet("states")]
-        //public async Task<IActionResult> GetStates()
-        //{
-        //    var result = await _mediator.Send(new FetchStatesQuery());
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("cities/{stateId}")]
-        //public async Task<IActionResult> GetCities(int stateId)
-        //{
-        //    var result = await _mediator.Send(new FetchCitiesQuery(stateId));
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("zones")]
-        //public async Task<IActionResult> GetZones()
-        //{
-        //    var result = await _mediator.Send(new FetchZonesQuery());
-        //    return Ok(result);
-        //}
-
 
         #region Corporate Type Endpoints
         [HttpPost("addCorporateType")]
@@ -238,7 +220,56 @@ namespace Vertroue.HMS.API.API.Controllers
             Ok(await _mediator.Send(new GetAllIdentificationTypesQuery()));
         #endregion
 
+        #region TPA Endpoints
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpPost("addTPA")]
+        public async Task<IActionResult> AddTPA([FromBody] AddTpaMasterCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpPost("updateTPA")]
+        public async Task<IActionResult> UpdateTPA([FromBody] UpdateTpaMasterCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpPost("deactivateTPA")]
+        public async Task<IActionResult> DeactivateTPA([FromQuery] int TpaId)
+        {
+            var result = await _mediator.Send(new DeactivateTpaMasterCommand
+            {
+                TPAId = TpaId,
+            });
+            return Ok(result);
+        }
+
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpGet("allTPAs")]
+        public async Task<ActionResult<List<TpaMasterDto>>> GetAllTPAs()
+        {
+            var result = await _mediator.Send(new GetTpaMasterQuery());
+            return Ok(result);
+        }
+
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpGet("getTPADetails")]
+        public async Task<IActionResult> GetTPADetails([FromQuery] int tpaId)
+        {
+            var result = await _mediator.Send(new GetTpaDetailsQuery
+            {
+                TpaId = tpaId,
+            });
+            return Ok(result);
+        }
+        #endregion
+
         #region Insurer Endpoints
+        [Authorize(Policy = "ProviderAdminOnly")]
         [HttpPost("addInsurer")]
         public async Task<IActionResult> AddInsurer([FromBody] AddInsurerCommand command)
         {
@@ -246,24 +277,41 @@ namespace Vertroue.HMS.API.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("updateInsurer")]
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpPost("updateInsurer")]
         public async Task<IActionResult> UpdateInsurer([FromBody] UpdateInsurerCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
-        [HttpPatch("deactivateInsurer")]
-        public async Task<IActionResult> DeactivateInsurer([FromBody] DeactivateInsurerCommand command)
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpPost("deactivateInsurer")]
+        public async Task<IActionResult> DeactivateInsurer([FromQuery] int insuranceCompanyId)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(new DeactivateInsurerCommand
+            {
+                InsuranceCompanyId = insuranceCompanyId,
+            });
             return Ok(result);
         }
 
-        [HttpGet("allInsurer")]
-        public async Task<IActionResult> GetAllInsurers()
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpGet("allInsurers")]
+        public async Task<ActionResult<List<InsurerDto>>> GetAllInsurers()
         {
             var result = await _mediator.Send(new GetAllInsurersQuery());
+            return Ok(result);
+        }
+
+        [Authorize(Policy = "ProviderAdminOnly")]
+        [HttpGet("getInsuranceCompany")]
+        public async Task<IActionResult> GetInsuranceCompanyDetails([FromQuery] int insuranceCompanyId)
+        {
+            var result = await _mediator.Send(new GetInsuranceCompanyDetailsQuery
+            {
+                InsuranceCompanyId = insuranceCompanyId,
+            });
             return Ok(result);
         }
         #endregion
@@ -435,5 +483,9 @@ namespace Vertroue.HMS.API.API.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet("getMasterData")]
+        public async Task<ActionResult<GetMasterDataQueryResponse>> GetMasterData()
+            => Ok(await _mediator.Send(new GetMasterDataQuery()));
     }
 }

@@ -1,16 +1,26 @@
 ﻿using MediatR;
 
-public class UpdateTpaMasterCommand : IRequest<string>
+public class UpdateTpaMasterCommand : IRequest<bool>
 {
-    public int TPA_Id { get; set; }
-    public string TP_Name { get; set; }
-    public string License_Number { get; set; }
-    public string License_Validity { get; set; }
-    public string Chief_Executive_Officer { get; set; }
-    public string TPA_Address { get; set; }
-    public string Senior_Citizen_Helpline { get; set; }
-    public string Toll_Free_Number { get; set; }
-    public string TPA_Email { get; set; }
-    public string TPA_Website { get; set; }
-    public int UserId { get; set; }
+    public int Tpaid { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string? ContactNumber { get; set; }
+
+    public string? FaxNumber { get; set; }
+
+    public string? Ceo { get; set; }
+
+    public string? LicenseNumber { get; set; }
+
+    public DateTime? LicenseValidTill { get; set; }
+
+    public string Address { get; set; } = null!;
+
+    public string? Email { get; set; }
+
+    public string? WebSite { get; set; }
+
+    public bool? IsActive { get; set; }
 }

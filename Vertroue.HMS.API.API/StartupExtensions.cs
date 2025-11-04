@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Vertroue.HMS.API.Api
 {
@@ -19,6 +20,11 @@ namespace Vertroue.HMS.API.Api
         this WebApplicationBuilder builder, IConfiguration configuration)
         {
             AddSwagger(builder.Services, configuration);
+
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 1073741824; // 1GB limit in bytes
+            });
 
             // TODO: Add below lines once we have APP Insights ready
             //var aiOptions = new ApplicationInsightsServiceOptions

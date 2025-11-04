@@ -31,16 +31,12 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
             var user = new UserHashed
             {
                 UserName = request.UserName,
-                PasswordHash = userMaster.UserPassword
+                PasswordHash = userMaster.Password
             };
             var passwordHasher = new PasswordHasher<UserHashed>();
             var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
 
             if (result != PasswordVerificationResult.Success)
-                throw new UnauthorizedAccessException();
-
-            var validateLoginResult = await _userMasterRepository.ValidateLoginAsync(request.UserName, request.Password, request.UserRole);
-            if (validateLoginResult == null)
                 throw new UnauthorizedAccessException();
 
             // Create JWT TOKEN
@@ -50,15 +46,11 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Role, userMaster.UserRole?.User_role_Name ?? "User"),
-                    new Claim("CorporateName", userMaster.Corporate?.Corporate_Name ?? "User"),
-                    new Claim("UserTypeName", userMaster.UserType?.User_Type_Name ?? "User"),
-                    new Claim("UserTypeId", userMaster.UserType?.User_Type_id.ToString() ?? "User"),
-                    new Claim("CorporateId", userMaster.Corporate?.Corporate_Id.ToString() ?? "User"),
-                    new Claim("UserRoleId", userMaster.UserRole?.User_Role_id.ToString() ?? "User"),
-                    new Claim("UserLoginId", userMaster.User_Login_id.ToString() ?? "User"),
+                    new Claim(ClaimTypes.Role, userMaster.UserRole?.Name ?? "GUEST"),
+                    new Claim("HospitalID", userMaster.HospitalId?.ToString() ?? "NONE"),
+                    new Claim("UserName", userMaster.Name ?? "No NAME"),
                     }),
-                Expires = DateTime.UtcNow.AddHours(8),
+                Expires = DateTime.Now.AddHours(14),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -68,7 +60,10 @@ namespace Vertroue.HMS.API.Application.Features.Users.Commands.Login
             return new LoginResponse { 
                 Token = tokenString, 
                 UserName = user.UserName, 
-                UserRole = validateLoginResult.UserRoleName 
+                UserRole = userMaster.UserRole?.Name ?? "GUEST",
+                HospitalId = userMaster.HospitalId ?? 0,
+                FullName = userMaster.Name ?? string.Empty,
+                HospitalName = userMaster.Hospital?.Name ?? string.Empty,                
             };
         }
     }

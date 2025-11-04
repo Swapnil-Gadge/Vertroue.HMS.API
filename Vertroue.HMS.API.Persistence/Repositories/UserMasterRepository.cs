@@ -16,16 +16,22 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             _config = config;
         }
 
-        public async Task<UserMaster> GetUserDetails(string userName)
+        public async Task<User> GetUserDetails(string userName)
         {
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentNullException("Username is empty");
 
-            return await _dbContext.User_Master
-                .Include(u => u.Corporate)
+            return await _dbContext.Users
                 .Include(u => u.UserRole)
-                .Include(u => u.UserType)
-                .FirstOrDefaultAsync(u => u.UserName.ToLower() == userName.ToLower());
+                .Include(u => u.Hospital)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.UserLoginId.ToLower() == userName.ToLower());
+        }
+
+        public async Task UpdateUser(User user)
+        {
+            _dbContext.Entry(user).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<LoginResponseDto> ValidateLoginAsync(string userId, string password, string userType)

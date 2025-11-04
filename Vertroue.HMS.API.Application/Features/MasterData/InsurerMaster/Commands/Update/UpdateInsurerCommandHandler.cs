@@ -4,7 +4,7 @@ using Vertroue.HMS.API.Application.Contracts.Persistence;
 
 namespace Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Update
 {
-    public class UpdateInsurerCommandHandler : IRequestHandler<UpdateInsurerCommand, string>
+    public class UpdateInsurerCommandHandler : IRequestHandler<UpdateInsurerCommand, bool>
     {
         private readonly IMasterDataRepository _repository;
 
@@ -13,9 +13,9 @@ namespace Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Command
             _repository = repository;
         }
 
-        public async Task<string> Handle(UpdateInsurerCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateInsurerCommand request, CancellationToken cancellationToken)
         {
-            return await _repository.ManageInsurerAsync(request, 'U');
+            return await _repository.AddUpdateInsuranceCompany(request);
         }
     }
 }

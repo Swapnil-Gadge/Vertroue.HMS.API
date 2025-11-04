@@ -17,6 +17,7 @@ using Vertroue.HMS.API.Application.Features.MasterData.TpaMaster.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.UserRole.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.UserType.Model;
 using Vertroue.HMS.API.Application.Features.MasterData.Zones.Model;
+using Vertroue.HMS.API.Domain.Entities;
 
 namespace Vertroue.HMS.API.Application.Contracts.Persistence
 {
@@ -42,8 +43,8 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<List<GenderDto>> FetchGendersAsync();
         Task<string> ManageIdentificationTypeAsync(object command, char action);
         Task<List<IdentificationTypeDto>> FetchIdentificationTypesAsync();
-        Task<string> ManageInsurerAsync(object request, char action);
-        Task<List<InsurerDto>> FetchInsurersAsync();
+        Task<bool> AddUpdateInsuranceCompany(object command);
+        Task<List<InsuranceCompany>> FetchInsurersAsync();
         Task<string> ManageRelationMasterAsync(dynamic data, char action);
         Task<List<RelationMasterDto>> FetchRelationMasterAsync();
         Task<string> ManageStateMasterAsync(object request, char action);
@@ -53,7 +54,7 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<string> ManageStatusProcessFlowAsync(object request, char action);
         Task<List<StatusProcessFlowDto>> FetchStatusProcessFlowAsync();
         Task<string> ManageTpaMasterAsync(object request, char action);
-        Task<List<TpaMasterDto>> FetchTpaMasterAsync();
+        Task<List<Tpa>> FetchTpaMasterAsync();
         Task<string> ManageUserRoleMasterAsync(object request, char action);
         Task<List<UserRoleDto>> FetchUserRoleMasterAsync();
 
@@ -63,6 +64,12 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<string> ManageZoneMasterAsync(object request, char action);
         Task<List<ZoneDto>> FetchZoneMasterAsync();
         Task<List<MenuHtmlDto>> FetchMenuHtmlAsync(GetMenuHtmlQuery request);
+        Task<Tpa> GetTpaAsync(int tpaId);
+        Task<bool> AddUpdateTPA(object request);
+        Task<bool> DisableInsuranceCompany(int insuranceCompanyId);
+        Task<bool> DisableTPA(int tpaId);
+        Task<InsuranceCompany> GetInsuranceCompanyAsync(int insuranceCompanyId);
+        Task<(List<CitiesMaster>, List<StatesMaster>, List<AdmissionType>, List<ClaimStatusMaster>, List<DischargeType>, List<LineOfTreatment>, List<MedicalHistoriesMaster>, List<RoomType>, List<Tpa>, List<InsuranceCompany>, List<UserRole>)> GetMasterData();
     }
 }
 

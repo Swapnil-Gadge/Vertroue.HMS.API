@@ -19,7 +19,13 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             return t;
         }
 
-        public async Task<IReadOnlyList<T>> ListAllAsync()
+        public virtual async Task<T?> GetByIdAsync(int id)
+        {
+            T? t = await _dbContext.Set<T>().FindAsync(id);
+            return t;
+        }
+
+        public virtual async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return await _dbContext.Set<T>().AsNoTracking().ToListAsync();
         }
@@ -46,6 +52,16 @@ namespace Vertroue.HMS.API.Persistence.Repositories
         public async Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DisableEntity(int id)
+        {
+            var entity = await _dbContext.Set<T>().FindAsync(id);
+            if (entity == null)
+                throw new KeyNotFoundException($"Entity with ID {id} not found.");
+
+            _dbContext.Entry(entity).Property("IsActive").CurrentValue = false;
             await _dbContext.SaveChangesAsync();
         }
     }

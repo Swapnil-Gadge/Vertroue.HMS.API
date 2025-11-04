@@ -1,6 +1,8 @@
-﻿using System.Security.Claims;
+﻿using Azure.Core;
+using System.Security.Claims;
 using Vertroue.HMS.API.Application.Contracts;
 using Vertroue.HMS.API.Application.Extensions;
+using Vertroue.HMS.API.Application.Shared;
 
 namespace Vertroue.HMS.API.Api.Services
 {
@@ -17,6 +19,33 @@ namespace Vertroue.HMS.API.Api.Services
             get
             {      
                 return _contextAccessor.HttpContext?.User?.Identity?.Name;
+            }
+        }
+
+        public string UserRole
+        {
+            get
+            {
+                return (_contextAccessor.HttpContext?.User?.Identity as ClaimsIdentity)
+                    .Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? string.Empty;
+            }
+        }
+
+        public int HospitalId
+        {
+            get
+            {
+                return (_contextAccessor.HttpContext?.User?.Identity as ClaimsIdentity)
+                    .Claims.FirstOrDefault(c => c.Type == "HospitalId")?.Value.ToInt32() ?? 0;
+            }
+        }
+
+        public string? UserName
+        {
+            get
+            {
+                return (_contextAccessor.HttpContext?.User?.Identity as ClaimsIdentity)
+                    .Claims.FirstOrDefault(c => c.Type == "UserName")?.Value.ToString() ?? null;
             }
         }
 
@@ -47,13 +76,9 @@ namespace Vertroue.HMS.API.Api.Services
             }
         }
 
-        public string UserRole
+        public bool IsUserUnauthorizedToPerformOperation(int hospitalId)
         {
-            get
-            {
-                return (_contextAccessor.HttpContext?.User?.Identity as ClaimsIdentity)
-                    .Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? string.Empty;
-            }
+            return this.HospitalId != hospitalId && UserRole != Constant.UserRoles.ProviderAdmin;
         }
     }
 }

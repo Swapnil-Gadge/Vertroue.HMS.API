@@ -1,7 +1,6 @@
 ﻿using MediatR;
 
-public class DeactivateTpaMasterCommand : IRequest<string>
+public class DeactivateTpaMasterCommand : IRequest<bool>
 {
-    public int TPA_Id { get; set; }
-    public int UserId { get; set; }
+    public int TPAId { get; set; }
 }

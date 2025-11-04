@@ -3,9 +3,8 @@ using MediatR;
 
 namespace Vertroue.HMS.API.Application.Features.MasterData.InsurerMaster.Commands.Deactivate
 {
-    public class DeactivateInsurerCommand : IRequest<string>
+    public class DeactivateInsurerCommand : IRequest<bool>
     {
-        public int InsurerId { get; set; }
-        public int UserId { get; set; }
+        public int InsuranceCompanyId { get; set; }
     }
 }
