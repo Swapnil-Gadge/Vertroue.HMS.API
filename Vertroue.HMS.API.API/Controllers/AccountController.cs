@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Vertroue.HMS.API.Application.Features.Users.Commands.Login;
 using Vertroue.HMS.API.Application.Features.Users.Commands.Register;
 using Vertroue.HMS.API.Application.Features.Users.Commands.UpdatePassword;
-using Vertroue.HMS.API.Application.Features.Users.Queries.ValidateLogin;
 using Vertroue.HMS.API.Application.Responses;
 
 namespace Vertroue.HMS.API.API.Controllers
@@ -20,6 +19,7 @@ namespace Vertroue.HMS.API.API.Controllers
             _mediator = mediator;
         }
 
+        // TODO: Remove this endoiint, this is there just because we want to create provider admin login
         //[Authorize]
         [HttpPost("register")]
         public async Task<ActionResult<BaseResponse>> Register(string userName, string password)
@@ -38,22 +38,6 @@ namespace Vertroue.HMS.API.API.Controllers
         {
             var response = await _mediator.Send(command);
             return Ok(response);
-        }
-
-        [HttpGet("validate-login")]
-        public async Task<IActionResult> ValidateLogin([FromQuery] string UserId, [FromQuery] string UserPass, [FromQuery] string UserType)
-        {
-            var query = new ValidateLoginQuery
-            {
-                UserId = UserId,
-                Password = UserPass,
-                UserType = UserType
-            };
-            var result = await _mediator.Send(query);
-            if (result == null)
-                return Unauthorized("Invalid credentials");
-
-            return Ok(result);
         }
 
         [Authorize]
