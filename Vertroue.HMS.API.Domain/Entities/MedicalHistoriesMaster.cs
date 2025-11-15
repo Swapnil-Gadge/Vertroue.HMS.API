@@ -6,5 +6,5 @@ public partial class MedicalHistoriesMaster
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<MedicalHistory> MedicalHistories { get; } = new List<MedicalHistory>();
+    //public virtual ICollection<MedicalHistory> MedicalHistories { get; } = new List<MedicalHistory>();
 }

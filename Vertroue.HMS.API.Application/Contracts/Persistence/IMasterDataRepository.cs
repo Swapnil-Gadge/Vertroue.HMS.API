@@ -68,8 +68,11 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<bool> AddUpdateTPA(object request);
         Task<bool> DisableInsuranceCompany(int insuranceCompanyId);
         Task<bool> DisableTPA(int tpaId);
+        Task<List<TreatmentsMaster>> FetchTreatments();
+        Task<List<PackagesMaster>> FetPackagesForHospital(int hospitalId);
         Task<InsuranceCompany> GetInsuranceCompanyAsync(int insuranceCompanyId);
-        Task<(List<CitiesMaster>, List<StatesMaster>, List<AdmissionType>, List<ClaimStatusMaster>, List<DischargeType>, List<LineOfTreatment>, List<MedicalHistoriesMaster>, List<RoomType>, List<Tpa>, List<InsuranceCompany>, List<UserRole>)> GetMasterData();
+        Task<(List<CitiesMaster>, List<StatesMaster>, List<AdmissionType>, List<ClaimStatusMaster>, List<DischargeType>, List<LineOfTreatment>, List<MedicalHistoriesMaster>, List<RoomType>, List<Tpa>, List<InsuranceCompany>, List<UserRole>, List<Hospital>, List<EmpanelledTpa>,
+            List<EmpanelledInsuranceCompany>, List<DoctorsMaster>)> GetMasterData(int? hospitalId);
     }
 }
 

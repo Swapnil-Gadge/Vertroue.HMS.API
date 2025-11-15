@@ -1266,7 +1266,34 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             return result;
         }
 
-        public async Task<(List<CitiesMaster>, List<StatesMaster>, List<AdmissionType>, List<ClaimStatusMaster>, List<DischargeType>, List<LineOfTreatment>, List<MedicalHistoriesMaster>, List<RoomType>, List<Tpa>, List<InsuranceCompany>, List<UserRole>)> GetMasterData()
+        public async Task<List<TreatmentsMaster>> FetchTreatments()
+        {
+            return await _dbContext.TreatmentsMasters.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<PackagesMaster>> FetPackagesForHospital(int hospitalId)
+        {
+            return await _dbContext.PackagesMasters
+                .Where(p => p.HospitalId == hospitalId)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<(
+            List<CitiesMaster>, 
+            List<StatesMaster>, 
+            List<AdmissionType>, 
+            List<ClaimStatusMaster>, 
+            List<DischargeType>, 
+            List<LineOfTreatment>, 
+            List<MedicalHistoriesMaster>, 
+            List<RoomType>, List<Tpa>, 
+            List<InsuranceCompany>,
+            List<UserRole>, 
+            List<Hospital>,
+            List<EmpanelledTpa>,
+            List<EmpanelledInsuranceCompany>,
+            List<DoctorsMaster>)> GetMasterData(int? hospitalId)
         {
             var cities = await _dbContext.CitiesMasters.AsNoTracking().ToListAsync();
             var states = await _dbContext.StatesMasters.AsNoTracking().ToListAsync();
@@ -1279,7 +1306,19 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             var tpas = await _dbContext.Tpas.AsNoTracking().ToListAsync();
             var insuranceCompanies = await _dbContext.InsuranceCompanies.AsNoTracking().ToListAsync();
             var userRoles = await _dbContext.UserRoles.AsNoTracking().ToListAsync();
-            return (cities, states, admissionTypes, claimStatuses, dischargeTypes, lineOfTreatments, medicalHistories, roomTypes, tpas, insuranceCompanies, userRoles);
+            var hospitals = await _dbContext.Hospitals.AsNoTracking().ToListAsync();
+            var empanelledTpas = await _dbContext.EmpanelledTpas.Include(e => e.Tpa)
+                .Where(e => (hospitalId.HasValue && e.HospitalId == hospitalId.Value) || true)
+                .AsNoTracking()
+                .ToListAsync();
+            var empanelledInsuranceCompanies = await _dbContext.EmpanelledInsuranceCompanies.Include(e => e.InsuranceCompany)
+                .Where(e => (hospitalId.HasValue && e.HospitalId == hospitalId.Value) || true)
+                .AsNoTracking()
+                .ToListAsync();
+            var doctorsMaster = await _dbContext.DoctorsMasters
+                .Where(d => (hospitalId.HasValue && d.HospitalId == hospitalId.Value) || true)
+                .AsNoTracking().ToListAsync();
+            return (cities, states, admissionTypes, claimStatuses, dischargeTypes, lineOfTreatments, medicalHistories, roomTypes, tpas, insuranceCompanies, userRoles, hospitals, empanelledTpas, empanelledInsuranceCompanies, doctorsMaster);
         }
     }
 }

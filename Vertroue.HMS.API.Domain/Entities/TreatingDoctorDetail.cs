@@ -20,6 +20,4 @@ public partial class TreatingDoctorDetail
     public DateTime? LastUpdatedDate { get; set; }
 
     public virtual DoctorsMaster? Doctor { get; set; }
-
-    public virtual Patient? Patient { get; set; }
 }

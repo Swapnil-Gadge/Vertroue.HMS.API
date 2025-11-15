@@ -15,6 +15,4 @@ public partial class RoomType
     public string? LastUpdatedBy { get; set; }
 
     public DateTime? LastUpdatedDate { get; set; }
-
-    public virtual ICollection<Patient> Patients { get; } = new List<Patient>();
 }

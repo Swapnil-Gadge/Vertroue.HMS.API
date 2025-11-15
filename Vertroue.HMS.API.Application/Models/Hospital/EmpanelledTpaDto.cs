@@ -8,6 +8,10 @@
 
         public string TpaName { get; set; } = null!;
 
+        public string? ContactNumber { get; set; }
+
+        public string? FaxNumber { get; set; }
+
         public DateTime? EmpanelledDate { get; set; }
 
         public string Portal { get; set; } = null!;

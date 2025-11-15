@@ -30,6 +30,7 @@ using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetDoctorsQuery;
 using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetEmapnelledTpaQuery;
 using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetEmpanelledInsuranceCompanyQuery;
 using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetHospital;
+using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetHospitalData;
 using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetHospitals;
 using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetMous;
 using Vertroue.HMS.API.Application.Features.Hospital.Queries.GetRenewals;
@@ -382,6 +383,15 @@ namespace Vertroue.HMS.API.API.Controllers
         public async Task<ActionResult<List<UserDto>>> GetUsers([FromQuery] int hospitalId, [FromQuery] int? userId)
         {
             var result = await _mediator.Send(new GetUsersQuery { HospitalId = hospitalId, UserId = userId });
+            return Ok(result);
+        }
+        #endregion
+
+        #region Hospital Data
+        [HttpGet("getHospitalData")]
+        public async Task<ActionResult<GetHospitalDataResponse>> GetHospitalData([FromQuery] int hospitalId)
+        {
+            var result = await _mediator.Send(new GetHospitalDataQuery { HospitalId = hospitalId });
             return Ok(result);
         }
         #endregion

@@ -26,5 +26,13 @@ namespace Vertroue.HMS.API.Application.Features.MasterData.MasterData.Queries.Ge
         public List<InsuranceCompanyDto> InsuranceCompanies { get; set; }
 
         public List<UserRoleDto> UserRoles { get; set; }
+
+        public List<HospitalDto> Hospitals { get; set; }
+
+        public List<EmpanelledInsuranceCompanyDto> EmpanelledInsuranceCompanies { get; set; }
+
+        public List<EmpanelledTpaDto> EmpanelledTpas { get; set; }
+
+        public List<DoctorDto> Doctors { get; set; }
     }
 }

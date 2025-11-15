@@ -17,5 +17,5 @@ public partial class PackagesMaster
 
     public virtual Hospital? Hospital { get; set; }
 
-    public virtual ICollection<Package> Packages { get; } = new List<Package>();
+    public virtual ICollection<ClaimFlow> ClaimFlows { get; } = new List<ClaimFlow>();
 }

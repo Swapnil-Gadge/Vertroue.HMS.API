@@ -11,5 +11,5 @@ public partial class TparesponseCode
 
     public string? QueryDescription { get; set; }
 
-    public virtual ICollection<Tparesponse> Tparesponses { get; } = new List<Tparesponse>();
+    public virtual ICollection<ClaimFlow> ClaimFlows { get; } = new List<ClaimFlow>();
 }

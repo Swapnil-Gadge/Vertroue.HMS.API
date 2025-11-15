@@ -28,5 +28,7 @@ public partial class DoctorsMaster
 
     public virtual Hospital? Hospital { get; set; }
 
+    public virtual ICollection<Patient> Patients { get; } = new List<Patient>();
+
     public virtual ICollection<TreatingDoctorDetail> TreatingDoctorDetails { get; } = new List<TreatingDoctorDetail>();
 }

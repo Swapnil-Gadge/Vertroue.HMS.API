@@ -5,6 +5,8 @@
         public int EmpanelledInsCompId { get; set; }
         public int? InsuranceCompanyId { get; set; }
         public string InsuranceCompanyName { get; set; } = null!;
+        public string? ContactNumber { get; set; }
+        public string? FaxNumber { get; set; }
         public DateTime? EmpanelledDate { get; set; }
         public string Portal { get; set; } = null!;
         public string? UserName { get; set; }

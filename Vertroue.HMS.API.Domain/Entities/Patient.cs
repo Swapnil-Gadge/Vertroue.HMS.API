@@ -8,11 +8,13 @@ public partial class Patient
 
     public int? InsuranceCompanyId { get; set; }
 
+    public int TreatingDoctorId { get; set; }
+
     public int? Tpaid { get; set; }
 
     public string? TpaclaimId { get; set; }
 
-    public string? Name { get; set; }
+    public string? PatientName { get; set; }
 
     public string? Gender { get; set; }
 
@@ -26,15 +28,15 @@ public partial class Patient
 
     public string? RelativeContactNumber { get; set; }
 
-    public string? HealthCardNumber { get; set; }
+    public string? InsuredCardNumber { get; set; }
 
     public string? PolicyNumber { get; set; }
 
-    public string? CorporateName { get; set; }
+    public string? CompanyName { get; set; }
 
     public string? EmployeeId { get; set; }
 
-    public bool? HasOtherInsurance { get; set; }
+    public bool? CurrentlyWithOtherMedician { get; set; }
 
     public string? OtherInsuranceCompany { get; set; }
 
@@ -44,67 +46,145 @@ public partial class Patient
 
     public string? FamilyPhysicianContact { get; set; }
 
-    public string? NatureOfIllness { get; set; }
+    public string? IllnessNature { get; set; }
 
     public string? ClinicalFindings { get; set; }
 
-    public int? DurationOfAilment { get; set; }
+    public int? PresentAilmentDuration { get; set; }
 
-    public DateTime? DateOfFirstConsultation { get; set; }
+    public DateTime? FirstConsultationDate { get; set; }
 
-    public string? PastHistoryOfAilment { get; set; }
+    public string? PastHistoryAilment { get; set; }
 
     public string? ProvisionalDiagnosis { get; set; }
 
-    public string? Icd10code { get; set; }
+    public string? Icd11Code { get; set; }
 
-    public int? LineOfTreatmentId { get; set; }
+    public string? TreatmentLine { get; set; }
 
-    public string? InvestigationOrMedicalManagementDetails { get; set; }
+    public string? InvestigationDetails { get; set; }
 
-    public string? RouteOfDrugAdmin { get; set; }
+    public string? DrugAdministrationRoute { get; set; }
 
-    public string? NameOfSurgery { get; set; }
+    public string? SurgicalDetails { get; set; }
 
-    public string? Icd10pcscode { get; set; }
+    public string? Icd10PcsCode { get; set; }
 
     public string? OtherTreatmentDetails { get; set; }
 
-    public string? HowInjuryOccured { get; set; }
-
-    public string? Maternity { get; set; }
-
-    public DateTime? DueDate { get; set; }
+    public string? InjuryOccurrence { get; set; }
 
     public DateTime? AdmissionDate { get; set; }
 
-    public int? AdmissionTypeId { get; set; }
+    public TimeSpan? AdmissionTime { get; set; }
+
+    public string? AdmissionType { get; set; }
 
     public int? ExpectedStayDays { get; set; }
 
-    public int? RoomTypeId { get; set; }
+    public string? RoomType { get; set; }
 
     public decimal? ExpectedCost { get; set; }
 
-    public decimal? PerDayCharges { get; set; }
+    public decimal? PerDayRoomRent { get; set; }
 
-    public decimal? Icucharges { get; set; }
+    public decimal? IcuCharges { get; set; }
 
-    public decimal? Otcharges { get; set; }
+    public decimal? OtCharges { get; set; }
 
-    public decimal? ProfessionalCharges { get; set; }
+    public decimal? ExpectedInvestigationCost { get; set; }
 
-    public decimal? MedicineCost { get; set; }
+    public decimal? ConsultationCharges { get; set; }
 
-    public decimal? AllInclusivePackageCharges { get; set; }
+    public decimal? MedicinesConsumables { get; set; }
 
-    public decimal? TotalCostToHospital { get; set; }
+    public decimal? AllInclusivePackageRs { get; set; }
 
-    public string? AnyOtherAilment { get; set; }
+    public decimal? TotalExpectedCost { get; set; }
+
+    public bool? AccidentCase { get; set; }
+
+    public bool? AccidentIsRta { get; set; }
+
+    public bool? AccidentReportedToPolice { get; set; }
+
+    public string? AccidentFirNumber { get; set; }
+
+    public DateTime? AccidentInjuryDate { get; set; }
+
+    public bool? SubstanceAbuse { get; set; }
+
+    public string? SubstanceAbuseReports { get; set; }
+
+    public bool? MaternityCase { get; set; }
+
+    public string? MaternityType { get; set; }
+
+    public DateTime? DeliveryDate { get; set; }
+
+    public bool? Diabetes { get; set; }
+
+    public int? DiabetesMonths { get; set; }
+
+    public int? DiabetesYears { get; set; }
+
+    public bool? HeartDisease { get; set; }
+
+    public int? HeartDiseaseMonths { get; set; }
+
+    public int? HeartDiseaseYears { get; set; }
+
+    public bool? Hypertension { get; set; }
+
+    public int? HypertensionMonths { get; set; }
+
+    public int? HypertensionYears { get; set; }
+
+    public bool? Hyperlipidemia { get; set; }
+
+    public int? HyperlipidemiaMonths { get; set; }
+
+    public int? HyperlipidemiaYears { get; set; }
+
+    public bool? Osteoarthritis { get; set; }
+
+    public int? OsteoarthritisMonths { get; set; }
+
+    public int? OsteoarthritisYears { get; set; }
+
+    public bool? AsthmaCopd { get; set; }
+
+    public int? AsthmaCopdMonths { get; set; }
+
+    public int? AsthmaCopdYears { get; set; }
+
+    public bool? Cancer { get; set; }
+
+    public int? CancerMonths { get; set; }
+
+    public int? CancerYears { get; set; }
+
+    public bool? AlcoholDrugAbuse { get; set; }
+
+    public int? AlcoholDrugAbuseMonths { get; set; }
+
+    public int? AlcoholDrugAbuseYears { get; set; }
+
+    public bool? HivStdAilment { get; set; }
+
+    public int? HivStdAilmentMonths { get; set; }
+
+    public int? HivStdAilmentYears { get; set; }
+
+    public string? OtherAilmentDetails { get; set; }
 
     public DateTime? DischargeDate { get; set; }
 
     public int? DischargeTypeId { get; set; }
+
+    public string? ClaimStatus { get; set; }
+
+    public DateTime? SubmitedDate { get; set; }
 
     public string? CreatedBy { get; set; }
 
@@ -114,35 +194,17 @@ public partial class Patient
 
     public DateTime? LastUpdatedDate { get; set; }
 
-    public virtual ICollection<AccidentDetail> AccidentDetails { get; } = new List<AccidentDetail>();
-
-    public virtual AdmissionType? AdmissionType { get; set; }
-
-    public virtual ICollection<Claim> Claims { get; } = new List<Claim>();
-
     public virtual DischargeType? DischargeType { get; set; }
-
-    public virtual ICollection<FileFlow> FileFlows { get; } = new List<FileFlow>();
 
     public virtual Hospital Hospital { get; set; } = null!;
 
     public virtual InsuranceCompany? InsuranceCompany { get; set; }
 
-    public virtual LineOfTreatment? LineOfTreatment { get; set; }
-
-    public virtual ICollection<MedicalHistory> MedicalHistories { get; } = new List<MedicalHistory>();
-
-    public virtual ICollection<Package> Packages { get; } = new List<Package>();
-
-    public virtual RoomType? RoomType { get; set; }
-
     public virtual Tpa? Tpa { get; set; }
 
-    public virtual ICollection<Tparesponse> Tparesponses { get; } = new List<Tparesponse>();
-
-    public virtual ICollection<TreatingDoctorDetail> TreatingDoctorDetails { get; } = new List<TreatingDoctorDetail>();
-
-    public virtual ICollection<Treatment> Treatments { get; } = new List<Treatment>();
+    public virtual DoctorsMaster TreatingDoctorDetails { get; }
 
     public virtual ICollection<PatientDoc> PatientDocs { get; } = new List<PatientDoc>();
+
+    public virtual ICollection<ClaimFlow> ClaimFlows { get; } = new List<ClaimFlow>();
 }

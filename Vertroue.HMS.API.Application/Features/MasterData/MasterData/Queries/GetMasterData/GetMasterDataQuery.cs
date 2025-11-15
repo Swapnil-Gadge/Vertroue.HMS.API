@@ -4,5 +4,6 @@ namespace Vertroue.HMS.API.Application.Features.MasterData.MasterData.Queries.Ge
 {
     public class GetMasterDataQuery : IRequest<GetMasterDataQueryResponse>
     {
+        public int? HospitalId { get; set; }
     }
 }

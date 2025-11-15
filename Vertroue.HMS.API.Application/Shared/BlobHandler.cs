@@ -53,11 +53,11 @@ namespace Vertroue.HMS.API.Application.Shared
             return blobClient.Uri;
         }
 
-        public async Task<bool> RemoveAsync(string fileUri)
+        public async Task<bool> RemoveAsync(string fileUri, string containerName)
         {
             var uri = new Uri(fileUri);
             var fileName = uri.Segments.LastOrDefault() ?? string.Empty;
-            var container = _blobServiceClient.GetBlobContainerClient(Constant.RenewalDocsContainer);
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
             var blob = container.GetBlobClient(fileName);
             return await blob.DeleteIfExistsAsync();
         }

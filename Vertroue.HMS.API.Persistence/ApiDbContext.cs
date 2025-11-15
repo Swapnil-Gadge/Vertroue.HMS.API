@@ -1,5 +1,4 @@
 ﻿using Vertroue.HMS.API.Application.Contracts;
-using Vertroue.HMS.API.Domain.Common;
 using Vertroue.HMS.API.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
@@ -50,29 +49,19 @@ namespace Vertroue.HMS.API.Persistence
 
         public virtual DbSet<User> Users { get; set; }
 
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-
-        public virtual DbSet<AccidentDetail> AccidentDetails { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }  
 
         public virtual DbSet<AdmissionType> AdmissionTypes { get; set; }
-
-        public virtual DbSet<Claim> Claims { get; set; }
-
+                
         public virtual DbSet<ClaimStatusMaster> ClaimStatusMasters { get; set; }
 
         public virtual DbSet<DischargeType> DischargeTypes { get; set; }
 
         public virtual DbSet<DoctorsMaster> DoctorsMasters { get; set; }
 
-        public virtual DbSet<FileFlow> FileFlows { get; set; }
-
         public virtual DbSet<LineOfTreatment> LineOfTreatments { get; set; }
 
         public virtual DbSet<MedicalHistoriesMaster> MedicalHistoriesMasters { get; set; }
-
-        public virtual DbSet<MedicalHistory> MedicalHistories { get; set; }
-
-        public virtual DbSet<Package> Packages { get; set; }
 
         public virtual DbSet<PackagesMaster> PackagesMasters { get; set; }
 
@@ -80,15 +69,15 @@ namespace Vertroue.HMS.API.Persistence
 
         public virtual DbSet<PatientDoc> PatientDocs { get; set; }
 
-        public virtual DbSet<Tparesponse> Tparesponses { get; set; }
-
         public virtual DbSet<TparesponseCode> TparesponseCodes { get; set; }
 
         public virtual DbSet<TreatingDoctorDetail> TreatingDoctorDetails { get; set; }
 
-        public virtual DbSet<Treatment> Treatments { get; set; }
-
         public virtual DbSet<TreatmentsMaster> TreatmentsMasters { get; set; }
+
+        public virtual DbSet<ClaimFlow> ClaimFlows { get; set; }
+
+        public virtual DbSet<ClaimFlowDoc> ClaimFlowDocs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -506,32 +495,6 @@ namespace Vertroue.HMS.API.Persistence
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<AccidentDetail>(entity =>
-            {
-                entity.HasKey(e => e.AccidentId).HasName("PK__Accident__8133DE8F6FBDDC99");
-
-                entity.Property(e => e.AccidentId).HasColumnName("AccidentID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.DateOfInjury).HasColumnType("date");
-                entity.Property(e => e.Firnumber)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("FIRNumber");
-                entity.Property(e => e.IsRta).HasColumnName("IsRTA");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.AccidentDetails)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__AccidentD__Patie__0AF29B96");
-            });
-
             modelBuilder.Entity<AdmissionType>(entity =>
             {
                 entity.HasKey(e => e.AdmissionTypeId).HasName("PK__Admissio__05B4DA4DEBB9C3E9");
@@ -540,35 +503,6 @@ namespace Vertroue.HMS.API.Persistence
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Claim>(entity =>
-            {
-                entity.HasKey(e => e.ClaimId).HasName("PK__Claims__EF2E13BBCFB480F4");
-
-                entity.Property(e => e.ClaimId).HasColumnName("ClaimID");
-                entity.Property(e => e.ApprovedAmount).HasColumnType("decimal(10, 2)");
-                entity.Property(e => e.ClaimStatusMasterId).HasColumnName("ClaimStatusMasterID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.FinalSettlementAmount).HasColumnType("decimal(10, 2)");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.PatientPayableAmount).HasColumnType("decimal(10, 2)");
-                entity.Property(e => e.SubmittedDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.ClaimStatusMaster).WithMany(p => p.Claims)
-                    .HasForeignKey(d => d.ClaimStatusMasterId)
-                    .HasConstraintName("FK__Claims__ClaimSta__64CCF2AE");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.Claims)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__Claims__PatientI__65C116E7");
             });
 
             modelBuilder.Entity<ClaimStatusMaster>(entity =>
@@ -627,37 +561,6 @@ namespace Vertroue.HMS.API.Persistence
                     .HasConstraintName("FK__DoctorsM__Hospit__39E294A9");
             });
 
-            modelBuilder.Entity<FileFlow>(entity =>
-            {
-                entity.HasKey(e => e.FileFlowId).HasName("PK__FileFlow__3D2A862ABBF7B240");
-
-                entity.ToTable("FileFlow");
-
-                entity.Property(e => e.FileFlowId).HasColumnName("FileFlowID");
-                entity.Property(e => e.ClaimStatusMasterId).HasColumnName("ClaimStatusMasterID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.DateUpdated).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.Status)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ClaimStatusMaster).WithMany(p => p.FileFlows)
-                    .HasForeignKey(d => d.ClaimStatusMasterId)
-                    .HasConstraintName("FK__FileFlow__ClaimS__7D98A078");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.FileFlows)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__FileFlow__Patien__7E8CC4B1");
-            });
-
             modelBuilder.Entity<LineOfTreatment>(entity =>
             {
                 entity.HasKey(e => e.LineOfTreatmentId).HasName("PK__LineOfTr__58AEDE0C9152C642");
@@ -678,69 +581,6 @@ namespace Vertroue.HMS.API.Persistence
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<MedicalHistory>(entity =>
-            {
-                entity.HasKey(e => e.HistoryId).HasName("PK__MedicalH__4D7B4ADD035C856C");
-
-                entity.ToTable("MedicalHistory");
-
-                entity.Property(e => e.HistoryId).HasColumnName("HistoryID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.HistoryMasterId).HasColumnName("HistoryMasterID");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.SinceMonthYear)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.HistoryMaster).WithMany(p => p.MedicalHistories)
-                    .HasForeignKey(d => d.HistoryMasterId)
-                    .HasConstraintName("FK__MedicalHi__Histo__08162EEB");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.MedicalHistories)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__MedicalHi__Patie__07220AB2");
-            });
-
-            modelBuilder.Entity<Package>(entity =>
-            {
-                entity.HasKey(e => e.PackageId).HasName("PK__Packages__322035ECA2D3A667");
-
-                entity.Property(e => e.PackageId).HasColumnName("PackageID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PackageMasterId).HasColumnName("PackageMasterID");
-                entity.Property(e => e.PackageName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
-
-                entity.HasOne(d => d.PackageMaster).WithMany(p => p.Packages)
-                    .HasForeignKey(d => d.PackageMasterId)
-                    .HasConstraintName("FK__Packages__Packag__7226EDCC");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.Packages)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__Packages__Patien__731B1205");
-
-                entity.HasOne(d => d.Treatment).WithMany(p => p.Packages)
-                    .HasForeignKey(d => d.TreatmentId)
-                    .HasConstraintName("FK__Packages__Treatm__740F363E");
             });
 
             modelBuilder.Entity<PackagesMaster>(entity =>
@@ -769,121 +609,130 @@ namespace Vertroue.HMS.API.Persistence
                 entity.HasKey(e => e.PatientId).HasName("PK__Patients__970EC3461727349C");
 
                 entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
-                entity.Property(e => e.AdmissionTypeId).HasColumnName("AdmissionTypeID");
-                entity.Property(e => e.AllInclusivePackageCharges).HasColumnType("decimal(10, 2)");
-                entity.Property(e => e.AnyOtherAilment)
-                    .HasMaxLength(5000)
+                entity.Property(e => e.AccidentFirNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+                entity.Property(e => e.AccidentInjuryDate).HasColumnType("datetime");
+                entity.Property(e => e.AdmissionDate).HasColumnType("date");
+                entity.Property(e => e.AdmissionType)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+                entity.Property(e => e.AllInclusivePackageRs).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.ClaimStatus)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
                 entity.Property(e => e.ClinicalFindings)
                     .HasMaxLength(5000)
                     .IsUnicode(false);
+                entity.Property(e => e.CompanyName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+                entity.Property(e => e.ConsultationCharges).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.ContactNumber)
                     .HasMaxLength(20)
-                    .IsUnicode(false);
-                entity.Property(e => e.CorporateName)
-                    .HasMaxLength(255)
                     .IsUnicode(false);
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(250)
                     .IsUnicode(false);
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.SubmitedDate).HasColumnType("datetime");
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
-                entity.Property(e => e.DateOfFirstConsultation).HasColumnType("date");
+                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
                 entity.Property(e => e.DischargeDate).HasColumnType("datetime");
                 entity.Property(e => e.DischargeTypeId).HasColumnName("DischargeTypeID");
-                entity.Property(e => e.DueDate).HasColumnType("date");
+                entity.Property(e => e.TreatingDoctorId).HasColumnName("TreatingDoctorID");
+                entity.Property(e => e.DrugAdministrationRoute)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
                 entity.Property(e => e.EmployeeId)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("EmployeeID");
                 entity.Property(e => e.ExpectedCost).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.ExpectedInvestigationCost).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.FamilyPhysicianContact)
                     .HasMaxLength(20)
                     .IsUnicode(false);
                 entity.Property(e => e.FamilyPhysicianName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+                entity.Property(e => e.FirstConsultationDate).HasColumnType("date");
                 entity.Property(e => e.Gender)
                     .HasMaxLength(10)
                     .IsUnicode(false);
-                entity.Property(e => e.HealthCardNumber)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
                 entity.Property(e => e.HospitalId).HasColumnName("HospitalID");
-                entity.Property(e => e.HowInjuryOccured)
+                entity.Property(e => e.Icd10PcsCode)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+                entity.Property(e => e.Icd11Code)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+                entity.Property(e => e.IcuCharges).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.IllnessNature)
                     .HasMaxLength(5000)
                     .IsUnicode(false);
-                entity.Property(e => e.Icd10code)
-                    .HasMaxLength(25)
-                    .IsUnicode(false)
-                    .HasColumnName("ICD10Code");
-                entity.Property(e => e.Icd10pcscode)
-                    .HasMaxLength(25)
-                    .IsUnicode(false)
-                    .HasColumnName("ICD10PCSCode");
-                entity.Property(e => e.Icucharges)
-                    .HasColumnType("decimal(10, 2)")
-                    .HasColumnName("ICUCharges");
+                entity.Property(e => e.InjuryOccurrence)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false);
                 entity.Property(e => e.InsuranceCompanyId).HasColumnName("InsuranceCompanyID");
-                entity.Property(e => e.InvestigationOrMedicalManagementDetails)
+                entity.Property(e => e.InsuredCardNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.InvestigationDetails)
                     .HasMaxLength(1000)
                     .IsUnicode(false);
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
                 entity.Property(e => e.LastUpdatedBy)
                     .HasMaxLength(250)
                     .IsUnicode(false);
-                entity.Property(e => e.LineOfTreatmentId).HasColumnName("LineOfTreatmentID");
-                entity.Property(e => e.Maternity)
-                    .HasMaxLength(2)
+                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
+                entity.Property(e => e.MaternityType)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
-                entity.Property(e => e.MedicineCost).HasColumnType("decimal(10, 2)");
-                entity.Property(e => e.Name)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-                entity.Property(e => e.NameOfSurgery)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
-                entity.Property(e => e.NatureOfIllness)
+                entity.Property(e => e.MedicinesConsumables).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.OtCharges).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.OtherAilmentDetails)
                     .HasMaxLength(5000)
                     .IsUnicode(false);
-                entity.Property(e => e.Otcharges)
-                    .HasColumnType("decimal(10, 2)")
-                    .HasColumnName("OTCharges");
                 entity.Property(e => e.OtherInsuranceCompany)
                     .HasMaxLength(255)
                     .IsUnicode(false);
                 entity.Property(e => e.OtherTreatmentDetails)
                     .HasMaxLength(1000)
                     .IsUnicode(false);
-                entity.Property(e => e.PastHistoryOfAilment)
+                entity.Property(e => e.PastHistoryAilment)
                     .HasMaxLength(100)
                     .IsUnicode(false);
-                entity.Property(e => e.PerDayCharges).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.PatientName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+                entity.Property(e => e.PerDayRoomRent).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.PolicyNumber)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-                entity.Property(e => e.ProfessionalCharges).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.ProvisionalDiagnosis)
                     .HasMaxLength(1000)
                     .IsUnicode(false);
                 entity.Property(e => e.RelativeContactNumber)
                     .HasMaxLength(20)
                     .IsUnicode(false);
-                entity.Property(e => e.RoomTypeId).HasColumnName("RoomTypeID");
-                entity.Property(e => e.RouteOfDrugAdmin)
+                entity.Property(e => e.RoomType)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.SubstanceAbuseReports)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+                entity.Property(e => e.SurgicalDetails)
                     .HasMaxLength(1000)
                     .IsUnicode(false);
-                entity.Property(e => e.TotalCostToHospital).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.TotalExpectedCost).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.TpaclaimId)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("TPAClaimID");
                 entity.Property(e => e.Tpaid).HasColumnName("TPAID");
-
-                entity.HasOne(d => d.AdmissionType).WithMany(p => p.Patients)
-                    .HasForeignKey(d => d.AdmissionTypeId)
-                    .HasConstraintName("FK__Patients__Admiss__5F141958");
+                entity.Property(e => e.TreatmentLine)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.DischargeType).WithMany(p => p.Patients)
                     .HasForeignKey(d => d.DischargeTypeId)
@@ -898,56 +747,13 @@ namespace Vertroue.HMS.API.Persistence
                     .HasForeignKey(d => d.InsuranceCompanyId)
                     .HasConstraintName("FK__Patients__Insura__5B438874");
 
-                entity.HasOne(d => d.LineOfTreatment).WithMany(p => p.Patients)
-                    .HasForeignKey(d => d.LineOfTreatmentId)
-                    .HasConstraintName("FK__Patients__LineOf__5E1FF51F");
-
-                entity.HasOne(d => d.RoomType).WithMany(p => p.Patients)
-                    .HasForeignKey(d => d.RoomTypeId)
-                    .HasConstraintName("FK__Patients__RoomTy__5D2BD0E6");
-
                 entity.HasOne(d => d.Tpa).WithMany(p => p.Patients)
                     .HasForeignKey(d => d.Tpaid)
                     .HasConstraintName("FK__Patients__TPAID__5C37ACAD");
-            });
 
-            modelBuilder.Entity<Tparesponse>(entity =>
-            {
-                entity.HasKey(e => e.ResponseId).HasName("PK__TPARespo__1AAA640C0F5B3B22");
-
-                entity.ToTable("TPAResponses");
-
-                entity.Property(e => e.ResponseId).HasColumnName("ResponseID");
-                entity.Property(e => e.ClaimStatusMasterId).HasColumnName("ClaimStatusMasterID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.ResponseDocName)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
-                entity.Property(e => e.ResponseDocument)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
-                entity.Property(e => e.ResponseNotes).HasColumnType("text");
-                entity.Property(e => e.TparesponseCodeId).HasColumnName("TPAResponseCodeID");
-
-                entity.HasOne(d => d.ClaimStatusMaster).WithMany(p => p.Tparesponses)
-                    .HasForeignKey(d => d.ClaimStatusMasterId)
-                    .HasConstraintName("FK__TPARespon__Claim__78D3EB5B");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.Tparesponses)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__TPARespon__Patie__79C80F94");
-
-                entity.HasOne(d => d.TparesponseCode).WithMany(p => p.Tparesponses)
-                    .HasForeignKey(d => d.TparesponseCodeId)
-                    .HasConstraintName("FK__TPARespon__TPARe__7ABC33CD");
+                entity.HasOne(d => d.TreatingDoctorDetails).WithMany(p => p.Patients)
+                    .HasForeignKey(d => d.TreatingDoctorId)
+                    .HasConstraintName("FK_Patients_Doctor_TreatingDocID");
             });
 
             modelBuilder.Entity<TparesponseCode>(entity =>
@@ -982,41 +788,6 @@ namespace Vertroue.HMS.API.Persistence
                 entity.HasOne(d => d.Doctor).WithMany(p => p.TreatingDoctorDetails)
                     .HasForeignKey(d => d.DoctorId)
                     .HasConstraintName("FK__TreatingD__Docto__10AB74EC");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.TreatingDoctorDetails)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__TreatingD__Patie__0FB750B3");
-            });
-
-            modelBuilder.Entity<Treatment>(entity =>
-            {
-                entity.HasKey(e => e.TreatmentId).HasName("PK__Treatmen__1A57B711E7C5B072");
-
-                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
-                entity.Property(e => e.ClaimStatusMasterId).HasColumnName("ClaimStatusMasterID");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdatedBy)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-                entity.Property(e => e.PackageId).HasColumnName("PackageID");
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
-                entity.Property(e => e.TreatmentMasterId).HasColumnName("TreatmentMasterID");
-
-                entity.HasOne(d => d.ClaimStatusMaster).WithMany(p => p.Treatments)
-                    .HasForeignKey(d => d.ClaimStatusMasterId)
-                    .HasConstraintName("FK__Treatment__Claim__6A85CC04");
-
-                entity.HasOne(d => d.Patient).WithMany(p => p.Treatments)
-                    .HasForeignKey(d => d.PatientId)
-                    .HasConstraintName("FK__Treatment__Patie__6B79F03D");
-
-                entity.HasOne(d => d.TreatmentMaster).WithMany(p => p.Treatments)
-                    .HasForeignKey(d => d.TreatmentMasterId)
-                    .HasConstraintName("FK__Treatment__Treat__6C6E1476");
             });
 
             modelBuilder.Entity<TreatmentsMaster>(entity =>
@@ -1047,7 +818,7 @@ namespace Vertroue.HMS.API.Persistence
                     .HasMaxLength(250)
                     .IsUnicode(false);
                 entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
-                entity.Property(e => e.PatientId).HasColumnName("PatientID");
+                entity.Property(e => e.PatientId).HasColumnName("PatientID").IsRequired(false);
                 entity.Property(e => e.Title)
                     .HasMaxLength(500)
                     .IsUnicode(false);
@@ -1056,6 +827,115 @@ namespace Vertroue.HMS.API.Persistence
                     .HasForeignKey(d => d.PatientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__PatientDocs__Patients_PatientID");
+            });
+
+            modelBuilder.Entity<ClaimFlow>(entity =>
+            {
+                entity.HasKey(e => e.ClaimFlowId).HasName("PK__ClaimFlo__D8C99EB8242AD3D9");
+
+                entity.Property(e => e.ClaimFlowId).HasColumnName("ClaimFlowID");
+                entity.Property(e => e.ApprovedAmount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.ClaimId).HasColumnName("ClaimID");
+                entity.Property(e => e.ClaimPatientPayableAmount).HasColumnType("decimal(10, 2)");
+                //entity.Property(e => e.ClaimStatusMasterId).HasColumnName("ClaimStatusMasterID");
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.EstimatedAmount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.FileFlowDateUpdated).HasColumnType("datetime");
+                entity.Property(e => e.FileFlowId).HasColumnName("FileFlowID");
+                entity.Property(e => e.FileFlowStatus)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.ReceiptNumber)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+                entity.Property(e => e.FinalSettlementAmount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.AmountCouldNotRecovered).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.LastUpdatedBy)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
+                entity.Property(e => e.PackageMasterId).HasColumnName("PackageMasterID");
+                entity.Property(e => e.PatientId).HasColumnName("PatientID");
+                entity.Property(e => e.TpaApprovalReference)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+                entity.Property(e => e.DischargeType)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+                entity.Property(e => e.ResponseDocName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+                entity.Property(e => e.ResponseDocument)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+                entity.Property(e => e.ResponseId).HasColumnName("ResponseID");
+                entity.Property(e => e.ResponseNotes).HasColumnType("text");
+                entity.Property(e => e.ResponseType)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+                entity.Property(e => e.QueryCode)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.Stage)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.SubmittedDate).HasColumnType("datetime");
+                entity.Property(e => e.SettlementDate).HasColumnType("datetime");
+                entity.Property(e => e.TparesponseCodeId).HasColumnName("TPAResponseCodeID");
+                entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
+                entity.Property(e => e.TreatmentMasterId).HasColumnName("TreatmentMasterID");
+                entity.Property(e => e.TreatmentPatientPayableAmount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.TreatmentDescription)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false);
+
+                //entity.HasOne(d => d.ClaimStatusMaster).WithMany(p => p.ClaimFlows)
+                //    .HasForeignKey(d => d.ClaimStatusMasterId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_ClaimFlow_ClaimStatus");
+
+                entity.HasOne(d => d.PackageMaster).WithMany(p => p.ClaimFlows)
+                    .HasForeignKey(d => d.PackageMasterId)
+                    .HasConstraintName("FK_ClaimFlow_PackageMaster");
+
+                entity.HasOne(d => d.Patient).WithMany(p => p.ClaimFlows)
+                    .HasForeignKey(d => d.PatientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ClaimFlow_Patient");
+
+                entity.HasOne(d => d.TparesponseCode).WithMany(p => p.ClaimFlows)
+                    .HasForeignKey(d => d.TparesponseCodeId)
+                    .HasConstraintName("FK_ClaimFlow_TPAResponseCode");
+
+                entity.HasOne(d => d.TreatmentMaster).WithMany(p => p.ClaimFlows)
+                    .HasForeignKey(d => d.TreatmentMasterId)
+                    .HasConstraintName("FK_ClaimFlow_TreatmentMaster");
+            });
+
+            modelBuilder.Entity<ClaimFlowDoc>(entity =>
+            {
+                entity.HasKey(e => e.ClaimFlowDocId).HasName("PK__ClaimFlowDocs__PRIMARY");
+
+                entity.Property(e => e.ClaimFlowId).HasColumnName("ClaimFlowID");
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.DocName)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false);
+                entity.Property(e => e.DocUri).IsUnicode(false);
+                entity.Property(e => e.LastUpdatedBy)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.LastUpdatedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ClaimFlow).WithMany(p => p.ClaimFlowDocs)
+                    .HasForeignKey(d => d.ClaimFlowId)
+                    .HasConstraintName("FK__ClaimFlowDocs__ClaimFlows");
             });
         }
 

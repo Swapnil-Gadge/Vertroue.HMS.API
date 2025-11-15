@@ -24,7 +24,7 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Commands.CreatePatientDo
 
                 foreach (var fileToUpload in request.Files)
                 {
-                    var uploadedfileUri = await UploadMouAsync(fileToUpload, cancellationToken);
+                    var uploadedfileUri = await UploadPatientDocAsync(fileToUpload, cancellationToken);
                     request.FileName = fileToUpload.FileName;
                     request.FileUrl = uploadedfileUri.ToString();
                 }

@@ -38,7 +38,7 @@ namespace Vertroue.HMS.API.Application.Features.Hospital.Commands.UpdateRenewal
 
                 foreach (var doc in docsToRemove)
                 {
-                    await RemoveAsync(doc.DocUri);
+                    await RemoveAsync(doc.DocUri, Constant.RenewalDocsContainer);
                 }
 
                 return await _hospitalRepository.UpdateRenewal(request);
