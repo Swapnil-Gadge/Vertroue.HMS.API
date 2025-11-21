@@ -17,11 +17,13 @@ namespace Vertroue.HMS.API.API.Controllers
             _mediator = mediator;
         }
 
-        //[Authorize]
         [HttpGet("providerAdminDashboard")]
-        public async Task<ActionResult<GetProviderAdminDashboardResponse>> GetProviderAdminDashboard()
+        public async Task<ActionResult<GetProviderAdminDashboardResponse>> GetProviderAdminDashboard([FromQuery] int? hospitalId)
         {
-            var response = await _mediator.Send(new GetProviderAdminDashboardQuery());
+            var response = await _mediator.Send(new GetProviderAdminDashboardQuery
+            {
+                HospitalId = hospitalId
+            });
             return Ok(response);
         }
     }
