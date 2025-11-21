@@ -47,12 +47,12 @@ namespace Vertroue.HMS.API.Application.Profiles
             CreateMap<DoctorsMaster, DoctorDto>().ReverseMap();
             CreateMap<TreatmentsMaster, TreatmentDto>().ReverseMap();
             CreateMap<PackagesMaster, PackageDto>().ReverseMap();
-            CreateMap<ClaimFlow, ClaimFlowDto>()
-                .ForMember(d => d.PackageName, opt => opt.MapFrom(src => src.PackageMaster.PackageName))
-                .ForMember(d => d.TreatmentName, opt => opt.MapFrom(src => src.TreatmentMaster.TreatmentName));
+            CreateMap<ClaimFlow, ClaimFlowDto>();
             CreateMap<ClaimFlowDoc, ClaimFlowDocDto>().ReverseMap();
             CreateMap<CreateClaimFlowCommand, ClaimFlow>();
             CreateMap<UpdateClaimFlowCommand, ClaimFlow>();
+            CreateMap<Icd10cmcode, ICD10CMCodeDto>().ReverseMap();
+            CreateMap<Icd10pcscode, ICD10PCSCodeDto>().ReverseMap();
         }
     }
 }

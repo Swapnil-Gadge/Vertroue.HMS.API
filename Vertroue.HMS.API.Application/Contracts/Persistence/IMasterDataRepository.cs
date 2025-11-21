@@ -72,7 +72,8 @@ namespace Vertroue.HMS.API.Application.Contracts.Persistence
         Task<List<PackagesMaster>> FetPackagesForHospital(int hospitalId);
         Task<InsuranceCompany> GetInsuranceCompanyAsync(int insuranceCompanyId);
         Task<(List<CitiesMaster>, List<StatesMaster>, List<AdmissionType>, List<ClaimStatusMaster>, List<DischargeType>, List<LineOfTreatment>, List<MedicalHistoriesMaster>, List<RoomType>, List<Tpa>, List<InsuranceCompany>, List<UserRole>, List<Hospital>, List<EmpanelledTpa>,
-            List<EmpanelledInsuranceCompany>, List<DoctorsMaster>)> GetMasterData(int? hospitalId);
+            List<EmpanelledInsuranceCompany>, List<DoctorsMaster>,
+            List<Icd10cmcode>, List<Icd10pcscode>)> GetMasterData(int? hospitalId);
     }
 }
 

@@ -26,11 +26,11 @@
 
         public decimal? DeniedCaseAmount { get; set; }
 
-        public int? DischargeCaseCount { get; set; }
+        public int? ClosedCaseCount { get; set; }
 
-        public decimal? DischargeCasePercent { get; set; }
+        public decimal? ClosedCasePercent { get; set; }
 
-        public decimal? DischargeCaseAmount { get; set; }
+        public decimal? ClosedCaseAmount { get; set; }
 
         public int? PaidCaseCount { get; set; }
 

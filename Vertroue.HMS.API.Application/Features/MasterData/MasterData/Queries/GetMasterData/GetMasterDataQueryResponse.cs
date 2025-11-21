@@ -34,5 +34,9 @@ namespace Vertroue.HMS.API.Application.Features.MasterData.MasterData.Queries.Ge
         public List<EmpanelledTpaDto> EmpanelledTpas { get; set; }
 
         public List<DoctorDto> Doctors { get; set; }
+
+        public List<ICD10CMCodeDto> ICD10CMCodes { get; set; }
+
+        public List<ICD10PCSCodeDto> ICD10PCSCodes { get; set; }
     }
 }

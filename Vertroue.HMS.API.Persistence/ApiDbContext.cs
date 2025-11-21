@@ -79,9 +79,44 @@ namespace Vertroue.HMS.API.Persistence
 
         public virtual DbSet<ClaimFlowDoc> ClaimFlowDocs { get; set; }
 
+        public virtual DbSet<Icd10cmcode> Icd10cmcodes { get; set; }
+
+        public virtual DbSet<Icd10pcscode> Icd10pcscodes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApiDbContext).Assembly);
+
+            modelBuilder.Entity<Icd10cmcode>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__ICD10CMCodes__Id");
+
+                entity.ToTable("ICD10CMCodes");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Icd10pcscode>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__ICD10PCSCodes__Id");
+
+                entity.ToTable("ICD10PCSCodes");
+
+                entity.Property(e => e.Category)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.Code)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<CitiesMaster>(entity =>
             {
@@ -627,6 +662,7 @@ namespace Vertroue.HMS.API.Persistence
                 entity.Property(e => e.CompanyName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
                 entity.Property(e => e.ConsultationCharges).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.ContactNumber)
                     .HasMaxLength(20)
@@ -648,6 +684,12 @@ namespace Vertroue.HMS.API.Persistence
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("EmployeeID");
+                entity.Property(e => e.UniqueId)
+                    .HasMaxLength(400)
+                    .IsUnicode(false);
+                entity.Property(e => e.AadharId)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
                 entity.Property(e => e.ExpectedCost).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.ExpectedInvestigationCost).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.FamilyPhysicianContact)
@@ -888,9 +930,21 @@ namespace Vertroue.HMS.API.Persistence
                 entity.Property(e => e.TreatmentId).HasColumnName("TreatmentID");
                 entity.Property(e => e.TreatmentMasterId).HasColumnName("TreatmentMasterID");
                 entity.Property(e => e.TreatmentPatientPayableAmount).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.TPAPayablePercent).HasColumnType("decimal(5, 2)");
                 entity.Property(e => e.TreatmentDescription)
                     .HasMaxLength(5000)
                     .IsUnicode(false);
+                entity.Property(e => e.DeathCause)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false);
+                entity.Property(e => e.TreatmentName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+                entity.Property(e => e.PackageName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+                entity.Property(e => e.DischargeDate).HasColumnType("date");
+                entity.Property(e => e.DeathDate).HasColumnType("date");
 
                 //entity.HasOne(d => d.ClaimStatusMaster).WithMany(p => p.ClaimFlows)
                 //    .HasForeignKey(d => d.ClaimStatusMasterId)

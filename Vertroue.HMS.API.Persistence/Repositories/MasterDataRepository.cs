@@ -1293,7 +1293,9 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             List<Hospital>,
             List<EmpanelledTpa>,
             List<EmpanelledInsuranceCompany>,
-            List<DoctorsMaster>)> GetMasterData(int? hospitalId)
+            List<DoctorsMaster>,
+            List<Icd10cmcode>,
+            List<Icd10pcscode>)> GetMasterData(int? hospitalId)
         {
             var cities = await _dbContext.CitiesMasters.AsNoTracking().ToListAsync();
             var states = await _dbContext.StatesMasters.AsNoTracking().ToListAsync();
@@ -1318,7 +1320,9 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             var doctorsMaster = await _dbContext.DoctorsMasters
                 .Where(d => (hospitalId.HasValue && d.HospitalId == hospitalId.Value) || true)
                 .AsNoTracking().ToListAsync();
-            return (cities, states, admissionTypes, claimStatuses, dischargeTypes, lineOfTreatments, medicalHistories, roomTypes, tpas, insuranceCompanies, userRoles, hospitals, empanelledTpas, empanelledInsuranceCompanies, doctorsMaster);
+            var icd10cmcodes = await _dbContext.Icd10cmcodes.AsNoTracking().ToListAsync();
+            var icd10pcscodes = await _dbContext.Icd10pcscodes.AsNoTracking().ToListAsync();
+            return (cities, states, admissionTypes, claimStatuses, dischargeTypes, lineOfTreatments, medicalHistories, roomTypes, tpas, insuranceCompanies, userRoles, hospitals, empanelledTpas, empanelledInsuranceCompanies, doctorsMaster, icd10cmcodes, icd10pcscodes);
         }
     }
 }

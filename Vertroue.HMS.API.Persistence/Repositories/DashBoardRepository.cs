@@ -1,8 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Linq.Expressions;
 using Vertroue.HMS.API.Application.Contracts.Persistence;
 using Vertroue.HMS.API.Application.Features.Dashboards.Models;
+using Vertroue.HMS.API.Application.Shared;
+using Vertroue.HMS.API.Domain.Entities;
 
 namespace Vertroue.HMS.API.Persistence.Repositories
 {
@@ -15,153 +18,258 @@ namespace Vertroue.HMS.API.Persistence.Repositories
             _context = dbContext;
         }
 
-        public async Task<(List<CaseCounts>, List<TatReportCase>, List<Denial>, List<Defficiency>, List<string?>, List<string?>)> GetProviderAdminDashboardData(int corpId, int loginId, string userType, string userRole)
+        public async Task<(List<CaseCounts>, List<TatReportCase>, List<Denial>, List<Defficiency>, List<string?>, List<string?>)> GetProviderAdminDashboardData(int hospitalId)
         {
             var caseCounts = new List<CaseCounts>();
             var tatReportCases = new List<TatReportCase>();
-            var denials = new List<Denial>();
-            var defficiencies = new List<Defficiency>();
+            var denials = new List<Denial>(); // TPA Query Codes
+            var defficiencies = new List<Defficiency>(); // Can be ICD 11 codes
             var tatReport = new List<string?>();
             var totalCaseBiFurications = new List<string?>();
 
-            var connection = _context.Database.GetDbConnection();
-            await using (connection)
+            Expression<Func<Patient, bool>> hospitalExpression = h => true;
+            if (hospitalId > 0)
             {
-                await connection.OpenAsync();
-
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "DashBoard_Provider";
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter[] spParameter = new SqlParameter[4];
-
-                    spParameter[0] = new SqlParameter("@UserId", SqlDbType.Int);
-                    spParameter[0].Direction = ParameterDirection.Input;
-                    spParameter[0].Value = loginId;
-
-                    spParameter[1] = new SqlParameter("@UserType", SqlDbType.VarChar, 100);
-                    spParameter[1].Direction = ParameterDirection.Input;
-                    spParameter[1].Value = userType;
-
-                    spParameter[2] = new SqlParameter("@UserRole", SqlDbType.VarChar, 100);
-                    spParameter[2].Direction = ParameterDirection.Input;
-                    spParameter[2].Value = userRole;
-
-                    spParameter[3] = new SqlParameter("@Corporate_id", SqlDbType.Int);
-                    spParameter[3].Direction = ParameterDirection.Input;
-                    spParameter[3].Value = corpId;
-
-                    command.Parameters.AddRange(spParameter);
-
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        // Read first result set
-                        while (await reader.ReadAsync())
-                        {
-                            caseCounts.Add(new CaseCounts
-                            {
-                                LiveCaseCount = reader.IsDBNull(0) ? null : reader.GetInt32(0),
-                                LiveCasePercent = reader.IsDBNull(1) ? null : Convert.ToDecimal(reader.GetValue(1)),
-                                LiveCaseAmount = reader.IsDBNull(2) ? null : Convert.ToDecimal(reader.GetValue(2)),
-                                ApprovedCaseCount = reader.IsDBNull(3) ? null : reader.GetInt32(3),
-                                ApprovedCasePercent = reader.IsDBNull(4) ? null : Convert.ToDecimal(reader.GetValue(4)),
-                                ApprovedCaseAmount = reader.IsDBNull(5) ? null : Convert.ToDecimal(reader.GetValue(5)),
-                                QuerryCaseCount = reader.IsDBNull(6) ? null : reader.GetInt32(6),
-                                QuerryCasePercent = reader.IsDBNull(7) ? null : Convert.ToDecimal(reader.GetValue(7)),
-                                QuerryCaseAmount = reader.IsDBNull(8) ? null : Convert.ToDecimal(reader.GetValue(8)),
-                                DeniedCaseCount = reader.IsDBNull(9) ? null : reader.GetInt32(9),
-                                DeniedCasePercent = reader.IsDBNull(10) ? null : Convert.ToDecimal(reader.GetValue(10)),
-                                DeniedCaseAmount = reader.IsDBNull(11) ? null : Convert.ToDecimal(reader.GetValue(11)),
-                                DischargeCaseCount = reader.IsDBNull(12) ? null : reader.GetInt32(12),
-                                DischargeCasePercent = reader.IsDBNull(13) ? null : Convert.ToDecimal(reader.GetValue(13)),
-                                DischargeCaseAmount = reader.IsDBNull(14) ? null : Convert.ToDecimal(reader.GetValue(14)),
-                                PaidCaseCount = reader.IsDBNull(15) ? null : reader.GetInt32(15),
-                                PaidCasePercent = reader.IsDBNull(16) ? null : Convert.ToDecimal(reader.GetValue(16)),
-                                PaidCaseAmount = reader.IsDBNull(17) ? null : Convert.ToDecimal(reader.GetValue(17)),
-                                PayPendingCaseCount = reader.IsDBNull(18) ? null : reader.GetInt32(18),
-                                PayPendingCasePercent = reader.IsDBNull(19) ? null : Convert.ToDecimal(reader.GetValue(19)),
-                                PayPendingCaseAmount = reader.IsDBNull(20) ? null : Convert.ToDecimal(reader.GetValue(20)),
-                                FileSentCaseCount = reader.IsDBNull(21) ? null : reader.GetInt32(21),
-                                FileSentCasePercent = reader.IsDBNull(22) ? null : Convert.ToDecimal(reader.GetValue(22)),
-                                FileSentCaseAmount = reader.IsDBNull(23) ? null : Convert.ToDecimal(reader.GetValue(23)),
-                                TotalCaseCount = reader.IsDBNull(24) ? null : reader.GetInt32(24),
-                                TotalCasePercent = reader.IsDBNull(25) ? null : Convert.ToDecimal(reader.GetValue(25)),
-                                TotalCaseAmount = reader.IsDBNull(26) ? null : Convert.ToDecimal(reader.GetValue(26)),                                
-                            });
-                        }
-
-                        // Go to the next result set
-                        if (await reader.NextResultAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                tatReportCases.Add(new TatReportCase
-                                {
-                                    TableId = reader.GetInt32(0), 
-                                    CaseDetailsId = reader.IsDBNull(1) ? null : reader.GetInt32(1),
-                                    CaseInitiateDate = reader.IsDBNull(2) ? null : reader.GetDateTime(2),
-                                    CaseDeffRecvDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
-                                    CaseDeffRespDate = reader.IsDBNull(4) ? null : reader.GetDateTime(4),
-                                    CaseApprovalDate = reader.IsDBNull(5) ? null : reader.GetDateTime(5),
-                                    CaseDeffTat = reader.IsDBNull(6) ? null : Convert.ToDecimal(reader.GetValue(6)),
-                                    CaseApprTat = reader.IsDBNull(7) ? null : Convert.ToDecimal(reader.GetValue(7)),
-                                    TatInHrs = reader.IsDBNull(8) ? null : Convert.ToDecimal(reader.GetValue(8)),
-                                });
-                            }
-                        }
-
-                        if (await reader.NextResultAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                tatReport.Add(reader.IsDBNull(0) ? null : reader.GetString(0));
-                            }
-                        }
-
-                        if (await reader.NextResultAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                totalCaseBiFurications.Add(reader.IsDBNull(0) ? null : reader.GetString(0));
-                            }
-                        }
-
-                        if (await reader.NextResultAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                defficiencies.Add(new Defficiency
-                                {
-                                    Id = reader.GetInt32(0),
-                                    Name = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                    TPACode = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                    InsurerCode = reader.IsDBNull(3) ? null : reader.GetString(3),
-                                    Count = reader.IsDBNull(4) ? null : reader.GetInt32(4),
-                                });
-                            }
-                        }
-
-                        if (await reader.NextResultAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                denials.Add(new Denial
-                                {
-                                    Id = reader.GetInt32(0),
-                                    Name = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                    TPACode = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                    InsurerCode = reader.IsDBNull(3) ? null : reader.GetString(3),
-                                    Count = reader.IsDBNull(4) ? null : reader.GetInt32(4),
-                                });
-                            }
-                        }
-                    }
-                }
+                hospitalExpression = h => h.HospitalId == hospitalId;
             }
 
+            var claims = await _context.Patients
+                        .Where(hospitalExpression)
+                        .Include(p => p.ClaimFlows) // Only latest
+                        .AsNoTracking()
+                        .ToListAsync();
+
+            var casecount = new CaseCounts
+            {
+                ApprovedCaseAmount = 0,
+                ApprovedCaseCount = 0,
+                ApprovedCasePercent = 0,
+                ClosedCaseAmount = 0,
+                ClosedCaseCount = 0,
+                ClosedCasePercent = 0,
+                DeniedCaseAmount = 0,
+                DeniedCaseCount = 0,
+                DeniedCasePercent = 0,
+                LiveCaseAmount = 0,
+                LiveCaseCount = 0,
+                LiveCasePercent = 0,
+                PayPendingCaseAmount = 0,
+                PayPendingCaseCount = 0,
+                PayPendingCasePercent = 0,
+                PaidCaseAmount = 0,
+                PaidCaseCount = 0,
+                PaidCasePercent = 0,
+                FileSentCaseAmount = 0,
+                FileSentCaseCount = 0,
+                FileSentCasePercent = 0,
+                QuerryCaseAmount = 0,
+                QuerryCaseCount = 0,
+                QuerryCasePercent = 0,
+                TotalCaseAmount = 0,
+                TotalCaseCount = 0,
+                TotalCasePercent = 0
+            };
+            foreach (var claim in claims)
+            {
+                var latestClaimFlow = claim.ClaimFlows.OrderByDescending(c => c.ClaimFlowId).FirstOrDefault();
+                var allClaimsFlows = claim.ClaimFlows;
+                decimal totalClaimAmount = 0;
+
+                if (latestClaimFlow != null)
+                    totalClaimAmount += allClaimsFlows.Sum(c => c.EstimatedAmount ?? 0) + allClaimsFlows.Sum(c => c.TreatmentPatientPayableAmount ?? 0);
+                else
+                    totalClaimAmount += claim.TotalExpectedCost ?? 0;
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.DRAFT 
+                    || claim.ClaimStatus == Constant.ClaimStatuses.CLAIM_SUBMITTED
+                    || claim.ClaimStatus == Constant.ClaimStatuses.ENHANCED_CLAIM_SUBMITTED)
+                {
+                    casecount.LiveCaseCount++;
+                    casecount.LiveCaseAmount += totalClaimAmount;
+                }                    
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.QUERIED 
+                    || claim.ClaimStatus == Constant.ClaimStatuses.QUERY_ANSWERED 
+                    || claim.ClaimStatus == Constant.ClaimStatuses.AWAITING_FINAL_APPROVAL)
+                {
+                    casecount.QuerryCaseCount++;
+
+                    // TODO: needs to check how to calculate queried amount
+                    var claimflow = allClaimsFlows
+                        .Where(c => (c.Stage == Constant.ClaimFlowTypes.TPA_RESPONSE && c.ApprovedAmount.HasValue && c.ApprovedAmount.Value > 0)
+                        || c.Stage == Constant.ClaimFlowTypes.TREATMENT || c.Stage == Constant.ClaimFlowTypes.ENHANCEMENT)
+                        .OrderByDescending(c => c.ClaimFlowId)
+                        .FirstOrDefault();
+
+                    if (claimflow == null)
+                        casecount.QuerryCaseAmount += claim.TotalExpectedCost ?? 0;
+                    else
+                        casecount.QuerryCaseAmount += (claimflow.ApprovedAmount ?? 0) + (claimflow.ClaimPatientPayableAmount ?? 0)
+                            + (claimflow.EstimatedAmount ?? 0) + (claimflow.TreatmentPatientPayableAmount ?? 0);
+                }                    
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.DENIED)
+                {
+                    casecount.DeniedCaseCount++;
+                    var claimflow = allClaimsFlows
+                       .Where(c => (c.Stage == Constant.ClaimFlowTypes.TPA_RESPONSE && c.ApprovedAmount.HasValue && c.ApprovedAmount.Value > 0)
+                       || c.Stage == Constant.ClaimFlowTypes.TREATMENT || c.Stage == Constant.ClaimFlowTypes.ENHANCEMENT)
+                       .OrderByDescending(c => c.ClaimFlowId)
+                       .FirstOrDefault();
+
+                    if (claimflow == null)
+                        casecount.DeniedCaseAmount += claim.TotalExpectedCost ?? 0;
+                    else
+                        casecount.DeniedCaseAmount += (claimflow.ApprovedAmount ?? 0) + (claimflow.ClaimPatientPayableAmount ?? 0)
+                            + (claimflow.EstimatedAmount ?? 0) + (claimflow.TreatmentPatientPayableAmount ?? 0);
+                }                    
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.CLOSED)
+                {
+                    casecount.ClosedCaseCount++;
+                    var closedClaimrec = allClaimsFlows
+                        .Where(c => c.Stage == Constant.ClaimFlowTypes.CLOSED_CLAIM)
+                        .OrderByDescending(c => c.ClaimFlowId)
+                        .FirstOrDefault();
+
+                    if (closedClaimrec != null)
+                        casecount.ClosedCaseAmount += closedClaimrec.ClaimPatientPayableAmount ?? 0;
+                    else
+                        casecount.ClosedCaseAmount += claim.TotalExpectedCost ?? 0;
+                }             
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.APPROVED ||
+                    claim.ClaimStatus == Constant.ClaimStatuses.PRE_AUTH_APPROVED ||
+                    claim.ClaimStatus == Constant.ClaimStatuses.PARTIALLY_APPROVED)
+                {
+                    casecount.ApprovedCaseCount++;
+                    if (latestClaimFlow != null)
+                        casecount.ApprovedCaseAmount += allClaimsFlows.Sum(c => c.ApprovedAmount ?? 0) + allClaimsFlows.Sum(c => c.ClaimPatientPayableAmount ?? 0);
+                    else
+                        casecount.ApprovedCaseAmount += claim.TotalExpectedCost ?? 0;
+                }
+                    
+                if (claim.ClaimStatus == Constant.ClaimStatuses.SETTLED)
+                {
+                    casecount.PaidCaseCount++;
+                    if (latestClaimFlow != null)
+                        casecount.PaidCaseAmount += allClaimsFlows.Sum(c => c.FinalSettlementAmount ?? 0) + allClaimsFlows.Sum(c => c.ClaimPatientPayableAmount ?? 0);
+                    else
+                        casecount.PaidCaseAmount += claim.TotalExpectedCost ?? 0;
+                }                    
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.ACKNOWLEDGEMENT_RECEIVED)
+                {
+                    casecount.PayPendingCaseCount++;
+                    if (latestClaimFlow != null)
+                        casecount.PayPendingCaseAmount += allClaimsFlows.Sum(c => c.ApprovedAmount ?? 0) + allClaimsFlows.Sum(c => c.ClaimPatientPayableAmount ?? 0);
+                    else
+                        casecount.PayPendingCaseAmount += claim.TotalExpectedCost ?? 0;
+                }                    
+
+                if (claim.ClaimStatus == Constant.ClaimStatuses.FILE_SENT)
+                {
+                    casecount.FileSentCaseCount++;
+                    if (latestClaimFlow != null)
+                        casecount.FileSentCaseAmount += allClaimsFlows.Sum(c => c.ApprovedAmount ?? 0) + allClaimsFlows.Sum(c => c.ClaimPatientPayableAmount ?? 0);
+                    else
+                        casecount.FileSentCaseAmount += claim.TotalExpectedCost ?? 0;
+                }                    
+            }
+            casecount.TotalCaseCount = claims.Count;
+            casecount.TotalCaseAmount = casecount.PaidCaseAmount + casecount.ApprovedCaseAmount + casecount.ClosedCaseAmount
+                + casecount.DeniedCaseAmount + casecount.FileSentCaseAmount + casecount.LiveCaseAmount
+                + casecount.PayPendingCaseAmount + casecount.QuerryCaseAmount;
+
+            casecount.LiveCasePercent = CalculatePercent(casecount.LiveCaseCount, casecount.TotalCaseCount);
+            casecount.ApprovedCasePercent = CalculatePercent(casecount.ApprovedCaseCount, casecount.TotalCaseCount);
+            casecount.QuerryCasePercent = CalculatePercent(casecount.QuerryCaseCount, casecount.TotalCaseCount);
+            casecount.DeniedCasePercent = CalculatePercent(casecount.DeniedCaseCount, casecount.TotalCaseCount);
+            casecount.PaidCasePercent = CalculatePercent(casecount.PaidCaseCount, casecount.TotalCaseCount);
+            casecount.PayPendingCasePercent = CalculatePercent(casecount.PayPendingCaseCount, casecount.TotalCaseCount);
+            casecount.FileSentCasePercent = CalculatePercent(casecount.FileSentCaseCount, casecount.TotalCaseCount);
+            casecount.ClosedCasePercent = CalculatePercent(casecount.ClosedCaseCount, casecount.TotalCaseCount);
+
+            caseCounts.Add(casecount);
+
+            totalCaseBiFurications.Add("\"Live case Count\",\"Approved case Count\",\"Queried case Count\",\"Denied case Count\",\"Closed case Count\",\"Paid case Count\",\"PayPending case Count\",\"File-Sent case Count\"");
+            totalCaseBiFurications.Add($"{casecount.LiveCaseCount}, {casecount.ApprovedCaseCount}, {casecount.QuerryCaseCount}, {casecount.DeniedCaseCount}, {casecount.ClosedCaseCount}, {casecount.PaidCaseCount}, {casecount.PayPendingCaseCount}, {casecount.FileSentCaseCount}");
+
+            var querycodes = claims
+                .SelectMany(c => c.ClaimFlows)
+                .Where(cf => cf.Stage == Constant.ClaimFlowTypes.TPA_RESPONSE && !string.IsNullOrEmpty(cf.QueryCode))
+                .GroupBy(cf => new { cf.QueryCode })
+                .Select(g => new Denial
+                {
+                    Name = g.Key.QueryCode,
+                    Count = g.Count(),
+                    TPACode = g.Key.QueryCode
+                })
+                .OrderByDescending(d => d.Count)
+                .Take(10)
+                .ToList();
+            denials.AddRange(querycodes);
+
+            var defficiencycodes = claims
+                .GroupBy(c => new { c.Icd11Code })
+                .Select(g => new Defficiency
+                {
+                    Name = g.Key.Icd11Code,
+                    Count = g.Count(),
+                    TPACode = g.Key.Icd11Code
+                })
+                .OrderByDescending(d => d.Count)
+                .Take(10)
+                .ToList();
+            defficiencies.AddRange(defficiencycodes);
+
+            var submittedClaims = claims
+                .Where(c => c.ClaimStatus == Constant.ClaimStatuses.CLAIM_SUBMITTED 
+                || c.ClaimStatus == Constant.ClaimStatuses.ENHANCED_CLAIM_SUBMITTED
+                || c.ClaimStatus == Constant.ClaimStatuses.QUERY_ANSWERED
+                || c.ClaimStatus == Constant.ClaimStatuses.AWAITING_FINAL_APPROVAL)
+                .OrderBy(c => c.SubmitedDate)
+                .ToList();
+
+            var labels = new[] { "0-1 hrs", "1-2 hrs", "2-3 hrs", "3-4 hrs", "4-5 hrs", "5-6 hrs", ">6 hrs" };
+            var tatValues = GetTATValues(submittedClaims);
+            tatReport.Add(string.Join(",", labels));
+            tatReport.Add(tatValues);
+
+            tatReport.Reverse();
             totalCaseBiFurications.Reverse();
             return (caseCounts, tatReportCases, denials, defficiencies, tatReport, totalCaseBiFurications);
+        }
+
+        private static decimal CalculatePercent(int? count, int? total)
+        {
+            return total > 0 ? (decimal)count * 100 / (total.HasValue ? total.Value : 0) : 0;
+        }
+
+        private string GetTATValues(List<Patient> claims)
+        {
+            var now = DateTime.Now;
+            var ranges = new (double Min, double Max)[]
+            {
+                (0.0, 1.0),
+                (1.0, 2.0),
+                (2.0, 3.0),
+                (3.0, 4.0),
+                (4.0, 5.0),
+                (5.0, 6.0),
+                (6.0, double.MaxValue)
+             };
+
+            var values = ranges
+                .Select(r =>
+                    claims.Count(c =>
+                    {
+                        var ageHours = (now - c.SubmitedDate.Value).TotalHours;
+                        return ageHours >= r.Min && ageHours < r.Max;
+                    })
+                )
+                .ToArray();
+            return string.Join(",", values);
         }
     }
 }

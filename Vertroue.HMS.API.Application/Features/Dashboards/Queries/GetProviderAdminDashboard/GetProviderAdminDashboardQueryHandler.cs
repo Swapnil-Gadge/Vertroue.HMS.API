@@ -18,10 +18,11 @@ namespace Vertroue.HMS.API.Application.Features.Dashboards.Queries.GetProviderAd
 
         public async Task<GetProviderAdminDashboardResponse> Handle(GetProviderAdminDashboardQuery request, CancellationToken cancellationToken)
         {
-            var result =  await _dashBoardRepository.GetProviderAdminDashboardData(_loggedInUserService.CorporateId,
-                _loggedInUserService.UserLoginId,
-                _loggedInUserService.UserType,
-                _loggedInUserService.UserRole);
+            if (_loggedInUserService.IsUserUnauthorizedToPerformOperation(request.HospitalId.HasValue ? request.HospitalId.Value : 0))
+                throw new UnauthorizedAccessException("User is not authorized to perform this operation.");
+
+            var result = await _dashBoardRepository.GetProviderAdminDashboardData(request.HospitalId.HasValue ? request.HospitalId.Value : 0);
+
             return new GetProviderAdminDashboardResponse
             {
                 CaseCounts = result.Item1,

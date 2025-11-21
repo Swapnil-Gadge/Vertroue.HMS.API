@@ -34,7 +34,19 @@
 
         public string? TreatmentName { get; set; }
 
+        public string? DeathCause { get; set; }
+
+        public DateTime? DischargeDate { get; set; }
+
+        public DateTime? DeathDate { get; set; }
+
+        public TimeSpan? DischargeTime { get; set; }
+
+        public TimeSpan? DeathTime { get; set; }
+
         public string? PackageName { get; set; }
+
+        public decimal? TPAPayablePercent { get; set; }
 
         public int? ResponseId { get; set; }
 

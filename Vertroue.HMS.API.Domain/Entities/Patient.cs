@@ -38,6 +38,14 @@ public partial class Patient
 
     public bool? CurrentlyWithOtherMedician { get; set; }
 
+    public string? UniqueId { get; set; }
+
+    public string? AadharId { get; set; }
+
+    public bool? AccidentMLC { get; set; }
+
+    public bool? AccidentSelfDeclaration { get; set; }
+
     public string? OtherInsuranceCompany { get; set; }
 
     public bool? HasFamilyPhysician { get; set; }

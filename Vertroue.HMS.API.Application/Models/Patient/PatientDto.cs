@@ -1,4 +1,6 @@
-﻿namespace Vertroue.HMS.API.Application.Models.Patient
+﻿using Vertroue.HMS.API.Application.Shared;
+
+namespace Vertroue.HMS.API.Application.Models.Patient
 {
     public class PatientDto
     {
@@ -215,6 +217,20 @@
         public string? LastUpdatedBy { get; set; }
 
         public DateTime? LastUpdatedDate { get; set; }
+
+        public bool? ClaimStatusChanged { get; set; }
+
+        public string? UniqueId { get; set; }
+
+        public string? AadharId { get; set; }
+
+        public bool? AccidentMLC { get; set; }
+
+        public bool? AccidentSelfDeclaration { get; set; }
+
+        public ClaimSubmissionsForType? ClaimSubmissionsForType { get; set; }
+
+        public string HospitalName { get; set; } = string.Empty;
 
         public List<int> AddedDocIds { get; set; } = new List<int>();
 

@@ -2,6 +2,11 @@
 using Vertroue.HMS.API.Application.Contracts.Persistence;
 using Vertroue.HMS.API.Application.Contracts;
 using Vertroue.HMS.API.Application.Models.Patient;
+using Vertroue.HMS.API.Application.Contracts.Infrastructure;
+using Vertroue.HMS.API.Application.Models.Mail;
+using Vertroue.HMS.API.Application.Shared;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Vertroue.HMS.API.Application.Features.Patient.Commands.UpdatePatient
 {
@@ -9,11 +14,19 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Commands.UpdatePatient
     {
         private readonly IPatientRepository _patientRepository;
         private readonly ILoggedInUserService _loggedInUserService;
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
 
-        public UpdatePatientCommandHandler(IPatientRepository patientRepository, ILoggedInUserService loggedInUserService)
+        public UpdatePatientCommandHandler(
+            IPatientRepository patientRepository, 
+            ILoggedInUserService loggedInUserService,
+            IEmailService emailService,
+            IConfiguration configuration)
         {
+            _emailService = emailService;
             _loggedInUserService = loggedInUserService;
             _patientRepository = patientRepository;
+            _configuration = configuration;
         }
 
         public async Task<PatientDto> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
@@ -34,6 +47,10 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Commands.UpdatePatient
                 DateOfBirth = patientDto.DateOfBirth,
                 CurrentlyWithOtherMedician = patientDto.CurrentlyWithOtherMedician == "Yes" ? true : false,
                 EmployeeId = patientDto.EmployeeId,
+                AadharId = patientDto.AadharId,
+                AccidentMLC = patientDto.AccidentMLC,
+                AccidentSelfDeclaration = patientDto.AccidentSelfDeclaration,
+                UniqueId = patientDto.UniqueId,
                 HasFamilyPhysician = patientDto.FamilyPhysician == "Yes" ? true : false,
                 FamilyPhysicianContact = patientDto.FamilyPhysicianContact,
                 AccidentInjuryDate = patientDto.AccidentInjuryDate,
@@ -121,6 +138,19 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Commands.UpdatePatient
                 CreatedDate = existingPatient.CreatedDate,
             };
             var result = await _patientRepository.UpdatePatientAsync(patient);
+
+            if (patientDto.ClaimStatusChanged.HasValue 
+                && patientDto.ClaimStatusChanged.Value)
+            {
+                var emailRequest = new Email
+                {
+                    From = _configuration.GetSection(Constant.ClaimManagementEmail).Value!,
+                    To = _configuration.GetSection(Constant.VertroueEmailID).Value!.Split(";").ToList(),
+                    Subject = "Patient Claim Status Updated",
+                    Body = GenerateEmailBody(patientDto)
+                };
+                await _emailService.SendEmail(emailRequest);
+            }
             return new PatientDto
             {
                 PatientId = result.PatientId,
@@ -129,6 +159,24 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Commands.UpdatePatient
                 LastUpdatedBy = result.LastUpdatedBy,
                 LastUpdatedDate = result.LastUpdatedDate,
             };
+        }
+
+        public string GenerateEmailBody(PatientDto patientDto)
+        {
+            string message = $"<p>The claim status for patient <b>{patientDto.PatientName}</b> for Hospital <b>{patientDto.HospitalName}</b> (ID: {patientDto.PatientId}) has been updated to <b>{patientDto.ClaimStatus}</b>.</p>";
+            var supportRequestText = new StringBuilder();
+            supportRequestText.Append(@"<!DOCTYPE html>
+            <html>
+            <body>
+            <div>");
+            supportRequestText.Append("Hello Team,");
+            supportRequestText.AppendLine("<br/>");
+            supportRequestText.AppendLine(message);
+            supportRequestText.AppendLine($"<p><a href=\"{_configuration.GetSection(Constant.AppLink).Value}/patients/{patientDto.PatientId}\" target =\"_blank\"><span data-offset-key=\"aftaq-1-0\"><span data-text=\"true\">Click here</a> to navigate to patient record for more details</p>");
+            supportRequestText.AppendLine("Best wishes,<br/>");
+            supportRequestText.AppendLine("Support Team");
+            supportRequestText.AppendLine("</div></body></html>");
+            return supportRequestText.ToString();
         }
     }
 }

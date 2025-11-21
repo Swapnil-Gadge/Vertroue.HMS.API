@@ -4,5 +4,6 @@ namespace Vertroue.HMS.API.Application.Features.Dashboards.Queries.GetProviderAd
 {
     public class GetProviderAdminDashboardQuery : IRequest<GetProviderAdminDashboardResponse>
     {
+        public int? HospitalId { get; set; }
     }
 }

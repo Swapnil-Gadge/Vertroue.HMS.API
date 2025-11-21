@@ -70,6 +70,8 @@ namespace Vertroue.HMS.API.Application.Features.MasterData.MasterData.Queries.Ge
                 EmpanelledInsuranceCompanies = empanelledICs,
                 EmpanelledTpas = empanelledTPAs,
                 Doctors = _mapper.Map<List<DoctorDto>>(result.Item15),
+                ICD10CMCodes = _mapper.Map<List<ICD10CMCodeDto>>(result.Item16),
+                ICD10PCSCodes = _mapper.Map<List<ICD10PCSCodeDto>>(result.Item17),
             };
         }
     }

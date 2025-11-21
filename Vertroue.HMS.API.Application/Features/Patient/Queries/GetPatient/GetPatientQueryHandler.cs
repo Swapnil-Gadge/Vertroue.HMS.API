@@ -67,6 +67,10 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Queries.GetPatient
                 ContactNumber = patient.ContactNumber,
                 DateOfBirth = patient.DateOfBirth,
                 CurrentlyWithOtherMedician = patient.CurrentlyWithOtherMedician.HasValue && patient.CurrentlyWithOtherMedician.Value ? "Yes" : "No",
+                AadharId = patient.AadharId,
+                UniqueId = patient.UniqueId,
+                AccidentMLC = patient.AccidentMLC,
+                AccidentSelfDeclaration = patient.AccidentSelfDeclaration,
                 EmployeeId = patient.EmployeeId,
                 FamilyPhysician = patient.HasFamilyPhysician.HasValue && patient.HasFamilyPhysician.Value ? "Yes" : "No",
                 FamilyPhysicianContact = patient.FamilyPhysicianContact,
@@ -161,7 +165,7 @@ namespace Vertroue.HMS.API.Application.Features.Patient.Queries.GetPatient
                 TreatingDoctorName = treatingDoctor != null ? treatingDoctor.DoctorName : string.Empty,
                 TreatingDoctorNameDeclaration = treatingDoctor != null ? treatingDoctor.DoctorName : string.Empty,
                 DoctorQualification = treatingDoctor != null ? treatingDoctor.Qualification : string.Empty,
-                DoctorRegistrationNumber = treatingDoctor != null ? treatingDoctor.RegistrationNumber : string.Empty,
+                DoctorRegistrationNumber = treatingDoctor != null ? treatingDoctor.RegistrationNumber : string.Empty,                
                 ClaimFlows = claimFlowDtos,
                 Documents = patientDocList
             };

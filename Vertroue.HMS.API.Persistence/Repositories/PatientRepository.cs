@@ -206,8 +206,6 @@ namespace Vertroue.HMS.API.Persistence.Repositories
         public async Task<List<ClaimFlow?>> GetClaimFlowByPatientIdAsync(int patientId)
         {
             return await _dbContext.ClaimFlows
-                .Include(c => c.TreatmentMaster)
-                .Include(c => c.PackageMaster)
                 .Where(c => c.PatientId == patientId).AsNoTracking().ToListAsync();
         }
 
